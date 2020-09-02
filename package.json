@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Andreingvarsson/MatJakt/issues"
   },
-  "homepage": "https://github.com/Andreingvarsson/MatJakt#readme"
+  "homepage": "https://github.com/Andreingvarsson/MatJakt#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
 }
