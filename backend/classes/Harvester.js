@@ -18,7 +18,7 @@ module.exports = class Harvester {
     let items = await IcaHarvester.getProducts(categoryURL);
   //   let products = await IcaHarvester.getProductIds(categoryURL);
   //   let productIds = products.items.map(x => x.id);
-    console.log(items)
+    scrubAllItems(items);
 
   //  console.log(productIds)
   }
