@@ -1,31 +1,27 @@
 const WillysHarvester = require("./WillysHarvester");
+const WillysScrubber = require("./WillysScrubber");
+
 const IcaHarvester = require("./IcaHarvester");
-const CoopHarvester = require("./WillysHarvester");
-
+const IcaScrubber = require("./IcaScrubber")
 module.exports = class Harvester {
-
-  static WillysProducts = [];
-  static IcaProducts = [];
 
   static async getWillysProducts(categoryURL) {
     let products = await WillysHarvester.getProducts(categoryURL);
-    this.WillysProducts = products;
-    console.log(this.WillysProducts.map((product) => product.name));
+    console.log(products)
+    let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(products)
+    console.log(scrubbedItems)
   }
-
+  
   static async getIcaProducts(categoryURL) {
-
-    let items = await IcaHarvester.getProducts(categoryURL);
-  //   let products = await IcaHarvester.getProductIds(categoryURL);
-  //   let productIds = products.items.map(x => x.id);
-    scrubAllItems(items);
-
-  //  console.log(productIds)
+    
+    let products = await IcaHarvester.getProducts(categoryURL);
+    let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(products)
+    console.log(scrubbedItems)
+    // console.log(products[0].name)
   }
-
+  
   static async getIcaCategories(){
     let categorys = await IcaHarvester.getCategories();
-    console.log(categorys.childCategories.map(x => x.name))
   }
 };
 

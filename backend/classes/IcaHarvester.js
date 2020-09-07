@@ -36,7 +36,6 @@ module.exports = class IcaHarvester {
       let res = await raw.json();
       fetchedItems = [...fetchedItems,...res ];
     }
-
     return fetchedItems;
   }
   

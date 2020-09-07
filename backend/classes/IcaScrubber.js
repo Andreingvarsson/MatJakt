@@ -1,29 +1,20 @@
 const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
 
-module.exports = class WillysScrubber extends Scrubber {
-  static translateSchema = {
+module.exports = class IcaScrubber extends Scrubber {
+  static translateSchemaIca = {
     name: (x) => x.name,
-    brand: (x) => x.manufacturer,
-    imageUrl: (x) => x.image && x.image.url,
-    unitPrice: (x) => x.priceValue,
-    unitVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".")),
-    unitMeasurement: (x) => x.displayVolume.replace(/[0-9\.]/g, ""),
-    comparePrice: (x) => parseFloat(x.comparePrice.replace(/,/, ".")),
-    compareMeasurement: (x) => x.comparePriceUnit,
-    inStock: (x) => !x.outOfStock,
-    frozen: (x) => x.labels.includes("frozen"),
-    ecological: (x) => x.labels.includes("ecological"),
-    Swedish: (x) => x.labels.includes("swedish_flag"),
-    countryOfOrigin: async (x) => {
-      // Seems we need detailed product info for this...
-      // (one fetch per product - lots of extra time :( )
-      // maybe ask productOwner if Swedish/non Swedish enough?
-      let rawData = await fetch(
-        "https://www.willys.se/axfood/rest/p/" + x.code
-      );
-      let data = await rawData.json();
-      return data.originCountry || data.tradeItemCountryOfOrigin;
-    },
+    brand: (x) => x.brand,
+    imageUrl: (x) => x.cloudinaryImageId,
+    price: (x) => x.price,
+    // compareProductVolumeUnit: (x) => x.displayVolume.replace(/[0-9\.]|ca: /g, ""),
+    // productVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".").replace(/ca: /, "")),
+    comparePrice: (x) => x.compare.price,
+    compareUnit: (x) => x.compare.priceText.match(/[^/]*$/)[0],
+    // inStock: (x) => !x.outOfStock,
+    eco: (x) => x.markings.environmental ? x.markings.environmental.filter(mark => mark.code === "EU_ORGANIC_FARMING") ? true : false : false,
+    originCountry: (x) => x.countryOfOrigin ? x.countryOfOrigin.name : null,
+    Swedish: (x) => x.countryOfOrigin && x.countryOfOrigin.name === 'Sverige'? true : 
+                    x.countryOfOrigin && x.countryOfOrigin.name !== 'Sverige' ? false : null,
   };
 };
