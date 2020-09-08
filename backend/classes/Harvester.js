@@ -1,8 +1,11 @@
 const WillysHarvester = require("./WillysHarvester");
 const WillysScrubber = require("./WillysScrubber");
+const MatHemScrubber = require("./MatHemScrubber")
 
 const IcaHarvester = require("./IcaHarvester");
-const IcaScrubber = require("./IcaScrubber")
+const IcaScrubber = require("./IcaScrubber");
+//const CoopHarvester = require("./CoopHarvester");
+const MatHemHarvester = require("./MatHemHarvester");
 module.exports = class Harvester {
 
   static async getWillysProducts(categoryURL) {
@@ -21,7 +24,29 @@ module.exports = class Harvester {
   }
   
   static async getIcaCategories(){
-    let categorys = await IcaHarvester.getCategories();
+    let categories = await IcaHarvester.getCategories();
+  }
+
+  // static async getCoopProducts(categoryURL){
+    
+  // }
+
+  // static async getCoopCategories(){
+  //   let categories = await CoopHarvester.getCategories();
+  //   console.log(categories)
+  // }
+
+  static async getMatHemCategories(){
+    let categories = await MatHemHarvester.getCategories();
+    console.log(categories)
+
+  }
+
+  static async getMatHemProducts(categoryURL){
+    let products = await MatHemHarvester.getMatHemProducts(categoryURL);
+    console.log(products.length);
+    let scrubbedProducts = await MatHemScrubber.scrubAllMatHemProducts(products);
+    console.log(scrubbedProducts[0]);
   }
 };
 

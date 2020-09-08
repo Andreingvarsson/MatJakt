@@ -3,10 +3,10 @@ const Scrubber = require("./Scrubber");
 
 module.exports = class WillysScrubber extends Scrubber {
   static translateSchema = {
-    name: (x) => x.name,
-    brand: (x) => x.manufacturer,
+    name: (x) => x.products.name,
+    brand: (x) => x.products.manufacturer,
     imageUrl: (x) => x.image && x.image.url,
-    unitPrice: (x) => x.priceValue,
+    unitPrice: (x) => x.price,
     unitVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".")),
     unitMeasurement: (x) => x.displayVolume.replace(/[0-9\.]/g, ""),
     comparePrice: (x) => parseFloat(x.comparePrice.replace(/,/, ".")),
