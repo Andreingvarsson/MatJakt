@@ -13,6 +13,8 @@ const stores = require('./json-to-import/stores.json');
 
 db.insertMany('stores', stores);
 
+
+
 const all = db.all(
 
   'SELECT * FROM stores',

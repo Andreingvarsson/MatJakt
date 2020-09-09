@@ -2,5 +2,9 @@
   {
     "storeId": "5",
     "name": "tillagdStore"
+  },
+  {
+    "storeId": "6",
+    "name": "tillagdStoreUpdate"
   }
 ]

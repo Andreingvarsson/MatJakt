@@ -30,7 +30,7 @@ module.exports = class DBHandler {
 
     let statement = this.connection.prepare(`
 
-      INSERT INTO ${tableName} (${properties.join(', ')})
+      INSERT OR REPLACE INTO ${tableName} (${properties.join(', ')})
 
       VALUES (${properties.map(x => '@' + x).join(', ')})
 
