@@ -16,12 +16,13 @@ module.exports = class Harvester {
     
     for(let category of categories.children){
       let products = await WillysHarvester.getProducts(category.url);
+      for(let product of products){product.harvestedFromCategory = [category.title];}
       allProducts = [...allProducts,...products];
     }
-
-    
     //let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(products)
-    console.log(allProducts[0])
+    //console.log(allProducts[0])
+    console.log(allProducts.length)
+    this.checkForDuplicates(allProducts);
   }
   
   static async getIcaProducts(categoryURL) {
@@ -48,6 +49,32 @@ module.exports = class Harvester {
     let products = await MatHemHarvester.getMatHemProducts(categoryURL);
     let scrubbedProducts = await MatHemScrubber.scrubAllMatHemProducts(products);
     console.log(scrubbedProducts[1]);
+  }
+
+
+  static checkForDuplicates(all){
+    let idField = 'code';
+    let hash = {};
+    let allWithNoDuplicates = [];
+    for(let product of all){
+      if(hash[product[idField]]){
+        // i have a duplicate
+        // add the extra category harvested from 
+        hash[product[idField]].harvestedFromCategory = 
+          [...hash[product[idField]].harvestedFromCategory, ...product.harvestedFromCategory];
+        // do not add to cleaned array
+        continue;
+      }
+      // add the product with its id field as a key to the hash object
+      hash[product[idField]] = product;
+      // add to new array with no duplicates
+      allWithNoDuplicates.push(product);
+    }
+    console.log('Product length before removing duplicates', all.length);
+    console.log('Product length after removing duplicates', allWithNoDuplicates.length);
+    console.log("THESE WERE SOME OF THE PREVIOUS DUPLICATES:");
+    console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(500,510));
+    return allWithNoDuplicates;
   }
 };
 
