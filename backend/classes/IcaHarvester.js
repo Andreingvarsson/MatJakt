@@ -21,9 +21,7 @@ module.exports = class IcaHarvester {
     // let ids = productIds.filter(function(x){
     //   return x.length === 13;
     // })
-
     while(productIds.length > 0 ){
-      //Supposed to fetch 99 items a time
       idsToFetch.push(productIds.splice(0, 99));
     }
 

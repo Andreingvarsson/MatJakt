@@ -2,7 +2,6 @@ const fetch = require('node-fetch');
 
 module.exports = class MatHemHarvester {
 
-
   static async getMatHemProducts(categoryURL) {
     let raw = await fetch(
       "https://api.mathem.io/product-search/noauth/search/products/10/categorytag/" 
@@ -11,8 +10,6 @@ module.exports = class MatHemHarvester {
     );
         let fetchedProducts = await raw.json();
         let mappedProducts = fetchedProducts.products;
-        //console.log(mappedProducts[0])
-
     return mappedProducts;
   }
 
