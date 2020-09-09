@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
 
 module.exports = class MatHemScrubber extends Scrubber {
+  
   static translateSchemaMatHem = {
     name: (x) => x.name,
     brand: (x) => x.brand.name,

@@ -7,10 +7,10 @@ let categoryURLIca = "frukt---gront-id_627";
 
 let categoryURLMatHem = "frukt-o-gront";
 
-Harvester.getMatHemProducts(categoryURLMatHem)
+//Harvester.getMatHemProducts(categoryURLMatHem)
 
   // Harvester.getWillysProducts(categoryURL);
-  //Harvester.getIcaProducts(categoryURLIca);
+  Harvester.getIcaProducts(categoryURLIca);
   //Harvester.getIcaCategories();
 //console.log(products.map(x => x.title))
 // let str = "Jfr-pris 207,02 kr/kg";
