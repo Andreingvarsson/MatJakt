@@ -41,7 +41,10 @@ module.exports = class IcaHarvester {
     let raw = await fetch(
       "https://handla.ica.se/api/product-info/v1/store/11981/category/catalog80002"
     );
-    return (await raw.json()).results;
+    let categoryObj = await raw.json();
+    let categories = categoryObj.childCategories.map(x => x.seoUrl)
+
+    return categories;
   }
 
 };

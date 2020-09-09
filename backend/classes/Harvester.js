@@ -8,11 +8,20 @@ const IcaScrubber = require("./IcaScrubber");
 const MatHemHarvester = require("./MatHemHarvester");
 module.exports = class Harvester {
 
-  static async getWillysProducts(categoryURL) {
-    let products = await WillysHarvester.getProducts(categoryURL);
-    console.log(products)
-    let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(products)
-    console.log(scrubbedItems)
+  static async getWillysProducts() {
+
+    let allProducts = [];
+
+    let categories = await WillysHarvester.getCategories()
+    
+    for(let category of categories.children){
+      let products = await WillysHarvester.getProducts(category.url);
+      allProducts = [...allProducts,...products];
+    }
+
+    
+    //let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(products)
+    console.log(allProducts[0])
   }
   
   static async getIcaProducts(categoryURL) {
@@ -25,6 +34,8 @@ module.exports = class Harvester {
   
   static async getIcaCategories(){
     let categories = await IcaHarvester.getCategories();
+    console.log(categories)
+    //return categories;
   }
 
   static async getMatHemCategories(){
