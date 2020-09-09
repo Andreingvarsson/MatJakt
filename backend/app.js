@@ -3,6 +3,16 @@ const DbHandler = require('./classes/DBHandler');
 
 const db = new DbHandler('./database/MatJaktDatabase.db');
 
+// Write some data to the database
+
+// (...any array of objects will do as long as the objects
+
+//  have the same property names as the fields in the db table)
+
+const stores = require('./json-to-import/stores.json');
+
+db.insertMany('stores', stores);
+
 const all = db.all(
 
   'SELECT * FROM stores',
