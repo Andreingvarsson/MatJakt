@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = class MatHemHarvester {
 
-  static async getMatHemProducts(categoryURL) {
+  static async getProducts(categoryURL) {
     let raw = await fetch(
       "https://api.mathem.io/product-search/noauth/search/products/10/categorytag/" 
       + categoryURL + 
@@ -13,13 +13,14 @@ module.exports = class MatHemHarvester {
     return products;
   }
 
-  static async getMatHemCategories() {
+  static async getCategories() {
     let raw = await fetch(
       "https://api.mathem.io/ecom-navigation/noauth/v2/menu/10?level=1"
     );
 
-    let fetchedProducts = await raw.json();
-    let products = await fetchedProducts.categories.map(x => x.id);
-    return products; 
+    // let fetchedProducts = await raw.json();
+    // let products = await fetchedProducts.categories.map(x => x.id);
+    // return products; 
+    return (await raw.json());
   }
 };

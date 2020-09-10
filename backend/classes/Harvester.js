@@ -12,50 +12,86 @@ module.exports = class Harvester {
 
     let allProducts = [];
     let categories = await WillysHarvester.getCategories()
-
     for(let category of categories.children){
       let products = await WillysHarvester.getProducts(category.url);
       for(let product of products){product.harvestedFromCategory = [category.title];}
       allProducts = [...allProducts,...products];
     }
-    console.log(allProducts.length)
-    let productsToScrub = this.checkForDuplicates(allProducts);
+
+    //Inför sprint1 visar antal produkter hämtade från willys
+    console.log('Amount of fetched products from Willys: ', allProducts.length)
+
+    let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
-    console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
+
+    //inför sprint1 visar en scrubbad produkt (dock inte origin country)
+    console.log('Scrubbed Willys products: ')
+    console.log(scrubbedItems[0],
+      scrubbedItems[2500], 
+      scrubbedItems[450], 
+      scrubbedItems[5000]
+    );
   }
   
-  static async getIcaProducts(categoryURL) {
-    
-    let products = await IcaHarvester.getProducts(categoryURL);
-    let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(products)
-    console.log(scrubbedItems)
-    // console.log(products[0].name)
-  }
-  
-  static async getIcaCategories(){
+  static async getIcaProducts() {
+    let allProducts = [];
     let categories = await IcaHarvester.getCategories();
-    console.log(categories)
-    //return categories;
+
+    for (let category of categories.childCategories) {
+      let products = await IcaHarvester.getProducts(category.seoUrl);
+      for (let product of products) {
+        product.harvestedFromCategory = [category.name];
+      }
+      allProducts = [...allProducts, ...products];
+    }
+
+    //Inför sprint1 visar antal produkter hämtade från Ica
+    console.log("Amount of fetched products from Ica: ", allProducts.length);
+
+    let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
+    let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(productsToScrub);
+
+    //Inför sprint1 visar enstaka scrubbade produkter
+    console.log('Scrubbed Ica products: ')
+    console.log(
+      scrubbedItems[0],
+      scrubbedItems[1500],
+      scrubbedItems[10300]
+    );
   }
 
-  static async getMatHemCategories(){
+  static async getMatHemProducts(){
+    let allProducts = [];
     let categories = await MatHemHarvester.getCategories();
-    console.log(categories)
+    for (let category of categories.categories) {
+      let products = await MatHemHarvester.getProducts(category.id);
+      for (let product of products) {
+        product.harvestedFromCategory = [category.title];
+      }
+      allProducts = [...allProducts, ...products];
+    }
 
-  }
+    //Inför sprint1 visar antal produkter hämtade från Mathem
+    console.log("Amount of fetched products from Mathem: ", allProducts.length);
 
-  static async getMatHemProducts(categoryURL){
-    let products = await MatHemHarvester.getMatHemProducts(categoryURL);
-    let scrubbedProducts = await MatHemScrubber.scrubAllMatHemProducts(products);
-    console.log(scrubbedProducts[1]);
+    let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});
+    let scrubbedItems = await MatHemScrubber.scrubAllMatHemProducts(productsToScrub);
+
+    //Inför sprint1 visar enstaka scrubbade produkter
+    console.log("Scrubbed Mathem products: ");
+    console.log(
+      scrubbedItems[204],
+      scrubbedItems[500],
+      scrubbedItems[300]
+      );
   }
 
 
   static checkForDuplicates(all){
-    let idField = 'code';
+    let idField = all.id;
     let hash = {};
     let allWithNoDuplicates = [];
-    for(let product of all){
+    for(let product of all.allProducts){
       if(hash[product[idField]]){
         // i have a duplicate
         // add the extra category harvested from 
@@ -69,10 +105,10 @@ module.exports = class Harvester {
       // add to new array with no duplicates
       allWithNoDuplicates.push(product);
     }
-    console.log('Product length before removing duplicates', all.length);
-    console.log('Product length after removing duplicates', allWithNoDuplicates.length);
+    console.log('Amount of products before removing duplicates', all.allProducts.length);
+    console.log('Amount of Products after removing duplicates', allWithNoDuplicates.length);
     //console.log("THESE WERE SOME OF THE PREVIOUS DUPLICATES:");
-    //console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(500,510));
+    //console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(0,5));
     return allWithNoDuplicates;
   }
 };
