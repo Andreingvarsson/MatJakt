@@ -11,18 +11,17 @@ module.exports = class Harvester {
   static async getWillysProducts() {
 
     let allProducts = [];
-
     let categories = await WillysHarvester.getCategories()
-    
+
     for(let category of categories.children){
       let products = await WillysHarvester.getProducts(category.url);
       for(let product of products){product.harvestedFromCategory = [category.title];}
       allProducts = [...allProducts,...products];
     }
-    //let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(products)
-    //console.log(allProducts[0])
     console.log(allProducts.length)
-    this.checkForDuplicates(allProducts);
+    let productsToScrub = this.checkForDuplicates(allProducts);
+    let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
+    console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
   }
   
   static async getIcaProducts(categoryURL) {
@@ -72,8 +71,8 @@ module.exports = class Harvester {
     }
     console.log('Product length before removing duplicates', all.length);
     console.log('Product length after removing duplicates', allWithNoDuplicates.length);
-    console.log("THESE WERE SOME OF THE PREVIOUS DUPLICATES:");
-    console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(500,510));
+    //console.log("THESE WERE SOME OF THE PREVIOUS DUPLICATES:");
+    //console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(500,510));
     return allWithNoDuplicates;
   }
 };
