@@ -1,11 +1,13 @@
 const WillysHarvester = require("./WillysHarvester");
 const WillysScrubber = require("./WillysScrubber");
 const MatHemScrubber = require("./MatHemScrubber")
+const fs = require('fs') //Added
 
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("./IcaScrubber");
 //const CoopHarvester = require("./CoopHarvester");
 const MatHemHarvester = require("./MatHemHarvester");
+
 module.exports = class Harvester {
 
   static async getWillysProducts() {
@@ -22,6 +24,7 @@ module.exports = class Harvester {
     let productsToScrub = this.checkForDuplicates(allProducts);
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
     console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
+    fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
   }
   
   static async getIcaProducts(categoryURL) {

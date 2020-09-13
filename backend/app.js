@@ -1,27 +1,24 @@
 const Harvester = require('./classes/Harvester')
 const DbHandler = require('./classes/DBHandler');
+const fs = require('fs')
 
 const db = new DbHandler('./database/MatJaktDatabase.db');
 
-// Write some data to the database
-
-// (...any array of objects will do as long as the objects
-
-//  have the same property names as the fields in the db table)
-
-const stores = require('./json-to-import/stores.json');
-
-db.insertMany('stores', stores);
 
 
+Harvester.getWillysProducts()
+
+const products = require('./json-to-import/WillysProducts.json');
+
+//db.insertMany('products', products);
 
 const all = db.all(
 
-  'SELECT * FROM stores',
+  'SELECT * FROM products',
 
 );
 
-console.log('All stores', all);
+console.log('All products', all);
 
 
 
@@ -34,7 +31,6 @@ let categoryURLMatHem = "frukt-o-gront";
 
 //Harvester.getMatHemProducts(categoryURLMatHem)
 
-  Harvester.getWillysProducts();
   //Harvester.getIcaCategories();
   //console.log(categories)
   //Harvester.getIcaProducts(categories);

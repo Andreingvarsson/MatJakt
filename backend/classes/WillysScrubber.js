@@ -15,8 +15,8 @@ module.exports = class WillysScrubber extends Scrubber {
     comparePrice: (x) => parseFloat(x.comparePrice.replace(/,/, ".")),
     compareUnit: (x) => x.comparePriceUnit? x.comparePriceUnit: 'Unknown' ,
     // inStock: (x) => !x.outOfStock,
-    eco: (x) => x.labels.includes("ecological"),
-    Swedish: (x) => x.labels.includes("swedish_flag"),
+    eco: (x) => x.labels.includes("ecological") ? "true" : "false",
+    Swedish: (x) => x.labels.includes("swedish_flag") ? "true" : "false",
     // NodeFetch ERROR 
     // originCountry: async (x) => {
     //   // Seems we need detailed product info for this...
