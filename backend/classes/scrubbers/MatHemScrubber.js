@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
+const StoreCategories = require("../StoreCategories")
 
 module.exports = class MatHemScrubber extends Scrubber {
   static translateSchemaMatHem = {
@@ -19,30 +20,12 @@ module.exports = class MatHemScrubber extends Scrubber {
           ? "true"
           : "false"
         : "false",
-    Swedish: (x) => x.origin ? x.origin === "Sverige" ? x.origin : null : null,
+    Swedish: (x) => x.origin ? x.origin.name === "Sverige" ? "true" : "false" : null,
     originCountry: (x) => (x.origin || {}).name || "Unknown",
   };
 
   static checkCategory(x) {
-    // beroende på vår entitet category i vår DB tilldelas de en kategori som vi bestämmer.
-    let categories = [
-      { title: "Frukt & Grönt", categoryId: 1 },
-      { title: "Mejeri & Ost", categoryId: 3 },
-      { title: "Bröd & Bageri", categoryId: 2 },
-      { title: "Kött & Chark", categoryId: 2 },
-      { title: "Dryck", categoryId: 2 },
-      { title: "Skafferi", categoryId: 5 },
-      { title: "Fisk & Skaldjur", categoryId: 6 },
-      { title: "Hem & Hushåll", categoryId: 7 },
-      { title: "Färdigmat & Mellanmål", categoryId: 8 },
-      { title: "Glass Godis & Snacks", categoryId: 9 },
-      { title: "Barnmat & Tillbehör", categoryId: 10 },
-      { title: "Apotek, Hygien & Hälsa", categoryId: 11 },
-      { title: "Kryddor & Smaksättare", categoryId: 12 },
-      { title: "Djurmat & Tillbehör", categoryId: 13 },
-      { title: "Kiosk & Tidningar", categoryId: 14 },
-    ];
-
+    let categories = StoreCategories.getMatHemCategories();
     let cat = categories.filter(
       (category) => category.title === x.harvestedFromCategory[0]
     );

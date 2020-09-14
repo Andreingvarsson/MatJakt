@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
-const willysCategories = require("../StoreCategories")
+const StoreCategories = require("../StoreCategories")
 
 module.exports = class WillysScrubber extends Scrubber {
 
@@ -32,33 +32,7 @@ module.exports = class WillysScrubber extends Scrubber {
   };
 
   static checkCategory(x){
-
-    // beroende på vår entitet category i vår DB tilldelas de en kategori som vi bestämmer.
-    let categories = [
-      { title: "Kött, chark & fågel", categoryId: 1 },
-      { title: "Fryst", categoryId: 3 },
-      { title: "Skafferi", categoryId: 2 },
-      { title: "Hem & Städ", categoryId: 2 },
-      { title: "Mejeri, ost & ägg", categoryId: 2 },
-      { title: "Frukt & Grönt", categoryId: 5 },
-      { title: "Bröd & Kakor", categoryId: 6 },
-      { title: "Fisk & Skaldjur", categoryId: 7 },
-      { title: "Dryck", categoryId: 8 },
-      { title: "Vegetariskt", categoryId: 9 },
-      { title: "Glass, godis & snacks", categoryId: 10 },
-      { title: "Färdigmat", categoryId: 11 },
-      { title: "Barn", categoryId: 12 },
-      { title: "Blommor", categoryId: 13 },
-      { title: "Hälsa & Skönhet", categoryId: 14 },
-      { title: "Apotek", categoryId: 15 },
-      { title: "Trädgård", categoryId: 16 },
-      { title: "Husdjur", categoryId: 17 },
-      { title: "Tobak", categoryId: 18 },
-      { title: "Tändare & tobakstillbehör", categoryId: 19 },
-      { title: "Lotter", categoryId: 20 },
-      { title: "Tidningar & böcker", categoryId: 21 },
-    ];
-
+    let categories = StoreCategories.getWillysCategories();
     let cat = categories.filter(category => category.title === x.harvestedFromCategory[0])
     return cat[0].categoryId;
   }

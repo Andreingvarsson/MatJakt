@@ -1,16 +1,12 @@
 const WillysHarvester = require("./WillysHarvester");
 const WillysScrubber = require("../scrubbers/WillysScrubber");
+const MatHemHarvester = require("./MatHemHarvester");
 const MatHemScrubber = require("../scrubbers/MatHemScrubber")
-const DbHandler = require('../DBHandler');
-const fs = require('fs')
-
-
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
-//const CoopHarvester = require("./CoopHarvester");
-const MatHemHarvester = require("./MatHemHarvester");
-
-const db = new DbHandler('./database/MatJaktDatabase.db');
+//const DbHandler = require('../DBHandler');
+//const fs = require('fs')
+//const db = new DbHandler('./database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
@@ -32,8 +28,8 @@ module.exports = class Harvester {
     console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
     //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
     //var WillysProducts = require('../json-to-import/WillysProducts.json');
-    db.run('DELETE FROM products WHERE storeId = 1');
-    db.insertMany('products', scrubbedItems);
+    //db.run('DELETE FROM products WHERE storeId = 1');
+    //db.insertMany('products', scrubbedItems);
   }
 
   /*static async getIcaProducts() {
@@ -61,8 +57,8 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(productsToScrub);
-    db.run('DELETE FROM products WHERE storeId = 2');
-    db.insertMany('products', scrubbedItems);
+    //db.run('DELETE FROM products WHERE storeId = 2');
+    //db.insertMany('products', scrubbedItems);
 
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log('Scrubbed Ica products: ')
@@ -89,8 +85,8 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});
     let scrubbedItems = await MatHemScrubber.scrubAllMatHemProducts(productsToScrub);
-    db.run('DELETE FROM products WHERE storeId = 3');
-    db.insertMany('products', scrubbedItems);
+    // db.run('DELETE FROM products WHERE storeId = 3');
+    // db.insertMany('products', scrubbedItems);
 
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log("Scrubbed Mathem products: ");
@@ -123,7 +119,8 @@ module.exports = class Harvester {
     console.log('Amount of products before removing duplicates', all.allProducts.length);
     console.log('Amount of Products after removing duplicates', allWithNoDuplicates.length);
     //console.log("THESE WERE SOME OF THE PREVIOUS DUPLICATES:");
-    //console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(0,5));
+    //console.log(allWithNoDuplicates.filter(x => x.harvestedFromCategory.length > 1).slice(0,10));
+    
     return allWithNoDuplicates;
   }
 };
