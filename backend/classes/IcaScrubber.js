@@ -1,14 +1,14 @@
 const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
-
+//const icaCategories = require("./StoreCategories")
 module.exports = class IcaScrubber extends Scrubber {
   static translateSchemaIca = {
-    storeId: 2,
-    categoryId: 1,
-    name: (x) => x.name,
-    brand: (x) => x.brand,
-    imageUrl: (x) => x.cloudinaryImageId,
-    price: (x) => x.price,
+    storeId: (x) => (x.storeId = 2),
+    categoryId: (x) => this.checkCategory(x),
+    name: (x) => x.name ? x.name : 'Unknown',
+    brand: (x) => x.brand ? x.brand : 'Unknown',
+    imageUrl: (x) => x.cloudinaryImageId? x.cloudinaryImageId : 'Unknown',
+    price: (x) => x.price? x.price : 'Unknown',
     productVolumeUnit: (x) => {
       if (x.soldInUnit === "kgm") {
         return "g";
@@ -16,10 +16,9 @@ module.exports = class IcaScrubber extends Scrubber {
         return "st";
       }
     },
-    productVolume: (x) => x.unitWeight,
-    comparePrice: (x) => x.compare.price,
-    compareUnit: (x) => x.compare.priceText.match(/[^/]*$/)[0],
-    // inStock: (x) => !x.outOfStock,
+    productVolume: (x) => x.unitWeight ? x.unitWeight : 'Unknown',
+    comparePrice: (x) => x.compare? x.compare.price? x.compare.price : 'Unknown' :'Unknown',
+    compareUnit: (x) => x.compare? x.compare.priceText ? x.compare.priceText.match(/[^/]*$/)[0]:'unknown': 'Unknown',
     eco: (x) =>
       x.markings.environmental
         ? x.markings.environmental.filter(
@@ -36,4 +35,34 @@ module.exports = class IcaScrubber extends Scrubber {
         : null,
     originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : null),
   };
+
+  static checkCategory(x) {
+
+    // beroende på vår entitet category i vår DB tilldelas de en kategori som vi bestämmer.
+    let categories = [
+      { title: "Kött, fågel & fisk", categoryId: 1 },
+      { title: "Vegetariskt", categoryId: 3 },
+      { title: "Mejeri, ost & ägg", categoryId: 2 },
+      { title: "Frukt & grönt", categoryId: 2 },
+      { title: "Bröd & kakor", categoryId: 2 },
+      { title: "Fryst", categoryId: 5 },
+      { title: "Skafferi", categoryId: 6 },
+      { title: "Färdigmat", categoryId: 7 },
+      { title: "Dryck", categoryId: 8 },
+      { title: "Glass, godis & snacks", categoryId: 9 },
+      { title: "Barn", categoryId: 10 },
+      { title: "Städ & disk", categoryId: 11 },
+      { title: "Hälsa & skönhet", categoryId: 12 },
+      { title: "Receptfria läkemedel", categoryId: 13 },
+      { title: "Djur", categoryId: 14 },
+      { title: "Kök", categoryId: 15 },
+      { title: "Hem & fritid", categoryId: 16 },
+      { title: "Kiosk", categoryId: 17 },
+    ];
+
+    let cat = categories.filter(
+      (category) => category.title === x.harvestedFromCategory[0]
+    );
+    return cat[0].categoryId;
+  }
 };

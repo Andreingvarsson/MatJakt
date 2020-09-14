@@ -3,7 +3,6 @@ const fetch = require("node-fetch");
 module.exports = class IcaHarvester {
 
   static async getProductIds(categoryURL) {
-    console.log(categoryURL)
     let raw = await fetch(
       'https://handla.ica.se/api/content/v1/collections/facets/customer-type/B2C/store/maxi-ica-stormarknad-malmo-id_02748/products?categories=' +
         categoryURL + "&bb=true");
@@ -41,10 +40,10 @@ module.exports = class IcaHarvester {
     let raw = await fetch(
       "https://handla.ica.se/api/product-info/v1/store/11981/category/catalog80002"
     );
-    let categoryObj = await raw.json();
-    let categories = categoryObj.childCategories.map(x => x.seoUrl)
+    // let categoryObj = await raw.json();
+    // let categories = categoryObj.childCategories.map(x => x.seoUrl)
 
-    return categories;
+    return (await raw.json());
   }
 
 };
