@@ -1,12 +1,12 @@
 const WillysHarvester = require("./WillysHarvester");
-const WillysScrubber = require("./WillysScrubber");
-const MatHemScrubber = require("./MatHemScrubber")
-const DbHandler = require('./DBHandler');
+const WillysScrubber = require("../scrubbers/WillysScrubber");
+const MatHemScrubber = require("../scrubbers/MatHemScrubber")
+const DbHandler = require('../DBHandler');
 const fs = require('fs')
 
 
 const IcaHarvester = require("./IcaHarvester");
-const IcaScrubber = require("./IcaScrubber");
+const IcaScrubber = require("../scrubbers/IcaScrubber");
 //const CoopHarvester = require("./CoopHarvester");
 const MatHemHarvester = require("./MatHemHarvester");
 
