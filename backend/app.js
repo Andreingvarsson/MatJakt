@@ -6,7 +6,7 @@ const db = new DbHandler('./database/MatJaktDatabase.db');
 
 
 //db.run('DROP TABLE IF EXISTS products');
-Harvester.getWillysProducts()
+//Harvester.getWillysProducts()
 //const products = require('./json-to-import/WillysProducts.json');
 
 //db.insertMany('products', products);
@@ -15,7 +15,7 @@ Harvester.getWillysProducts()
 
 /*const all = db.all(
 
-  'SELECT * FROM products',
+  'SELECT * FROM products WHERE storeId = 1',
 
 );
 
@@ -28,10 +28,10 @@ console.log('All products', all);*/
   Harvester.getWillysProducts();
 
   //inför sprint1 alla Ica produkter
-  //Harvester.getIcaProducts();
+  Harvester.getIcaProducts();
 
   //inför sprint1 alla mathem produkter
-  //Harvester.getMatHemProducts();
+  Harvester.getMatHemProducts();
 
 
 

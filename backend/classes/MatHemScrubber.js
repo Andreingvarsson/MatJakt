@@ -8,18 +8,18 @@ module.exports = class MatHemScrubber extends Scrubber {
     name: (x) => x.name ? x.name : 'Unknown',
     brand: (x) => x.brand.name ? x.brand.name: 'Unknown',
     imageUrl: (x) => x.images? x.images.MEDIUM : 'Unknown',
-    price: (x) => x.price? x.price : 'Unknown',
+    price: (x) => x.price? x.price : null,
     productVolumeUnit: (x) => x.unit? x.unit: 'Unknown',
-    productVolume: (x) => x.quantity? x.quantity : 'Unknown',
-    comparePrice: (x) => x.comparisonPrice? x.comparisonPrice : 'Unknown',
+    productVolume: (x) => x.quantity? x.quantity : null,
+    comparePrice: (x) => x.comparisonPrice? x.comparisonPrice : null,
     compareUnit: (x) => x.comparisonUnit? x.comparisonUnit: 'Unknown',
     eco: (x) =>
       x.badges.length > 0
         ? x.badges.filter((x) => x.name === "Ekologisk")
-          ? true
-          : false
-        : false,
-    Swedish: (x) => (x.origin || {}).name === "Sverige",
+          ? "true"
+          : "false"
+        : "false",
+    Swedish: (x) => x.origin ? x.origin === "Sverige" ? x.origin : null : null,
     originCountry: (x) => (x.origin || {}).name || "Unknown",
   };
 

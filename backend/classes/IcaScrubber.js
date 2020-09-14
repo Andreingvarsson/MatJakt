@@ -8,7 +8,7 @@ module.exports = class IcaScrubber extends Scrubber {
     name: (x) => x.name ? x.name : 'Unknown',
     brand: (x) => x.brand ? x.brand : 'Unknown',
     imageUrl: (x) => x.cloudinaryImageId? x.cloudinaryImageId : 'Unknown',
-    price: (x) => x.price? x.price : 'Unknown',
+    price: (x) => x.price? x.price : null,
     productVolumeUnit: (x) => {
       if (x.soldInUnit === "kgm") {
         return "g";
@@ -16,22 +16,22 @@ module.exports = class IcaScrubber extends Scrubber {
         return "st";
       }
     },
-    productVolume: (x) => x.unitWeight ? x.unitWeight : 'Unknown',
-    comparePrice: (x) => x.compare? x.compare.price? x.compare.price : 'Unknown' :'Unknown',
+    productVolume: (x) => x.unitWeight ? x.unitWeight : null,
+    comparePrice: (x) => x.compare? x.compare.price? x.compare.price : null : null,
     compareUnit: (x) => x.compare? x.compare.priceText ? x.compare.priceText.match(/[^/]*$/)[0]:'unknown': 'Unknown',
     eco: (x) =>
       x.markings.environmental
         ? x.markings.environmental.filter(
             (mark) => mark.code === "EU_ORGANIC_FARMING"
           )
-          ? true
-          : false
-        : false,
+          ? "true"
+          : "false"
+        : "false",
     Swedish: (x) =>
       x.countryOfOrigin && x.countryOfOrigin.name === "Sverige"
-        ? true
+        ? "true"
         : x.countryOfOrigin && x.countryOfOrigin.name !== "Sverige"
-        ? false
+        ? "false"
         : null,
     originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : null),
   };

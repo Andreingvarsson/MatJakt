@@ -30,20 +30,19 @@ module.exports = class Harvester {
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
     console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
-    console.log("Writing data to JSON-file")
-    fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
-    var WillysProducts = require('../json-to-import/WillysProducts.json');
-    db.run('DELETE FROM products');
-    db.insertMany('products', WillysProducts);
+    //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
+    //var WillysProducts = require('../json-to-import/WillysProducts.json');
+    db.run('DELETE FROM products WHERE storeId = 1');
+    db.insertMany('products', scrubbedItems);
   }
 
-  static async getIcaProducts() {
+  /*static async getIcaProducts() {
 
     let products = await IcaHarvester.getProducts(categoryURL);
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(products)
     console.log(scrubbedItems)
     // console.log(products[0].name)
-  }
+  }*/
   
   static async getIcaProducts() {
     let allProducts = [];
@@ -62,6 +61,8 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(productsToScrub);
+    db.run('DELETE FROM products WHERE storeId = 2');
+    db.insertMany('products', scrubbedItems);
 
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log('Scrubbed Ica products: ')
@@ -88,6 +89,8 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});
     let scrubbedItems = await MatHemScrubber.scrubAllMatHemProducts(productsToScrub);
+    db.run('DELETE FROM products WHERE storeId = 3');
+    db.insertMany('products', scrubbedItems);
 
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log("Scrubbed Mathem products: ");
