@@ -5,20 +5,22 @@ const fs = require('fs')
 const db = new DbHandler('./database/MatJaktDatabase.db');
 
 
-
+//db.run('DROP TABLE IF EXISTS products');
 Harvester.getWillysProducts()
-
-const products = require('./json-to-import/WillysProducts.json');
+//const products = require('./json-to-import/WillysProducts.json');
 
 //db.insertMany('products', products);
+//db.run('DELETE FROM products WHERE storeId 1');
+//db.run('DELETE FROM products');
 
-const all = db.all(
+/*const all = db.all(
 
   'SELECT * FROM products',
 
 );
 
-console.log('All products', all);
+
+console.log('All products', all);*/
 
 
 
@@ -33,7 +35,7 @@ let categoryURLMatHem = "frukt-o-gront";
 
   //Harvester.getIcaCategories();
   //console.log(categories)
-  //Harvester.getIcaProducts(categories);
+  //Harvester.getIcaProducts();
   //Harvester.getIcaCategories();
 //console.log(products.map(x => x.title))
 // let str = "Jfr-pris 207,02 kr/kg";

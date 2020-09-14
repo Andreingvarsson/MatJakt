@@ -4,7 +4,7 @@ const Scrubber = require("./Scrubber");
 module.exports = class WillysScrubber extends Scrubber {
 
   static translateSchemaWillys = {
-    //storeId: (x) => x.storeId = 1,
+    storeId: (x) => x.storeId = 1,
     categoryId: (x) => this.checkCategory(x), 
     name: (x) => x.name? x.name: 'Unknown',
     brand: (x) => x.manufacturer? x.manufacturer: 'Unknown',

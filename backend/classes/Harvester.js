@@ -1,12 +1,16 @@
 const WillysHarvester = require("./WillysHarvester");
 const WillysScrubber = require("./WillysScrubber");
 const MatHemScrubber = require("./MatHemScrubber")
-const fs = require('fs') //Added
+const DbHandler = require('./DBHandler');
+const fs = require('fs')
+
 
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("./IcaScrubber");
 //const CoopHarvester = require("./CoopHarvester");
 const MatHemHarvester = require("./MatHemHarvester");
+
+const db = new DbHandler('./database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
@@ -24,11 +28,15 @@ module.exports = class Harvester {
     let productsToScrub = this.checkForDuplicates(allProducts);
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
     console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
+    console.log("Writing data to JSON-file")
     fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
+    var WillysProducts = require('../json-to-import/WillysProducts.json');
+    db.run('DELETE FROM products');
+    db.insertMany('products', WillysProducts);
   }
-  
-  static async getIcaProducts(categoryURL) {
-    
+
+  static async getIcaProducts() {
+
     let products = await IcaHarvester.getProducts(categoryURL);
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(products)
     console.log(scrubbedItems)
