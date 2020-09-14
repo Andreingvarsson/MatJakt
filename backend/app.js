@@ -1,8 +1,8 @@
-const Harvester = require('./classes/Harvester')
-const DbHandler = require('./classes/DBHandler');
+// const Harvester = require('./classes/Harvester')
+// const DbHandler = require('./classes/DBHandler');
 const fs = require('fs')
 
-const db = new DbHandler('./database/MatJaktDatabase.db');
+// const db = new DbHandler('./database/MatJaktDatabase.db');
 
 
 //db.run('DROP TABLE IF EXISTS products');
@@ -24,14 +24,23 @@ console.log('All products', all);*/
 
 
 
-  //Inför sprint1 alla willysProdukter
-  Harvester.getWillysProducts();
+  // //Inför sprint1 alla willysProdukter
+  // Harvester.getWillysProducts();
 
-  //inför sprint1 alla Ica produkter
-  Harvester.getIcaProducts();
+  // //inför sprint1 alla Ica produkter
+  // Harvester.getIcaProducts();
 
-  //inför sprint1 alla mathem produkter
-  Harvester.getMatHemProducts();
+  // //inför sprint1 alla mathem produkter
+  // Harvester.getMatHemProducts();
+
+const express = require('express');
+const app = express();
+
+app.get('/api/test', (req, res)=>{
+  res.json({works: true})
+})
+
+app.listen(3001, () => console.log('server listening on port 3001'))
 
 
 
