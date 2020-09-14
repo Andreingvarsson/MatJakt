@@ -30,17 +30,7 @@ module.exports = class Scrubber {
     }
     return scrubbed;
   }
-  
-  // static async scrubOneCoop(product) {
-  //   let scrubbed = {};
-  //   let tschema = this.translateSchemaCoop;
-  //   for (let key in tschema) {
-  //     let scrubFunc = tschema[key];
-  //     scrubbed[key] = await scrubFunc(product);
-  //   }
-  //   return scrubbed;
-  // }
-  
+
   static async scrubAllWillysProducts(products) {
     let scrubbed = [];
     for (let product of products) {

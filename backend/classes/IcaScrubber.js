@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 const Scrubber = require("./Scrubber");
+const StoreCategories = require("./StoreCategories")
 //const icaCategories = require("./StoreCategories")
 module.exports = class IcaScrubber extends Scrubber {
   static translateSchemaIca = {
@@ -39,26 +40,26 @@ module.exports = class IcaScrubber extends Scrubber {
   static checkCategory(x) {
 
     // beroende på vår entitet category i vår DB tilldelas de en kategori som vi bestämmer.
-    let categories = [
-      { title: "Kött, fågel & fisk", categoryId: 1 },
-      { title: "Vegetariskt", categoryId: 3 },
-      { title: "Mejeri, ost & ägg", categoryId: 2 },
-      { title: "Frukt & grönt", categoryId: 2 },
-      { title: "Bröd & kakor", categoryId: 2 },
-      { title: "Fryst", categoryId: 5 },
-      { title: "Skafferi", categoryId: 6 },
-      { title: "Färdigmat", categoryId: 7 },
-      { title: "Dryck", categoryId: 8 },
-      { title: "Glass, godis & snacks", categoryId: 9 },
-      { title: "Barn", categoryId: 10 },
-      { title: "Städ & disk", categoryId: 11 },
-      { title: "Hälsa & skönhet", categoryId: 12 },
-      { title: "Receptfria läkemedel", categoryId: 13 },
-      { title: "Djur", categoryId: 14 },
-      { title: "Kök", categoryId: 15 },
-      { title: "Hem & fritid", categoryId: 16 },
-      { title: "Kiosk", categoryId: 17 },
-    ];
+    // let categories = [
+    //   { title: "Kött, fågel & fisk", categoryId: 1 },
+    //   { title: "Vegetariskt", categoryId: 3 },
+    //   { title: "Mejeri, ost & ägg", categoryId: 2 },
+    //   { title: "Frukt & grönt", categoryId: 2 },
+    //   { title: "Bröd & kakor", categoryId: 2 },
+    //   { title: "Fryst", categoryId: 5 },
+    //   { title: "Skafferi", categoryId: 6 },
+    //   { title: "Färdigmat", categoryId: 7 },
+    //   { title: "Dryck", categoryId: 8 },
+    //   { title: "Glass, godis & snacks", categoryId: 9 },
+    //   { title: "Barn", categoryId: 10 },
+    //   { title: "Städ & disk", categoryId: 11 },
+    //   { title: "Hälsa & skönhet", categoryId: 12 },
+    //   { title: "Receptfria läkemedel", categoryId: 13 },
+    //   { title: "Djur", categoryId: 14 },
+    //   { title: "Kök", categoryId: 15 },
+    //   { title: "Hem & fritid", categoryId: 16 },
+    //   { title: "Kiosk", categoryId: 17 },
+    // ];
 
     let cat = categories.filter(
       (category) => category.title === x.harvestedFromCategory[0]
