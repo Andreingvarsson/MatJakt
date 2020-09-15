@@ -25,10 +25,10 @@ console.log('All products', all);*/
 
 
   // //Inför sprint1 alla willysProdukter
-  Harvester.getWillysProducts();
+  //Harvester.getWillysProducts();
 
   // //inför sprint1 alla Ica produkter
-  // Harvester.getIcaProducts();
+  Harvester.getIcaProducts();
 
   // //inför sprint1 alla mathem produkter
   //Harvester.getMatHemProducts();
@@ -41,8 +41,6 @@ console.log('All products', all);*/
 // })
 
 // app.listen(3001, () => console.log('server listening on port 3001'))
-
-
 
 
 

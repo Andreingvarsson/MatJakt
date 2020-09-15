@@ -17,7 +17,7 @@ module.exports = class IcaScrubber extends Scrubber {
         return "st";
       }
     },
-    productVolume: (x) => x.unitWeight ? x.unitWeight : null,
+    productVolume: (x) => this.checkProductVolume(x),//x.unitWeight ? x.unitWeight : null,
     comparePrice: (x) => x.compare? x.compare.price? x.compare.price : null : null,
     compareUnit: (x) => x.compare? x.compare.priceText ? x.compare.priceText.match(/[^/]*$/)[0]:'unknown': 'Unknown',
     eco: (x) =>
@@ -43,5 +43,13 @@ module.exports = class IcaScrubber extends Scrubber {
       (category) => category.title === x.harvestedFromCategory[0]
     );
     return cat[0].categoryId;
+  }
+
+  static checkProductVolume(x){
+    let z =  x.unitWeight? x.unitWeight !== null? x.unitWeight : x.name? parseFloat(x.name.match(/([0-9]+)((?=ml)|(?=g)|(?=kg)|(?=l)|(?=st))/g)) >= 1 ?
+    parseFloat(x.name.match(/([0-9]+)((?=ml)|(?=g)|(?=kg)|(?=l)|(?=st))/g)[0]) : null : null : x.name? 
+    parseFloat(x.name.match(/([0-9]+)((?=ml)|(?=g)|(?=kg)|(?=l)|(?=st))/g)) >= 1 ? parseFloat(x.name.match(/([0-9]+)((?=ml)|(?=g)|(?=kg)|(?=l)|(?=st))/g)[0]) : null: null;
+
+    return z;
   }
 };
