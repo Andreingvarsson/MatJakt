@@ -10,16 +10,19 @@ module.exports = class WillysScrubber extends Scrubber {
     name: (x) => x.name? x.name: 'Unknown',
     brand: (x) => x.manufacturer? x.manufacturer: 'Unknown',
     imageUrl: (x) => x.image && x.image.url ? x.image && x.image.url: 'Unknown',
-    price: (x) => x.priceValue? x.priceValue : 'Unknown' ,
+    //atm looking if there is a discount if there is adjusting price and compareprice
+    //Do we want to adjust price to discount price directly or add a discount object with an id?
+    price: (x) => x.potentialPromotions.length >= 1? x.potentialPromotions[0].price.value ? x.potentialPromotions[0].price.value : x.priceValue? x.priceValue : 'Unknown' : x.priceValue? x.priceValue : 'Unknown' ,
     productVolumeUnit: (x) => x.displayVolume.replace(/[0-9\.]|ca: /g, ""),
     productVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".").replace(/ca: /, "")),
-    comparePrice: (x) => parseFloat(x.comparePrice.replace(/,/, ".")),
+    onDiscount: (x) => x.potentialPromotions.length >= 1? true: false,
+    comparePrice: (x) => x.potentialPromotions.length >= 1? x.potentialPromotions[0].comparePrice? parseFloat(x.potentialPromotions[0].comparePrice.replace(/,/, ".")) : x.comparePrice ? parseFloat(x.comparePrice.replace(/,/, ".")): 'unknown': x.comparePrice ? parseFloat(x.comparePrice.replace(/,/, ".")) : 'unknown',
     compareUnit: (x) => x.comparePriceUnit? x.comparePriceUnit: 'Unknown' ,
     eco: (x) => x.labels.includes("ecological") ? "true" : "false",
     Swedish: (x) => x.labels.includes("swedish_flag") ? "true" : "false",
     // NodeFetch ERROR Unexpected token N in json at position 0 ?
-     originCountry: (x)=> '',
-     //async (x) => {
+     originCountry: (x) => 'some country',
+    //  async (x) => {
     //   // Seems we need detailed product info for this...
     //   // (one fetch per product - lots of extra time :( )
     //   // maybe ask productOwner if Swedish/non Swedish enough?
