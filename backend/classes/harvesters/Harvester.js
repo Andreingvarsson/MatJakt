@@ -25,7 +25,7 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
-    console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
+    console.log(scrubbedItems[0],scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
     //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
     //var WillysProducts = require('../json-to-import/WillysProducts.json');
     //db.run('DELETE FROM products WHERE storeId = 1');
