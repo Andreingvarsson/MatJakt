@@ -28,7 +28,7 @@ module.exports = class IcaScrubber extends Scrubber {
         : x.countryOfOrigin && x.countryOfOrigin.name !== "Sverige"
         ? "false"
         : null,
-    originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : null),
+    originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : 'Unknown'),
   };
 
   static checkCategory(x) {
@@ -62,9 +62,5 @@ module.exports = class IcaScrubber extends Scrubber {
         return null;
       }
     }
-    // if (x.soldInUnit === "kgm") {
-    //   return "g";
-    // } else if (x.soldInUnit === "pce") {
-    //   return "st";
   }
 };
