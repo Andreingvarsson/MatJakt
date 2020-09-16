@@ -1,9 +1,8 @@
 const Harvester = require('./classes/Harvesters/Harvester')
-// const DbHandler = require('./classes/DBHandler');
-//const fs = require('fs')
-
-// const db = new DbHandler('./database/MatJaktDatabase.db');
-
+const DbHandler = require('./classes/DBHandler');
+const util = require('util')
+const db = new DbHandler('./backend/database/MatJaktDatabase.db');
+//db.all = util.promisify(db.all)
 
 //db.run('DROP TABLE IF EXISTS products');
 //Harvester.getWillysProducts()
@@ -13,14 +12,16 @@ const Harvester = require('./classes/Harvesters/Harvester')
 //db.run('DELETE FROM products WHERE storeId 1');
 //db.run('DELETE FROM products');
 
-/*const all = db.all(
 
-  'SELECT * FROM products WHERE storeId = 1',
+
+const allProducts = db.all(
+
+  'SELECT * FROM products',
 
 );
 
 
-console.log('All products', all);*/
+//console.log('All products', all);
 
 
 
@@ -28,19 +29,51 @@ console.log('All products', all);*/
   //Harvester.getWillysProducts();
 
   // //inför sprint1 alla Ica produkter
-  Harvester.getIcaProducts();
+  //Harvester.getIcaProducts();
 
   // //inför sprint1 alla mathem produkter
   //Harvester.getMatHemProducts();
 
-// const express = require('express');
-// const app = express();
+const express = require('express');
+const app = express();
 
-// app.get('/api/test', (req, res)=>{
-//   res.json({works: true})
-// })
+app.get('/api/test', (req, res)=>{
+   res.json({works: true})
+})
 
-// app.listen(3001, () => console.log('server listening on port 3001'))
+app.get('/api/products', (req, res) => {
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
+  let anyProducts = db.all('SELECT * FROM products ' + limit)
+  res.json({
+    anyProducts: anyProducts
+  })
+})
+
+app.get('/api/products/:storeId', (req, res) => {
+  let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId)
+  res.json(
+    anyProducts
+  )
+})
+
+/* Gets error for missing storeId, don't know why
+app.get('/api/products/:storeId', (req, res) => {
+  let anyProducts = db.all('SELECT * FROM products WHERE storeId = $storeId', {
+    $storeId: req.params.storeId
+  })
+  res.json(
+    anyProducts
+  )
+})
+*/
+
+app.use(express.static(__dirname + 'src')) //Hittar nog bara till backend pga __dirname, så kan inte ladda hela mappen för nedanstående del
+
+app.get('*', (req, res) => {
+  res.sendFile('index.js', { root: 'src'});
+})
+
+app.listen(3001, () => console.log('MatJakt server listening on port 3001'));
 
 
 
