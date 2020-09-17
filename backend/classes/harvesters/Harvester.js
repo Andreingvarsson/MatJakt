@@ -19,8 +19,6 @@ module.exports = class Harvester {
       for(let product of products){product.harvestedFromCategory = [category.title];}
       allProducts = [...allProducts,...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från willys
     console.log('Amount of fetched products from Willys: ', allProducts.length)
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
@@ -51,8 +49,6 @@ module.exports = class Harvester {
       }
       allProducts = [...allProducts, ...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från Ica
     console.log("Amount of fetched products from Ica: ", allProducts.length);
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
@@ -60,7 +56,6 @@ module.exports = class Harvester {
     //db.run('DELETE FROM products WHERE storeId = 2');
     //db.insertMany('products', scrubbedItems);
 
-    //Inför sprint1 visar enstaka scrubbade produkter
     console.log('Scrubbed Ica products: ')
     console.log(
       scrubbedItems[0],
@@ -80,8 +75,6 @@ module.exports = class Harvester {
       }
       allProducts = [...allProducts, ...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från Mathem
     console.log("Amount of fetched products from Mathem: ", allProducts.length);
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});

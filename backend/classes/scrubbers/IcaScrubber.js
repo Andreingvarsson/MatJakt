@@ -20,20 +20,10 @@ module.exports = class IcaScrubber extends Scrubber {
     productVolumeUnit: (x) => this.checkProductVolumeUnit(x),
     productVolume: (x) => this.checkProductVolume(x),//x.unitWeight ? x.unitWeight : null,
     compareUnit: (x) => x.compare? x.compare.priceText ? x.compare.priceText.match(/[^/]*$/)[0]:'unknown': 'Unknown',
-    eco: (x) =>
-      x.markings.environmental
-        ? x.markings.environmental.filter(
-            (mark) => mark.code === "EU_ORGANIC_FARMING"
-          )
-          ? "true"
-          : "false"
-        : "false",
-    Swedish: (x) =>
-      x.countryOfOrigin && x.countryOfOrigin.name === "Sverige"
-        ? "true"
-        : x.countryOfOrigin && x.countryOfOrigin.name !== "Sverige"
-        ? "false"
-        : null,
+    eco: (x) => x.markings.environmental ? x.markings.environmental.filter((mark) => mark.code === "EU_ORGANIC_FARMING")? "true"
+      : "false" : "false",
+    Swedish: (x) => x.countryOfOrigin && x.countryOfOrigin.name === "Sverige" ? "true": x.countryOfOrigin && 
+      x.countryOfOrigin.name !== "Sverige" ? "false" : null,
     originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : 'Unknown'),
   };
 
