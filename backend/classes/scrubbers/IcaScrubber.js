@@ -8,9 +8,9 @@ module.exports = class IcaScrubber extends Scrubber {
     categoryId: (x) => this.checkCategory(x),
     imageUrl: (x) => x.cloudinaryImageId? x.cloudinaryImageId : 'Unknown',
     onDiscount: (x) => x.promotions? x.promotions.priorityPromotion? x.promotions.priorityPromotion.name?
-     x.promotions.priorityPromotion.name.match(/([0-9]+\s)(för)/g)? 'false': 'true' : 'false' : 'false' :'false',
+     x.promotions.priorityPromotion.name.match(/([0-9]+\s)(för)/g)? 0: 1 : 0 : 0 :0,
     memberDiscount: (x) => x.promotions? x.promotions.priorityPromotion? x.promotions.priorityPromotion.forLoggedIn?
-    x.promotions.priorityPromotion.forLoggedIn === true? 'true' : 'false' : 'false' : 'false' : 'false',
+    x.promotions.priorityPromotion.forLoggedIn === true? 1 : 0 : 0 : 0 : 0,
     name: (x) => x.name ? x.name : 'Unknown',
     brand: (x) => x.brand ? x.brand : 'Unknown',
     price: (x) => this.checkForDiscountPrice(x),
@@ -20,10 +20,10 @@ module.exports = class IcaScrubber extends Scrubber {
     productVolumeUnit: (x) => this.checkProductVolumeUnit(x),
     productVolume: (x) => this.checkProductVolume(x),//x.unitWeight ? x.unitWeight : null,
     compareUnit: (x) => x.compare? x.compare.priceText ? x.compare.priceText.match(/[^/]*$/)[0]:'unknown': 'Unknown',
-    eco: (x) => x.markings.environmental ? x.markings.environmental.filter((mark) => mark.code === "EU_ORGANIC_FARMING")? "true"
-      : "false" : "false",
-    Swedish: (x) => x.countryOfOrigin && x.countryOfOrigin.name === "Sverige" ? "true": x.countryOfOrigin && 
-      x.countryOfOrigin.name !== "Sverige" ? "false" : null,
+    eco: (x) => x.markings.environmental ? x.markings.environmental.filter((mark) => mark.code === "EU_ORGANIC_FARMING")? 1
+      : 0 : 0,
+    Swedish: (x) => x.countryOfOrigin && x.countryOfOrigin.name === "Sverige" ? 1: x.countryOfOrigin && 
+      x.countryOfOrigin.name !== "Sverige" ? 0 : null,
     originCountry: (x) => (x.countryOfOrigin ? x.countryOfOrigin.name : 'Unknown'),
   };
 

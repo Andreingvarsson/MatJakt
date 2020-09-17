@@ -1,6 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  //Switch,
+  //Route,
+  //Link
+} from "react-router-dom";
 
 const getData = async () => {
 
@@ -14,6 +19,8 @@ const getData = async () => {
 
 function App() {
   return (
+    <>
+    <Router>
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -34,7 +41,10 @@ function App() {
           Learn React
         </a>
       </header>
+    <h1>Hejsan Kewla dudes</h1>
     </div>
+    </Router>
+    </>
   );
 }
 

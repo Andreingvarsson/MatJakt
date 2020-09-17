@@ -10,7 +10,7 @@ module.exports = class WillysScrubber extends Scrubber {
       x.image && x.image.url ? x.image && x.image.url : "Unknown",
     onDiscount: (x) => this.checkIfDiscount(x),
     memberDiscount: (x) => x.potentialPromotions.length >= 1 ? x.potentialPromotions.campaignType?
-      x.potentialPromotions.campaignType === "LOYALTY" ? 'true' : 'false' : 'false' : 'false',
+      x.potentialPromotions.campaignType === "LOYALTY" ? 1 : 0 : 0 : 0,
     name: (x) => (x.name ? x.name : "Unknown"),
     brand: (x) => (x.manufacturer ? x.manufacturer : "Unknown"),
     price: (x) => this.checkDiscountPrice(x),
@@ -20,8 +20,8 @@ module.exports = class WillysScrubber extends Scrubber {
     productVolumeUnit: (x) => x.displayVolume.replace(/[0-9\.]|ca: /g, "").replace(/,/, ""),
     productVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".").replace(/ca: /, "")),
     compareUnit: (x) => (x.comparePriceUnit ? x.comparePriceUnit : "Unknown"),
-    eco: (x) => (x.labels.includes("ecological") ? "true" : "false"),
-    Swedish: (x) => (x.labels.includes("swedish_flag") ? "true" : "false"),
+    eco: (x) => (x.labels.includes("ecological") ? 1 : 0),
+    Swedish: (x) => (x.labels.includes("swedish_flag") ? 1 : 0),
     // NodeFetch ERROR Unexpected token N in json at position 0 ?
     originCountry: (x) => "some country",
     //  async (x) => {
@@ -95,10 +95,10 @@ module.exports = class WillysScrubber extends Scrubber {
       x.potentialPromotions.length >= 1
         ? x.potentialPromotions[0].conditionLabel
           ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
-            ? 'false'
-            : 'true'
-          : 'false'
-        : 'false';
+            ? 0
+            : 1
+          : 0
+        : 0;
 
     return z;
   }
