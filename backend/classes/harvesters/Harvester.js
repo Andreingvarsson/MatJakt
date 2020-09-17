@@ -85,6 +85,8 @@ module.exports = class Harvester {
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log("Scrubbed Mathem products: ");
     console.log(
+      scrubbedItems[3],
+      scrubbedItems[6],
       scrubbedItems[204],
       scrubbedItems[500],
       scrubbedItems[300]
