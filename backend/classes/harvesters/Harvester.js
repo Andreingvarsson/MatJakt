@@ -64,6 +64,7 @@ module.exports = class Harvester {
     console.log('Scrubbed Ica products: ')
     console.log(
       scrubbedItems[0],
+      scrubbedItems[10],
       scrubbedItems[1500],
       scrubbedItems[10300]
     );
