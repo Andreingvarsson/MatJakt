@@ -95,10 +95,10 @@ module.exports = class WillysScrubber extends Scrubber {
       x.potentialPromotions.length >= 1
         ? x.potentialPromotions[0].conditionLabel
           ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
-            ? false
-            : true
-          : false
-        : false;
+            ? 'false'
+            : 'true'
+          : 'false'
+        : 'false';
 
     return z;
   }
