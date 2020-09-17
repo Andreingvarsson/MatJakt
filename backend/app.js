@@ -5,7 +5,7 @@ const db = new DbHandler('./backend/database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 
 //db.run('DROP TABLE IF EXISTS products');
-//Harvester.getWillysProducts()
+Harvester.getWillysProducts()
 //const products = require('./json-to-import/WillysProducts.json');
 
 //db.insertMany('products', products);
@@ -13,24 +13,29 @@ const db = new DbHandler('./backend/database/MatJaktDatabase.db');
 //db.run('DELETE FROM products');
 
 
+const express = require('express');
+const app = express();
 
-const allProducts = db.all(
+
+
+/*const allProducts = db.all(
 
   'SELECT * FROM products',
 
-);
+);*/
 
 
 //console.log('All products', all);
 
 // //Inför sprint1 alla willysProdukter
-Harvester.getWillysProducts();
+//Harvester.getWillysProducts();
 
 // //inför sprint1 alla Ica produkter
 //Harvester.getIcaProducts();
 
   // //Inför sprint1 alla willysProdukter
-  //Harvester.getWillysProducts();
+  //Harvester.getWillysProducts();Harvester.getWillysProducts()
+
 
   // //inför sprint1 alla Ica produkter
   //Harvester.getIcaProducts();
@@ -38,8 +43,6 @@ Harvester.getWillysProducts();
   // //inför sprint1 alla mathem produkter
   //Harvester.getMatHemProducts();
 
-const express = require('express');
-const app = express();
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
 
