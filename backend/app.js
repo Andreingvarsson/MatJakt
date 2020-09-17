@@ -37,6 +37,8 @@ const allProducts = db.all(
 const express = require('express');
 const app = express();
 
+//TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
+
 app.get('/api/test', (req, res)=>{
    res.json({works: true})
 })
@@ -45,12 +47,19 @@ app.get('/api/products', (req, res) => {
   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
   let anyProducts = db.all('SELECT * FROM products ' + limit)
   res.json({
-    anyProducts: anyProducts
+    anyProducts
   })
 })
 
 app.get('/api/products/:storeId', (req, res) => {
-  let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId)
+  let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId + " AND WHERE price = 55")
+  res.json(
+    anyProducts
+  )
+})
+
+app.get('/api/sort', (req, res) => {
+  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = 1 OR categoryId = 2 ORDER BY price ASC')
   res.json(
     anyProducts
   )

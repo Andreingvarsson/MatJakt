@@ -4,7 +4,7 @@ import './App.css';
 
 const getData = async () => {
 
-  let data = await fetch('/api/products') //Gets all products
+  let data = await fetch('/api/sort')
 
   data = await data.json()
 
