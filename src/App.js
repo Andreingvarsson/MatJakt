@@ -2,6 +2,16 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+const getData = async () => {
+
+  let data = await fetch('/api/products') //Gets all products
+
+  data = await data.json()
+
+  console.log(data)
+
+}
+
 function App() {
   return (
     <div className="App">
@@ -9,6 +19,11 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>
+          <button onClick={getData}>
+            click me
+          </button>
         </p>
         <a
           className="App-link"
