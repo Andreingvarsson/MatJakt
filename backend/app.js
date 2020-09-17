@@ -23,7 +23,11 @@ const allProducts = db.all(
 
 //console.log('All products', all);
 
+// //Inför sprint1 alla willysProdukter
+Harvester.getWillysProducts();
 
+// //inför sprint1 alla Ica produkter
+//Harvester.getIcaProducts();
 
   // //Inför sprint1 alla willysProdukter
   //Harvester.getWillysProducts();
@@ -88,3 +92,4 @@ app.listen(3001, () => console.log('MatJakt server listening on port 3001'));
 
 
 
+// app.listen(3001, () => console.log("server listening on port 3001"));

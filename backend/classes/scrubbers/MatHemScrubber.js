@@ -4,23 +4,22 @@ const StoreCategories = require("../StoreCategories")
 
 module.exports = class MatHemScrubber extends Scrubber {
   static translateSchemaMatHem = {
-    storeId: (x) => x.storeId = 3,
+    storeId: (x) => (x.storeId = 3),
     categoryId: (x) => this.checkCategory(x),
-    name: (x) => x.name ? x.name : 'Unknown',
-    brand: (x) => x.brand.name ? x.brand.name: 'Unknown',
-    imageUrl: (x) => x.images? x.images.MEDIUM : 'Unknown',
-    price: (x) => x.price? x.price : null,
-    productVolumeUnit: (x) => x.unit? x.unit: 'Unknown',
-    productVolume: (x) => x.quantity? x.quantity : null,
-    comparePrice: (x) => x.comparisonPrice? x.comparisonPrice : null,
-    compareUnit: (x) => x.comparisonUnit? x.comparisonUnit: 'Unknown',
-    eco: (x) =>
-      x.badges.length > 0
-        ? x.badges.filter((x) => x.name === "Ekologisk")
-          ? "true"
-          : "false"
-        : "false",
-    Swedish: (x) => x.origin ? x.origin.name === "Sverige" ? "true" : "false" : null,
+    imageUrl: (x) => (x.images ? x.images.MEDIUM : "Unknown"),
+    onDiscount: (x) => x.discount && x.discount.discountType === "PRODUCT_DISCOUNT" ? 'true' : 'false',
+    memberDiscount: (x) => x.discount && x.discount.discountType === "PRODUCT_DISCOUNT" ? 'true' : 'false',
+    name: (x) => (x.name ? x.name : "Unknown"),
+    brand: (x) => (x.brand.name ? x.brand.name : "Unknown"),
+    price: (x) => (x.discount && x.discount.discountType === 'PRODUCT_DISCOUNT'? x.discount.price: x.price? x.price : null),
+    comparePrice: (x) => (x.discount && x.discount.discountType === 'PRODUCT_DISCOUNT'? x.discount.comparisonPrice : x.comparisonPrice? x.comparisonPrice : null),
+    ordinaryPrice: (x) => (x.price ? x.price : null),
+    ordinaryComparePrice: (x) => (x.comparisonPrice ? x.comparisonPrice : null),
+    productVolumeUnit: (x) => (x.unit ? x.unit : "Unknown"),
+    productVolume: (x) => (x.quantity ? x.quantity : null),
+    compareUnit: (x) => (x.comparisonUnit ? x.comparisonUnit : "Unknown"),
+    eco: (x) => x.badges.length > 0 ? x.badges.filter((x) => x.name === "Ekologisk") ? "true" : "false" : "false",
+    Swedish: (x) => x.origin ? (x.origin.name === "Sverige" ? "true" : "false") : null,
     originCountry: (x) => (x.origin || {}).name || "Unknown",
   };
 

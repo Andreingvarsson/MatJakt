@@ -19,13 +19,11 @@ module.exports = class Harvester {
       for(let product of products){product.harvestedFromCategory = [category.title];}
       allProducts = [...allProducts,...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från willys
     console.log('Amount of fetched products from Willys: ', allProducts.length)
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
-    console.log(scrubbedItems[0], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
+    console.log(scrubbedItems[0],scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
     //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
     //var WillysProducts = require('../json-to-import/WillysProducts.json');
     //db.run('DELETE FROM products WHERE storeId = 1');
@@ -51,8 +49,6 @@ module.exports = class Harvester {
       }
       allProducts = [...allProducts, ...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från Ica
     console.log("Amount of fetched products from Ica: ", allProducts.length);
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
@@ -60,10 +56,10 @@ module.exports = class Harvester {
     //db.run('DELETE FROM products WHERE storeId = 2');
     //db.insertMany('products', scrubbedItems);
 
-    //Inför sprint1 visar enstaka scrubbade produkter
     console.log('Scrubbed Ica products: ')
     console.log(
       scrubbedItems[0],
+      scrubbedItems[10],
       scrubbedItems[1500],
       scrubbedItems[10300]
     );
@@ -79,8 +75,6 @@ module.exports = class Harvester {
       }
       allProducts = [...allProducts, ...products];
     }
-
-    //Inför sprint1 visar antal produkter hämtade från Mathem
     console.log("Amount of fetched products from Mathem: ", allProducts.length);
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});
@@ -91,6 +85,8 @@ module.exports = class Harvester {
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log("Scrubbed Mathem products: ");
     console.log(
+      scrubbedItems[3],
+      scrubbedItems[6],
       scrubbedItems[204],
       scrubbedItems[500],
       scrubbedItems[300]

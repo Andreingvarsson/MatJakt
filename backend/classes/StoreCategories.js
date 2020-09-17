@@ -13,9 +13,9 @@ let dbCategories = {
   barn: 12,
   halsaOchSkonhet: 13,
   kiosk: 14
-  }
-  module.exports = class StoreCategories {
-     
+}
+module.exports = class StoreCategories {
+
       static getWillysCategories(){
         let willysCategories = [
           { title: "Kött, chark & fågel", categoryId: dbCategories.kottCharkFagel },
