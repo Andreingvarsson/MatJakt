@@ -7,6 +7,16 @@ import {
   //Link
 } from "react-router-dom";
 
+const getData = async () => {
+
+  let data = await fetch('/api/sort')
+
+  data = await data.json()
+
+  console.log(data)
+
+}
+
 function App() {
   return (
     <>
