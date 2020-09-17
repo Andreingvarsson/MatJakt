@@ -10,7 +10,7 @@ module.exports = class WillysScrubber extends Scrubber {
       x.image && x.image.url ? x.image && x.image.url : "Unknown",
     onDiscount: (x) => this.checkIfDiscount(x),
     memberDiscount: (x) => x.potentialPromotions.length >= 1 ? x.potentialPromotions.campaignType?
-      x.potentialPromotions.campaignType === "LOYALTY" ? true : false : false : false,
+      x.potentialPromotions.campaignType === "LOYALTY" ? 'true' : 'false' : 'false' : 'false',
     name: (x) => (x.name ? x.name : "Unknown"),
     brand: (x) => (x.manufacturer ? x.manufacturer : "Unknown"),
     price: (x) => this.checkDiscountPrice(x),
