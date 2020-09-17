@@ -6,6 +6,8 @@ import {
   Route,
   //Link
 } from "react-router-dom";
+import home from "./Pages/Home";
+import StoreContext from "./ContextProviders/StoreContext";
 
 const getData = async () => {
 
@@ -23,9 +25,11 @@ function App() {
     <Router>  
     <div className="App"> 
     {/* contextProvider */}
+    <StoreContext>
     <Switch>
       <Route exact path="/" component={home}/>
     </Switch>
+    </StoreContext>
     {/* contextProvider */}
     </div>
     </Router>
