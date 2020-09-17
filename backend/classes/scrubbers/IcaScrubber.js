@@ -10,7 +10,7 @@ module.exports = class IcaScrubber extends Scrubber {
     onDiscount: (x) => x.promotions? x.promotions.priorityPromotion? x.promotions.priorityPromotion.name?
      x.promotions.priorityPromotion.name.match(/([0-9]+\s)(för)/g)? 'false': 'true' : 'false' : 'false' :'false',
     memberDiscount: (x) => x.promotions? x.promotions.priorityPromotion? x.promotions.priorityPromotion.forLoggedIn?
-    x.promotions.priorityPromotion.forLoggedIn : 'false' : 'false' : 'false',
+    x.promotions.priorityPromotion.forLoggedIn === true? 'true' : 'false' : 'false' : 'false' : 'false',
     name: (x) => x.name ? x.name : 'Unknown',
     brand: (x) => x.brand ? x.brand : 'Unknown',
     price: (x) => this.checkForDiscountPrice(x),

@@ -28,10 +28,10 @@ console.log('All products', all);*/
 //Harvester.getWillysProducts();
 
 // //inför sprint1 alla Ica produkter
-//Harvester.getIcaProducts();
+Harvester.getIcaProducts();
 
 // //inför sprint1 alla mathem produkter
-Harvester.getMatHemProducts();
+//Harvester.getMatHemProducts();
 //////******************************************************************* */
 // const express = require("express");
 // const app = express();
