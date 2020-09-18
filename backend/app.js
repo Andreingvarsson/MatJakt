@@ -1,7 +1,7 @@
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('./database/MatJaktDatabase.db');
+const db = new DbHandler('./backend/database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 
 async function getAll() {
