@@ -1,21 +1,54 @@
+const express = require('express');
+const app = express();
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('./backend/database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
+//const { setInterval } = require('timers');
 
 async function getAll() {
-  await Harvester.getWillysProducts().then(
-    await Harvester.getIcaProducts().then(
-      await Harvester.getMatHemProducts().then(
-        console.log("All methods finished")
-      )
-    )
-  );
-  
+  await Harvester.getWillysProducts();
+  await Harvester.getIcaProducts();
+  await Harvester.getMatHemProducts();
+  console.log("All methods finished")
 }
 
-getAll();
+
+//let intervalId;
+//checkIfNeedToFetch();
+// Förhoppningsvis kollar varje timme om det behövs göra en hämtning till db:n
+function setCheckFetchInterval(){
+  let date = new Date();
+  let secondsPastHour = date.getMinutes()*60 + date.getSeconds();
+  let interval = setInterval(checkIfNeedToFetch, 60*60*1000 - secondsPastHour*1000)
+  return interval;
+}
+
+function checkIfNeedToFetch(){
+
+  // get latestFetch timestamp from db
+  //
+  let dateNow = new Date();
+  let nextFetchDate = new Date(latestFetchDate.getTime()+1000*60*60*24);
+  
+  if(dateNow > nextFetchDate){
+    // Need to fetch data to db
+    clearInterval(intervalId);
+    intervalId = setCheckFetchInterval();
+    this.getAll();
+    // Push a new latestFetch timestamp to db
+  }else{
+    // Don't need to fetch data to db
+    clearInterval(intervalId);
+    intervalId = setCheckFetchInterval();
+  }
+}
+
+
+
+
+// getAll();
 
 //db.run('DROP TABLE IF EXISTS products');
 //const products = require('./json-to-import/WillysProducts.json');
@@ -25,8 +58,6 @@ getAll();
 //db.run('DELETE FROM products');
 
 
-const express = require('express');
-const app = express();
 
 //Harvester.getWillysProducts()
 
