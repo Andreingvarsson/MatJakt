@@ -8,6 +8,10 @@ import {
 } from "react-router-dom";
 import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
+import Header from './Components/Header'
+
+
+
 
 const getData = async () => {
 
@@ -24,6 +28,7 @@ function App() {
     <>
     <Router>  
     <div className="App"> 
+    <Header></Header>
     {/* contextProvider */}
     <StoreContext>
     <Switch>

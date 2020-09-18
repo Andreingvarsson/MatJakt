@@ -1,0 +1,21 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.container{
+
+}
+
+.header{
+    background-color: pink;
+    width: 100%;
+}
+
+.navbar-brand{
+    color: white;
+    text-align: center; 
+    
+  
+}
+
