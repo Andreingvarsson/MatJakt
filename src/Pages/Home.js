@@ -32,7 +32,7 @@ const Home = () => {
     <>
     <div className="home"> 
     <h1>hejsan kings</h1>
-    <button onClick={()=> getProducts()}>Knapp</button>
+    <button onClick={()=> getProducts()}>Hämta produkter</button>
     </div>
     </>
   );
