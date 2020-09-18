@@ -1,11 +1,23 @@
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('./backend/database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 
+async function getAll() {
+  await Harvester.getWillysProducts().then(
+    await Harvester.getIcaProducts().then(
+      await Harvester.getMatHemProducts().then(
+        console.log("All methods finished")
+      )
+    )
+  );
+  
+}
+
+getAll();
+
 //db.run('DROP TABLE IF EXISTS products');
-Harvester.getWillysProducts()
 //const products = require('./json-to-import/WillysProducts.json');
 
 //db.insertMany('products', products);
@@ -16,6 +28,7 @@ Harvester.getWillysProducts()
 const express = require('express');
 const app = express();
 
+//Harvester.getWillysProducts()
 
 
 /*const allProducts = db.all(
@@ -29,6 +42,7 @@ const app = express();
 
 // //Inför sprint1 alla willysProdukter
 //Harvester.getWillysProducts();
+
 
 // //inför sprint1 alla Ica produkter
 //Harvester.getIcaProducts();
