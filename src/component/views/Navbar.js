@@ -9,15 +9,15 @@ const Example = (props) => {
   return (
     <div>
       <Navbar color="danger" light>
-        <NavbarBrand href="/" className="mr-auto">HOME</NavbarBrand>
+        <NavbarBrand href="/" className="mr-auto">HEM</NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="./components/pages/pageOne">Components</NavLink>
+              <NavLink href="/components/">Skapa konto</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+              <NavLink href="https://github.com/reactstrap/reactsp">logga in</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
