@@ -59,8 +59,6 @@ function checkIfNeedToFetch(){
 
 
 
-//Harvester.getWillysProducts()
-
 
 /*const allProducts = db.all(
 
@@ -68,25 +66,21 @@ function checkIfNeedToFetch(){
 
 );*/
 
+async function getAll() {
+  await Harvester.getWillysProducts();
+  //await Harvester.getIcaProducts();
+  //await Harvester.getMatHemProducts();
+} 
 
+getAll();
 //console.log('All products', all);
 
 // //Inför sprint1 alla willysProdukter
-//Harvester.getWillysProducts();
-
 
 // //inför sprint1 alla Ica produkter
-//Harvester.getIcaProducts();
 
-  // //Inför sprint1 alla willysProdukter
-  //Harvester.getWillysProducts();Harvester.getWillysProducts()
+// //inför sprint1 alla mathem produkter
 
-
-  // //inför sprint1 alla Ica produkter
-  //Harvester.getIcaProducts();
-
-  // //inför sprint1 alla mathem produkter
-  //Harvester.getMatHemProducts();
 
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
@@ -103,8 +97,15 @@ app.get('/api/products', (req, res) => {
   })
 })
 
-app.get('/api/products/:storeId', (req, res) => {
+/*app.get('/api/products/:storeId', (req, res) => {
   let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId + " AND WHERE price = 55")
+  res.json(
+    anyProducts
+  )
+})*/
+
+app.get('/api/products/:categoryId', (req, res) => {
+  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC")
   res.json(
     anyProducts
   )
@@ -135,9 +136,3 @@ app.get('*', (req, res) => {
 })
 
 app.listen(3001, () => console.log('MatJakt server listening on port 3001'));
-
-
-
-
-
-// app.listen(3001, () => console.log("server listening on port 3001"));

@@ -5,7 +5,6 @@ const MatHemScrubber = require("../scrubbers/MatHemScrubber")
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
 const DbHandler = require('../DBHandler');
-//const fs = require('fs')
 const db = new DbHandler('./database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
@@ -25,8 +24,6 @@ module.exports = class Harvester {
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
     console.log(//scrubbedItems[0], scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450],
       scrubbedItems[5000])
-    //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
-    //var WillysProducts = require('../json-to-import/WillysProducts.json');
     db.run('DELETE FROM products WHERE storeId = 1');
     db.insertMany('products', scrubbedItems);
     console.log("Willys method finished");
