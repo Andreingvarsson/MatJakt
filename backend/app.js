@@ -3,7 +3,7 @@ const app = express();
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('./database/MatJaktDatabase.db');
+const db = new DbHandler('../database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 //const { setInterval } = require('timers');
 
@@ -14,10 +14,30 @@ async function getAll() {
   console.log("All methods finished")
 }
 
+// getAll();
+
+//*************** trying to fix date converting************************* */
+// let date = new Date();
+// // let strDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+// // let newstrDate = date.getHours() + ':'+date.getMinutes()+':'+date.getSeconds();
+// // let s = strDate + ' ' + newstrDate;
+// // let newDate = date.getTime()
+// // let sqlDate = date.toISOString();
+// // console.log(date)
+// let abs = date.getTime();
+// console.log(abs)
+// //postNewFetchDate(abs)
+// let news = new Date(abs)
+// console.log(news)
+
+
+let date = new Date(getLatestFetch(1));
+console.log(date + 'DATE')
 
 //let intervalId;
 //checkIfNeedToFetch();
 // Förhoppningsvis kollar varje timme om det behövs göra en hämtning till db:n
+
 function setCheckFetchInterval(){
   let date = new Date();
   let secondsPastHour = date.getMinutes()*60 + date.getSeconds();
@@ -25,10 +45,23 @@ function setCheckFetchInterval(){
   return interval;
 }
 
+function postNewFetchDate(date){
+  db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 1')
+}
+
+function getLatestFetch(id){
+  let latestFetch = db.all(`SELECT latestFetch FROM stores WHERE storeId = ${id}`);
+  console.log(latestFetch[0].latestFetch + ' i fetch')
+  return latestFetch[0].latestFetch;
+
+}
+
 function checkIfNeedToFetch(){
 
   // get latestFetch timestamp from db
   //
+
+
   let dateNow = new Date();
   let nextFetchDate = new Date(latestFetchDate.getTime()+1000*60*60*24);
   
@@ -44,44 +77,6 @@ function checkIfNeedToFetch(){
     intervalId = setCheckFetchInterval();
   }
 }
-
-
-
-
-// getAll();
-
-//db.run('DROP TABLE IF EXISTS products');
-//const products = require('./json-to-import/WillysProducts.json');
-
-//db.insertMany('products', products);
-//db.run('DELETE FROM products WHERE storeId 1');
-//db.run('DELETE FROM products');
-
-
-
-
-/*const allProducts = db.all(
-
-  'SELECT * FROM products',
-
-);*/
-
-async function getAll() {
-  await Harvester.getWillysProducts();
-  //await Harvester.getIcaProducts();
-  //await Harvester.getMatHemProducts();
-} 
-
-getAll();
-//console.log('All products', all);
-
-// //Inför sprint1 alla willysProdukter
-
-// //inför sprint1 alla Ica produkter
-
-// //inför sprint1 alla mathem produkter
-
-
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
 

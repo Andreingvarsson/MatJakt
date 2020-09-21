@@ -5,7 +5,7 @@ const MatHemScrubber = require("../scrubbers/MatHemScrubber")
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
 const DbHandler = require('../DBHandler');
-const db = new DbHandler('./database/MatJaktDatabase.db');
+const db = new DbHandler('../database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
@@ -26,6 +26,7 @@ module.exports = class Harvester {
       scrubbedItems[5000])
     db.run('DELETE FROM products WHERE storeId = 1');
     db.insertMany('products', scrubbedItems);
+    db.
     console.log("Willys method finished");
   }
 
