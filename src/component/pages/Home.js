@@ -3,7 +3,7 @@ import { Card, Button, CardImg, CardTitle, CardText, CardDeck,
   CardSubtitle, CardBody } from 'reactstrap';
 
 
-export default function HomePage() {
+export default function Home() {
     return (
         <div>
           <div>
