@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavbarBrand} from 'reactstrap';
 
 export default function HomePage() {
     return (
@@ -12,7 +13,7 @@ export default function HomePage() {
         <br/>
     </div>
     {/* <button onClick={()=> getProducts()}>Hämta produkter</button> */}
- <div> <h2 >Hämta produkter</h2>
+ <div className="HH2">  <NavbarBrand href="/AllP" className="mr-auto">Hämta produkter</NavbarBrand>
 </div>
 </div>        
     )
