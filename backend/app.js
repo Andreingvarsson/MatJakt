@@ -33,14 +33,14 @@ console.log('All products', all);*/
   // //inför sprint1 alla mathem produkter
   //Harvester.getMatHemProducts();
 
-// const express = require('express');
-// const app = express();
+ const express = require('express');
+ const app = express();
 
-// app.get('/api/test', (req, res)=>{
-//   res.json({works: true})
-// })
+ app.get('/api/test', (req, res)=>{
+   res.json({works: true})
+ })
 
-// app.listen(3001, () => console.log('server listening on port 3001'))
+ app.listen(3001, () => console.log('server listening on port 3001'))
 
 
 
