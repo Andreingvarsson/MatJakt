@@ -4,31 +4,8 @@ const util = require('util')
 const db = new DbHandler('./backend/database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 
-async function getAll() {
-  await Harvester.getWillysProducts().then(
-    await Harvester.getIcaProducts().then(
-      await Harvester.getMatHemProducts().then(
-        console.log("All methods finished")
-      )
-    )
-  );
-  
-}
-
-getAll();
-
-//db.run('DROP TABLE IF EXISTS products');
-//const products = require('./json-to-import/WillysProducts.json');
-
-//db.insertMany('products', products);
-//db.run('DELETE FROM products WHERE storeId 1');
-//db.run('DELETE FROM products');
-
-
 const express = require('express');
 const app = express();
-
-//Harvester.getWillysProducts()
 
 
 /*const allProducts = db.all(
@@ -42,20 +19,10 @@ const app = express();
 
 // //Inför sprint1 alla willysProdukter
 //Harvester.getWillysProducts();
-
-
 // //inför sprint1 alla Ica produkter
 //Harvester.getIcaProducts();
-
-  // //Inför sprint1 alla willysProdukter
-  //Harvester.getWillysProducts();Harvester.getWillysProducts()
-
-
-  // //inför sprint1 alla Ica produkter
-  //Harvester.getIcaProducts();
-
-  // //inför sprint1 alla mathem produkter
-  //Harvester.getMatHemProducts();
+// //inför sprint1 alla mathem produkter
+//Harvester.getMatHemProducts();
 
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
@@ -72,8 +39,15 @@ app.get('/api/products', (req, res) => {
   })
 })
 
-app.get('/api/products/:storeId', (req, res) => {
+/*app.get('/api/products/:storeId', (req, res) => {
   let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId + " AND WHERE price = 55")
+  res.json(
+    anyProducts
+  )
+})*/
+
+app.get('/api/products/:categoryId', (req, res) => {
+  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC")
   res.json(
     anyProducts
   )
@@ -104,9 +78,3 @@ app.get('*', (req, res) => {
 })
 
 app.listen(3001, () => console.log('MatJakt server listening on port 3001'));
-
-
-
-
-
-// app.listen(3001, () => console.log("server listening on port 3001"));
