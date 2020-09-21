@@ -24,10 +24,10 @@ const allProducts = db.all(
 //console.log('All products', all);
 
 // //Inför sprint1 alla willysProdukter
-//Harvester.getWillysProducts();
+Harvester.getWillysProducts();
 
 // //inför sprint1 alla Ica produkter
-//Harvester.getIcaProducts();
+Harvester.getIcaProducts();
 
   // //Inför sprint1 alla willysProdukter
   //Harvester.getWillysProducts();
@@ -36,7 +36,7 @@ const allProducts = db.all(
   //Harvester.getIcaProducts();
 
   // //inför sprint1 alla mathem produkter
-  //Harvester.getMatHemProducts();
+ Harvester.getMatHemProducts();
 
 const express = require('express');
 const app = express();
@@ -52,6 +52,15 @@ app.get('/api/products', (req, res) => {
   let anyProducts = db.all('SELECT * FROM products ' + limit)
   res.json({
     anyProducts
+  })
+})
+
+// JUST TRYING SOMETHING FOR FRONTEND!
+app.get('/api/categories', (req, res) => {
+  // const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
+  let anyCategories = db.all('SELECT * FROM categories ')
+  res.json({
+    anyCategories
   })
 })
 
