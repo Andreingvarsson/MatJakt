@@ -1,7 +1,7 @@
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('./backend/database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 
 const express = require('express');
@@ -14,15 +14,21 @@ const app = express();
 
 );*/
 
+async function getAll() {
+  await Harvester.getWillysProducts();
+  //await Harvester.getIcaProducts();
+  //await Harvester.getMatHemProducts();
+} 
 
+getAll();
 //console.log('All products', all);
 
 // //Inför sprint1 alla willysProdukter
-//Harvester.getWillysProducts();
+
 // //inför sprint1 alla Ica produkter
-//Harvester.getIcaProducts();
+
 // //inför sprint1 alla mathem produkter
-//Harvester.getMatHemProducts();
+
 
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
