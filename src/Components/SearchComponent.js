@@ -8,7 +8,7 @@ import {
 import { StoreContext } from "../ContextProviders/StoreContext";
 
 const SearchComponent = (props) => {
-//   const [liveCategoryList, setLiveCategoryList] = useState([]);
+  //   const [liveCategoryList, setLiveCategoryList] = useState([]);
 
   const [categoryList, setCategoryList] = useState([]);
 
@@ -28,14 +28,12 @@ const SearchComponent = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  //   useEffect(() => {
+  //       console.log(categoryList)
+  //       setLiveCategoryList(categoryList);
+  //       console.log(liveCategoryList);
 
-
-//   useEffect(() => {
-//       console.log(categoryList)
-//       setLiveCategoryList(categoryList);
-//       console.log(liveCategoryList);
-   
-//   }, [categoryList]);
+  //   }, [categoryList]);
 
   //   const checkCategories = async  () =>{
   //       let obj = await getCategories();
@@ -53,7 +51,11 @@ const SearchComponent = (props) => {
           <Dropdown isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle caret>Kategorier</DropdownToggle>
             <DropdownMenu>
-            {categoryList.map(category => <DropdownItem key={category.categoryId}>{category.name}</DropdownItem>)}
+              {categoryList.map((category) => (
+                <DropdownItem key={category.categoryId}>
+                  {category.name}
+                </DropdownItem>
+              ))}
             </DropdownMenu>
           </Dropdown>
         </div>
