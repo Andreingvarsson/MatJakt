@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useDebugValue, useEffect, useState } from "react";
 
 export const StoreContext = createContext();
 
@@ -9,6 +9,9 @@ const StoreContextProvider = (props) => {
   //   useEffect( async ()=> {
   //       getCategories();
   //   }, [])
+
+  const [productsToShow, setProductsToShow] = useState([])
+  
 
   const getProducts = async () => {
     let res = await fetch("/api/sort");
@@ -26,12 +29,13 @@ const StoreContextProvider = (props) => {
     }
   };
 
-  const getProductsByCategory = async (categoryId) => {
-    console.log('Inne i getProductsByCat - id: ' + categoryId )
-    let res = await fetch(`/api/catProducts/${categoryId}`); // api to get categories.. whats the right "name"..
+  const getProductsByCategory = async (categoryId, page=0) => {
+    console.log('Inne i getProductsByCat - id: ' + categoryId)
+    let res = await fetch(`/api/catProducts/${categoryId}?limit=10&page=${page}` ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();
-      console.log(res[0])
+      //console.log(res[0])
+      // setProductsToShow(res);
       return res;
     } catch (e) {
       console.log("This is the error!! " + e);
@@ -41,7 +45,8 @@ const StoreContextProvider = (props) => {
   const values = {
     getProducts: getProducts,
     getCategories: getCategories,
-    getProductsByCategory: getProductsByCategory
+    getProductsByCategory: getProductsByCategory,
+    productsToShow: productsToShow
     // categoryList: categoryList,
   };
 

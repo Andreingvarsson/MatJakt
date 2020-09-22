@@ -59,7 +59,7 @@ function getLatestFetch(id){
 function checkIfNeedToFetch(){
 
   // get latestFetch timestamp from db
-  //
+  // 
 
 
   let dateNow = new Date();
@@ -111,8 +111,10 @@ app.get('/api/products/:storeId', (req, res) => {
 })
 
 app.get('/api/catProducts/:categoryId', (req, res) => {
-  console.log(req + ' req')
-  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC")
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
+  const page = req.query.page ? ` OFFSET ` + req.query.page*10 : ''
+  console.log(req.query.limit + ' req limit'+ req.query.page)
+  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC " + limit + page)
   res.json(
     anyProducts
   )
