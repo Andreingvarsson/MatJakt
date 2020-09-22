@@ -3,7 +3,7 @@ const app = express();
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('../database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 //const { setInterval } = require('timers');
 
@@ -14,8 +14,40 @@ async function getAll() {
   console.log("All methods finished")
 }
 
-// getAll();
+//getAll();
+/*var date = Math.round((new Date()).getTime() / 1000);
+console.log(date)
+if (date > date + (86400)) {
+  console.log("It's been over 24 hours since last fetch")  
+} else {
+  console.log("It hasn't been over 24 hours since last fetch") 
+}
+newDate = date + 86401
+if (newDate > date + (86400)) {
+  console.log("It's been over 24 hours since last fetch")
+}else if (date < date + (86400)) {
+  console.log("It hasn't been over 24 hours since last fetch")
+}*/
 
+async function checkForHarvest() {
+  setTimeout(() => {
+    console.log("Checking if harvest is needed")
+    var currentDate = Math.round((new Date()).getTime() / 1000);
+    var latestFetchDate = db.all('SELECT latestFetch FROM stores WHERE storeId = 1')
+    console.log("Current date: " + currentDate)
+    console.log("Latest fetch: " + latestFetchDate[0].latestFetch)
+    if (currentDate > latestFetchDate[0].latestFetch + (600)) {
+      console.log("It's been over 24 hours since last fetch, starting new fetch")
+      getAll();
+    } else {
+      console.log("It hasn't been over 24 hours since last fetch")
+    }
+    checkForHarvest();
+  }, 600000)
+}
+
+checkForHarvest();
+//Harvester.getWillysProducts();
 //*************** trying to fix date converting************************* */
 // let date = new Date();
 // // let strDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -30,24 +62,28 @@ async function getAll() {
 // let news = new Date(abs)
 // console.log(news)
 
+/*var date = Math.round((new Date()).getTime() / 1000);
+console.log(date);
 
-let date = new Date(getLatestFetch(1));
-console.log(date + 'DATE')
+function postNewFetchDate(date) {
+  db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 1')
+}
+postNewFetchDate(date);*/
+
+//let date = new Date(getLatestFetch(1));
+//console.log(date + 'DATE')
 
 //let intervalId;
 //checkIfNeedToFetch();
 // Förhoppningsvis kollar varje timme om det behövs göra en hämtning till db:n
 
-function setCheckFetchInterval(){
+/*function setCheckFetchInterval(){
   let date = new Date();
   let secondsPastHour = date.getMinutes()*60 + date.getSeconds();
   let interval = setInterval(checkIfNeedToFetch, 60*60*1000 - secondsPastHour*1000)
   return interval;
-}
+}*/
 
-function postNewFetchDate(date){
-  db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 1')
-}
 
 function getLatestFetch(id){
   let latestFetch = db.all(`SELECT latestFetch FROM stores WHERE storeId = ${id}`);

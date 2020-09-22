@@ -5,7 +5,7 @@ const MatHemScrubber = require("../scrubbers/MatHemScrubber")
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
 const DbHandler = require('../DBHandler');
-const db = new DbHandler('../database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
@@ -22,11 +22,12 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
-    console.log(//scrubbedItems[0], scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450],
-      scrubbedItems[5000])
+    //console.log(//scrubbedItems[0], scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
     db.run('DELETE FROM products WHERE storeId = 1');
     db.insertMany('products', scrubbedItems);
-    db.
+    console.log("Harvested Willys data inserted into database")
+    var date = Math.round((new Date()).getTime() / 1000);
+    db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 1')
     console.log("Willys method finished");
   }
 
@@ -55,14 +56,16 @@ module.exports = class Harvester {
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(productsToScrub);
     db.run('DELETE FROM products WHERE storeId = 2');
     db.insertMany('products', scrubbedItems);
-    
-    console.log('Scrubbed Ica products: ')
-    console.log(
+    console.log("Harvested Ica data inserted into database")
+    var date = Math.round((new Date()).getTime() / 1000);
+    db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 2')
+    //console.log('Scrubbed Ica products: ')
+    /*console.log(
       //scrubbedItems[0],
       //scrubbedItems[10],
       //scrubbedItems[1500],
       scrubbedItems[10300]
-      );
+      );*/
     console.log("Ica method finished");
   }
 
@@ -82,16 +85,18 @@ module.exports = class Harvester {
     let scrubbedItems = await MatHemScrubber.scrubAllMatHemProducts(productsToScrub);
     db.run('DELETE FROM products WHERE storeId = 3');
     db.insertMany('products', scrubbedItems);
-
+    console.log("Harvested MatHem data inserted into database")
+    var date = Math.round((new Date()).getTime() / 1000);
+    db.run('UPDATE stores SET latestFetch = ' + date + ' WHERE storeId = 3')
     //Inför sprint1 visar enstaka scrubbade produkter
-    console.log("Scrubbed Mathem products: ");
+    /*console.log("Scrubbed Mathem products: ");
     console.log(
       //scrubbedItems[3],
       //scrubbedItems[6],
       //scrubbedItems[204],
       //scrubbedItems[500],
       scrubbedItems[300]
-    );
+    );*/
     console.log("Mathem method finished");
   }
 
