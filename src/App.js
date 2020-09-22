@@ -4,18 +4,22 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  //Link
+  Link
 } from "react-router-dom";
 import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
 import Header from "./Components/Header";
 import GrocerySearchPage from "./Pages/GrocerySearchPage";
 
-// const getData = async () => {
-//   let data = await fetch("/api/sort");
-//   data = await data.json();
-//   console.log(data);
-// };
+const getData = async (input) => {
+
+  let data = await fetch('/api/products/' + input)
+
+  data = await data.json()
+
+  console.log(data)
+
+}
 
 function App() {
   return (
