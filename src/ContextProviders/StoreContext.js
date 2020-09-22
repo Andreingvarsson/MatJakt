@@ -26,9 +26,22 @@ const StoreContextProvider = (props) => {
     }
   };
 
+  const getProductsByCategory = async (categoryId) => {
+    console.log('Inne i getProductsByCat - id: ' + categoryId )
+    let res = await fetch(`/api/catProducts/${categoryId}`); // api to get categories.. whats the right "name"..
+    try {
+      res = await res.json();
+      console.log(res[0])
+      return res;
+    } catch (e) {
+      console.log("This is the error!! " + e);
+    }
+  };
+
   const values = {
     getProducts: getProducts,
     getCategories: getCategories,
+    getProductsByCategory: getProductsByCategory
     // categoryList: categoryList,
   };
 

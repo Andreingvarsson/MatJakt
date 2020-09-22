@@ -3,7 +3,7 @@ const app = express();
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
-const db = new DbHandler('../database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 //db.all = util.promisify(db.all)
 //const { setInterval } = require('timers');
 
@@ -91,7 +91,7 @@ app.get('/api/products', (req, res) => {
     anyProducts
   })
 })
-
+//******************************************************************************** */
 // JUST TRYING SOMETHING FOR FRONTEND!
 app.get('/api/categories', (req, res) => {
   // const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
@@ -101,15 +101,17 @@ app.get('/api/categories', (req, res) => {
   })
 })
 
-
+//******************************************************************************* */
 app.get('/api/products/:storeId', (req, res) => {
+  console.log('fel' + req)
   let anyProducts = db.all('SELECT * FROM products WHERE storeId = ' + req.params.storeId + " AND WHERE price = 55")
   res.json(
     anyProducts
   )
 })
 
-app.get('/api/products/:categoryId', (req, res) => {
+app.get('/api/catProducts/:categoryId', (req, res) => {
+  console.log(req + ' req')
   let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC")
   res.json(
     anyProducts

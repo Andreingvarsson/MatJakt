@@ -31,7 +31,7 @@ function App() {
           <StoreContext>
             <Switch>
               <Route exact path="/" component={home} />
-              <Route path="/searchGroceries" component={GrocerySearchPage} />
+              <Route path="/sok-varor" component={GrocerySearchPage} />
             </Switch>
           </StoreContext>
           {/* contextProvider */}
