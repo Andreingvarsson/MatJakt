@@ -19,7 +19,7 @@ module.exports = class WillysScrubber extends Scrubber {
     ordinaryComparePrice: (x) => x.comparePrice ? parseFloat(x.comparePrice.replace(/,/, ".")): null,
     productVolumeUnit: (x) => x.displayVolume.replace(/[0-9\.]|ca: /g, "").replace(/,/, ""),
     productVolume: (x) => parseFloat(x.displayVolume.replace(/,/, ".").replace(/ca: /, "")),
-    compareUnit: (x) => (x.comparePriceUnit ? x.comparePriceUnit : "Unknown"),
+    compareUnit: (x) => x.comparePriceUnit ? x.comparePriceUnit : "Unknown",
     eco: (x) => (x.labels.includes("ecological") ? 1 : 0),
     Swedish: (x) => (x.labels.includes("swedish_flag") ? 1 : 0),
     // NodeFetch ERROR Unexpected token N in json at position 0 ?
@@ -45,7 +45,18 @@ module.exports = class WillysScrubber extends Scrubber {
   }
 
   static checkDiscountPrice(x) {
-    let z =
+
+    try {
+      if (x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)) {
+        return x.priceValue;
+      }
+      return x.potentialPromotions[0].price.value;
+    } catch {
+      return x.priceValue;
+    }
+
+
+    /*let z =
       x.potentialPromotions.length >= 1
         ? x.potentialPromotions[0].conditionLabel
           ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
@@ -58,16 +69,28 @@ module.exports = class WillysScrubber extends Scrubber {
             ? x.priceValue
             : null
           : x.priceValue
-          ? x.price.value
+          ? x.priceValue
           : null
         : x.priceValue
         ? x.priceValue
         : null;
-    return z;
+    return z;*/
   }
 
   static checkDiscountComparePrice(x) {
-    let z =
+
+    try {
+      if (x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)) {
+        return parseFloat(x.comparePrice.replace(/,/, "."));
+      }
+      return parseFloat(
+        x.potentialPromotions[0].comparePrice.replace(/,/, ".")
+      );
+    } catch {
+      return parseFloat(x.comparePrice.replace(/,/, "."));
+    }
+
+    /*let z =
       x.potentialPromotions.length >= 1
         ? x.potentialPromotions[0].conditionLabel
           ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
@@ -87,7 +110,7 @@ module.exports = class WillysScrubber extends Scrubber {
         : x.comparePrice
         ? parseFloat(x.comparePrice.replace(/,/, "."))
         : null;
-        return z;
+        return z;*/
   }
 
   static checkIfDiscount(x) {

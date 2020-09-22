@@ -4,9 +4,8 @@ const MatHemHarvester = require("./MatHemHarvester");
 const MatHemScrubber = require("../scrubbers/MatHemScrubber")
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
-//const DbHandler = require('../DBHandler');
-//const fs = require('fs')
-//const db = new DbHandler('./database/MatJaktDatabase.db');
+const DbHandler = require('../DBHandler');
+const db = new DbHandler('../database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
@@ -23,11 +22,12 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts, id: "code" });
     let scrubbedItems = await WillysScrubber.scrubAllWillysProducts(productsToScrub)
-    console.log(scrubbedItems[0],scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450], scrubbedItems[5000])
-    //fs.writeFileSync( './json-to-import/WillysProducts.json', JSON.stringify(scrubbedItems))
-    //var WillysProducts = require('../json-to-import/WillysProducts.json');
-    //db.run('DELETE FROM products WHERE storeId = 1');
-    //db.insertMany('products', scrubbedItems);
+    console.log(//scrubbedItems[0], scrubbedItems[1], scrubbedItems[2500], scrubbedItems[450],
+      scrubbedItems[5000])
+    db.run('DELETE FROM products WHERE storeId = 1');
+    db.insertMany('products', scrubbedItems);
+    db.
+    console.log("Willys method finished");
   }
 
   /*static async getIcaProducts() {
@@ -53,16 +53,17 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "sku"});
     let scrubbedItems = await IcaScrubber.scrubAllIcaProducts(productsToScrub);
-    //db.run('DELETE FROM products WHERE storeId = 2');
-    //db.insertMany('products', scrubbedItems);
-
+    db.run('DELETE FROM products WHERE storeId = 2');
+    db.insertMany('products', scrubbedItems);
+    
     console.log('Scrubbed Ica products: ')
     console.log(
-      scrubbedItems[0],
-      scrubbedItems[10],
-      scrubbedItems[1500],
+      //scrubbedItems[0],
+      //scrubbedItems[10],
+      //scrubbedItems[1500],
       scrubbedItems[10300]
-    );
+      );
+    console.log("Ica method finished");
   }
 
   static async getMatHemProducts(){
@@ -79,18 +80,19 @@ module.exports = class Harvester {
 
     let productsToScrub = this.checkForDuplicates({allProducts: allProducts,id: "id"});
     let scrubbedItems = await MatHemScrubber.scrubAllMatHemProducts(productsToScrub);
-    // db.run('DELETE FROM products WHERE storeId = 3');
-    // db.insertMany('products', scrubbedItems);
+    db.run('DELETE FROM products WHERE storeId = 3');
+    db.insertMany('products', scrubbedItems);
 
     //Inför sprint1 visar enstaka scrubbade produkter
     console.log("Scrubbed Mathem products: ");
     console.log(
-      scrubbedItems[3],
-      scrubbedItems[6],
-      scrubbedItems[204],
-      scrubbedItems[500],
+      //scrubbedItems[3],
+      //scrubbedItems[6],
+      //scrubbedItems[204],
+      //scrubbedItems[500],
       scrubbedItems[300]
-      );
+    );
+    console.log("Mathem method finished");
   }
 
 
