@@ -15,7 +15,7 @@ const StoreContextProvider = (props) => {
   //       getCategories();
   //   }, [])
 
-  const [productsToShow, setProductsToShow] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
     let res = await fetch("/api/sort");
@@ -52,7 +52,8 @@ const StoreContextProvider = (props) => {
     getProducts: getProducts,
     getCategories: getCategories,
     getProductsByCategory: getProductsByCategory,
-    productsToShow: productsToShow,
+    products: products,
+    setProducts: setProducts
     // categoryList: categoryList,
   };
 

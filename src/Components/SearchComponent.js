@@ -4,17 +4,21 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Label,
+  Input
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
 import ProductItem from "./ProductItem";
+import '../Css/SearchComponent.css'
 
 const SearchComponent = (props) => {
   const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const { getCategories, getProductsByCategory } = useContext(StoreContext);
+  const { getCategories, getProductsByCategory, setProducts, products } = useContext(StoreContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [productsToShow, setProductsToShow] = useState([]);
+  //const [products, setProducts] = useState(products);
 
   const fetchCategories = async () => {
     let result = await getCategories();
@@ -23,7 +27,8 @@ const SearchComponent = (props) => {
 
   const fetchMoreProducts = async (select) => {
     let result = await getProductsByCategory(select, page);
-    let newList = [...productsToShow, ...result];
+    let newList = [...productsToShow/*products*/, ...result];
+    //setProducts(newList)
     setProductsToShow(newList);
   };
 
@@ -37,21 +42,21 @@ const SearchComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    if (productsToShow.length === 0) {
+    console.log(products)
+    if (productsToShow.length /*products*/ === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
       }
     }
-  }, [productsToShow]);
+  }, [productsToShow/*products*/]);
 
   useEffect(() => {
     setPage(0);
+    //setProducts([])
     setProductsToShow([]);
   }, [selectedCategory]);
 
-  let dropStyle = {
-    margin: "1.5rem 0rem",
-  };
+  
   let btnStyle = {
     margin: "2rem",
   };
@@ -61,20 +66,16 @@ const SearchComponent = (props) => {
 
   return (
     <>
-      <div className="searchComponent">
-        <div className="container row">
-          <div className="col-6">
-            <Dropdown isOpen={dropdownOpen} toggle={toggle} style={dropStyle}>
+      <div className="searchComponent container ">
+       
+          <div className="row fixed">
+          <div className="col-sm-4 col-md-4 col-l-4 mt-5 no-pad">
+            <Dropdown isOpen={dropdownOpen} toggle={toggle} className="">
               <DropdownToggle caret>Alla kategorier</DropdownToggle>
               <DropdownMenu>
                 {categoryList.map((category) => (
-                  <DropdownItem
-                    onClick={() => {
-                      setSelectedCategory(category.categoryId);
-                      setCategoryTitle(category.name);
-                    }}
-                    key={category.categoryId}
-                  >
+                  <DropdownItem onClick={() => {setSelectedCategory(category.categoryId); setCategoryTitle(category.name);}}
+                    key={category.categoryId}>
                     {category.name}
                   </DropdownItem>
                 ))}
@@ -89,11 +90,19 @@ const SearchComponent = (props) => {
               </DropdownMenu>
             </Dropdown>
           </div>
-          <h5 className="col-6" style={dropStyle}>
-            {categoryTitle}
-          </h5>
+          <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
+          <input type="text" className="form-control" placeholder="Sök produkt"  />  
+          
+          </div>
+          {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
-        <div className="">
+        <div className="row align-self-start">
+          {products.map((product, i) => (
+            <ProductItem
+              key={product.productId + "a" + i}
+              product={product}
+            ></ProductItem>
+          ))}
           {productsToShow.map((product, i) => (
             <ProductItem
               key={product.productId + "a" + i}
@@ -102,6 +111,7 @@ const SearchComponent = (props) => {
           ))}
         </div>
         {productsToShow.length ? (
+          <div className="col d-flex jusitfy-content-center">
           <button
             style={btnStyle}
             type="button"
@@ -109,9 +119,10 @@ const SearchComponent = (props) => {
             onClick={
               () => setPage(page + 1) /*fetchMoreProducts(selectedCategory)*/
             }
-          >
+            >
             Ladda fler
           </button>
+        </div>
         ) : null}
       </div>
     </>
