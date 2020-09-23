@@ -4,6 +4,8 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  ListGroup,
+  ListGroupItem
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
 import ProductItem from "./ProductItem";
@@ -88,6 +90,32 @@ const SearchComponent = (props) => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
+
+            <ListGroup>
+            {categoryList.map((category) => (
+                  <ListGroupItem
+                    onClick={() => {
+                      setSelectedCategory(category.categoryId);
+                      setCategoryTitle(category.name);
+                    }}
+                    key={category.categoryId}
+                  >
+                    {category.name}
+               </ListGroupItem>
+                    ))}
+                <ListGroupItem        onClick={() => {
+                    setSelectedCategory(0);
+                    setCategoryTitle(""); /*setPage(0)*/
+                  }}
+                >
+                 Återställ</ListGroupItem>
+  
+    </ListGroup>
+
+
+
+
+
           </div>
           <h5 className="col-6" style={dropStyle}>
             {categoryTitle}
