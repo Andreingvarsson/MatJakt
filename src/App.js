@@ -10,6 +10,7 @@ import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
 import Header from "./Components/Header";
 import GrocerySearchPage from "./Pages/GrocerySearchPage";
+import CheapestResult from "./Pages/CheapestResult";
 
 const getData = async (input) => {
 
@@ -32,6 +33,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/sok-varor" component={GrocerySearchPage} />
+              <Route path="/billigast-hos" component={CheapestResult} />
             </Switch>
           </StoreContext>
           {/* contextProvider */}
