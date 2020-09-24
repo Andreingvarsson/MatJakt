@@ -5,7 +5,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Label,
-  Input
+  Input,
+  Form
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
 import ProductItem from "./ProductItem";
@@ -15,10 +16,23 @@ const SearchComponent = (props) => {
   const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const { getCategories, getProductsByCategory, setProducts, products } = useContext(StoreContext);
+  const { getCategories, getProductsByCategory, getProductsBySearch, setProducts, products } = useContext(StoreContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [productsToShow, setProductsToShow] = useState([]);
   //const [products, setProducts] = useState(products);
+
+  let isSearching = false;
+  let searchedWord = '';
+
+  const [searchWord, setSearchWord] = useState('');
+
+  const fetchProductsBySearch = async (search) => {
+    let result = await getProductsBySearch(search, page)
+    setProductsToShow([])
+    setSelectedCategory(0)
+    let newList = [...productsToShow,...result]
+    setProductsToShow(newList)
+  }
 
   const fetchCategories = async () => {
     let result = await getCategories();
@@ -42,11 +56,14 @@ const SearchComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(products)
+    
     if (productsToShow.length /*products*/ === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
+      }else if(isSearching){
+        fetchProductsBySearch()
       }
+
     }
   }, [productsToShow/*products*/]);
 
@@ -63,6 +80,40 @@ const SearchComponent = (props) => {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  const updateSearchWord = (event) => {
+    setSearchWord(event)
+  }
+
+  const handleSearch = () => {
+
+    if(searchWord.length > 0){
+
+      fetchProductsBySearch(searchWord)
+      
+    }
+    isSearching = true;
+    searchedWord = searchWord;
+    console.log(searchedWord)
+    console.log(productsToShow + 'innnan')
+    setProductsToShow([])
+    console.log(productsToShow+'efter')
+    setCategoryTitle(searchedWord)
+    //setSearchWord('')
+
+  }
+
+  const onKeyUp = (e) => {
+    if(e.charCode === 13){
+      handleSearch()
+    }
+  }
+
+  useEffect(()=>{
+    console.log(searchWord)
+  },[searchWord])
+
+
 
   return (
     <>
@@ -91,7 +142,9 @@ const SearchComponent = (props) => {
             </Dropdown>
           </div>
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
-          <input type="text" className="form-control" placeholder="Sök produkt"  />  
+            
+              <Input type="text" className="form-control" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
+            
           
           </div>
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}

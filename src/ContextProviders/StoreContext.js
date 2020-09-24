@@ -47,11 +47,28 @@ const StoreContextProvider = (props) => {
       console.log("This is the error!! " + e);
     }
   };
+  
+
+  const getProductsBySearch = async (searchWord, page = 0) => {
+    console.log("Inne i getProductsBySearch - id: " + searchWord);
+    let res = await fetch(
+      `/api/searchProducts/${searchWord}?limit=10&page=${page}`
+    ); // api to get categories.. whats the right "name"..
+    try {
+      res = await res.json();
+      //console.log(res[0])
+      // setProductsToShow(res);
+      return res;
+    } catch (e) {
+      console.log("This is the error!! " + e);
+    }
+  };
 
   const values = {
     getProducts: getProducts,
     getCategories: getCategories,
     getProductsByCategory: getProductsByCategory,
+    getProductsBySearch: getProductsBySearch,
     products: products,
     setProducts: setProducts
     // categoryList: categoryList,
