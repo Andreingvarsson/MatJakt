@@ -1,12 +1,14 @@
 import React from "react";
 import "../Css/CheapestResult.css";
+import {Card} from 'reactstrap';
 
 const CheapestResult = (props) => {
 
+// Change to reactstrap Card!!
 
-    
   return (
     <>
+    <Card>
       <div className="page">
         <h1 className="">Din inköpslista</h1>
         <h3 className="">blir billigast hos: </h3>
@@ -34,6 +36,7 @@ const CheapestResult = (props) => {
           <h5> 400 kr </h5>
         </div>
       </div>
+      </Card>
     </>
   );
 };
