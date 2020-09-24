@@ -2,6 +2,9 @@ import React from "react";
 import "../Css/CheapestResult.css";
 
 const CheapestResult = (props) => {
+
+
+    
   return (
     <>
       <div className="page">
@@ -13,7 +16,7 @@ const CheapestResult = (props) => {
             src="https://lh3.googleusercontent.com/proxy/rLv9GbeKWzlSmi8yWR1bROlxf2P1fJWBcqrZ3TfWfWR9PRiMtiar1f7VeMcuiF6lnmZaMy0EhZYY4XCSAJYM2UusG5GiYYXIsInGV-Wv_o5MMcOJmMmvUZuUXuN_prEyJ_j-KHN5QcXmpcgfXceNQAwU1L91"
           ></img>
           <h3>med en totalsumma på</h3>
-          <h2> 387 kr </h2>
+          <h3> 387 kr </h3>
         </div>
         <div className="line"></div>
         <div className="second-seg">
