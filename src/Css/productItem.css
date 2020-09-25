@@ -14,13 +14,13 @@
     /* width: auto; */
 }
 .ica-back{
-    /* height: 5vh; */
+    height: 5vh;
     background: url("../images/ica-logo-share.jpg") no-repeat center;
     background-size: contain;
     /* width: auto; */
 }
 .mathem-back{
-    /* height: 8vh; */
+    height: 8vh;
     background: url("../images/mathem.png") no-repeat center;
     background-size: contain;
 }

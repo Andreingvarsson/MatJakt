@@ -37,7 +37,7 @@ const ProductItem = (props) => {
   return (
     <div className="card mb-3 col-xl-3 col-l-4 col-md-4 col-sm-6 col-xs-6" style={cardCont} >
       <div className="col no-gutters ">
-        <div className="">
+        <div className="d-flex justify-content-center">
           <img src={props.product.storeId !== 2? props.product.imageUrl
             : `https://assets.icanet.se/t_product_large_v1,f_auto/${props.product.imageUrl}.jpg`} className="card-img-top pic-height  " alt="..."/>
         </div>
