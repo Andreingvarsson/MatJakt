@@ -123,8 +123,8 @@ const SearchComponent = (props) => {
           <div className="row ">
           <div className="col-sm-4 col-md-4 col-l-4 mt-5 no-pad">
             <Dropdown isOpen={dropdownOpen} toggle={toggle} className="">
-              <DropdownToggle caret className="btn-dark">Alla kategorier</DropdownToggle>
-              <DropdownMenu>
+              <DropdownToggle caret className="btn-dark mono-font">Alla kategorier</DropdownToggle>
+              <DropdownMenu className="mono-font">
                 {categoryList.map((category) => (
                   <DropdownItem onClick={() => {setSelectedCategory(category.categoryId); setCategoryTitle(category.name);}}
                     key={category.categoryId}>
@@ -143,7 +143,7 @@ const SearchComponent = (props) => {
             </Dropdown>
           </div>
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
-              <Input type="text" className="form-control" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
+              <Input type="text" className="form-control mono-font" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
           </div>
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
@@ -162,11 +162,11 @@ const SearchComponent = (props) => {
           ))}
         </div>
         {productsToShow.length ? (
-          <div className="col-12 d-flex jusitfy-content-center">
+          <div className="col-12 d-flex jusitfy-content-center ">
           <button
             style={btnStyle}
             type="button"
-            className="btn btn-dark"
+            className="btn btn-dark mono-font"
             onClick={
               () => setPage(page + 1) /*fetchMoreProducts(selectedCategory)*/
             }

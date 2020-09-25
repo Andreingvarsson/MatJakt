@@ -1,0 +1,5 @@
+.img-list{
+    height: 15vh;
+    background: url("../images/cart.jpg") no-repeat center;
+    background-size: cover;
+}

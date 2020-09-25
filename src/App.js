@@ -10,6 +10,7 @@ import StoreContext from "./ContextProviders/StoreContext";
 import ProductContext from "./ContextProviders/ProductContext";
 import Header from "./Components/Header";
 import GrocerySearchPage from "./Pages/GrocerySearchPage";
+import ProductListPage from "./Pages/ProductListPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/sok-varor" component={GrocerySearchPage} />
+              <Route path="/inkopslista" component={ProductListPage}/>
             </Switch>
             </ProductContext>
           </StoreContext>

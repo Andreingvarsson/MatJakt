@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import '../Css/productItem.css'
+import '../Css/fonts.css'
 import {ProductContext} from '../ContextProviders/ProductContext'
 
 const ProductItem = (props) => {
@@ -42,11 +43,11 @@ const ProductItem = (props) => {
             : `https://assets.icanet.se/t_product_large_v1,f_auto/${props.product.imageUrl}.jpg`} className="card-img-top pic-height  " alt="..."/>
         </div>
           <div className="card-body">
-            <h6 className="card-title text-center" style={titleStyle}>{props.product.name}</h6>
-          <h5 className="text-center">{props.product.price} kr</h5>
-          <p className="card-text text-center" style={pStyle}>{props.product.productVolume}{props.product.productVolumeUnit}</p> 
-          <p className="card-text text-center" style={pStyle}>Jfr-pris {props.product.comparePrice}/{props.product.compareUnit}<span> - {props.product.originCountry}</span></p> 
-          <p className="card-text text-center" style={pStyle}></p> 
+            <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{props.product.name}</h6>
+          <h5 className="text-center monospace-font solid">{props.product.price} kr</h5>
+          <p className="card-text text-center monospace-font" style={pStyle}>{props.product.productVolume}{props.product.productVolumeUnit}</p> 
+          <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {props.product.comparePrice}/{props.product.compareUnit}<span> - {props.product.originCountry}</span></p> 
+          <p className="card-text text-center monospace-font" style={pStyle}></p> 
             <div className={stores[props.product.storeId]} ></div>    
           </div>
       </div>
@@ -55,15 +56,15 @@ const ProductItem = (props) => {
           <div className="col-6">
 
             <div className="row d-flex align-middle">
-              <button type="button" className=" btn btn-dark col-4" onClick={()=> {if(count > 1){setCount(count-1)}}}> - </button>
+              <button type="button" className=" btn btn-light col-4" onClick={()=> {if(count > 1){setCount(count-1)}}}> - </button>
               <p className="col-4 ">{count}</p>
               {/* need to fix css when more then 9 products */}
-              <button type="button" className="btn btn-dark col-4 " onClick={()=> {if(count < 9){setCount(count+1)}}}> + </button>
+              <button type="button" className="btn btn-light col-4 " onClick={()=> {if(count < 9){setCount(count+1)}}}> + </button>
             </div>
 
           </div>
           <div className="col-6 d-flex justify-content-end no-pad-right">
-          <button type="button" className="btn btn-dark" /*onClick={() => addProductToContext()}*/>Lägg till</button>
+          <button type="button" className="btn btn-light monospace-font" /*onClick={() => addProductToContext()}*/>Lägg till</button>
 
           </div>
         </div>

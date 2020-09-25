@@ -10,7 +10,9 @@
 .navbar-brand{
     color: white;
     text-align: center;
-    font-family: monospace; 
-    
-  
+    padding-right: 0 !important;
+}
+
+.link{
+    color: black;
 }
