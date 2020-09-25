@@ -20,15 +20,12 @@ const SearchComponent = (props) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [productsToShow, setProductsToShow] = useState([]);
   //const [products, setProducts] = useState(products);
-
-  let isSearching = false;
-  let searchedWord = '';
-
   const [searchWord, setSearchWord] = useState('');
+  const [searchedWord, setSearchedWord] = useState('');
 
   const fetchProductsBySearch = async (search) => {
     let result = await getProductsBySearch(search, page)
-    setProductsToShow([])
+    //setProductsToShow([])
     setSelectedCategory(0)
     let newList = [...productsToShow,...result]
     setProductsToShow(newList)
@@ -47,33 +44,42 @@ const SearchComponent = (props) => {
   };
 
   useEffect(() => {
-    fetchMoreProducts(selectedCategory);
+    if(selectedCategory !== 0){
+      fetchMoreProducts(selectedCategory);
+    }
+    else if(searchedWord){
+      fetchProductsBySearch(searchedWord)
+    }
   }, [page]);
-
+ 
   useEffect(() => {
     fetchCategories();
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    
     if (productsToShow.length /*products*/ === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
-      }else if(isSearching){
-        fetchProductsBySearch()
+      }else if(searchedWord){
+        fetchProductsBySearch(searchedWord)
       }
-
     }
-  }, [productsToShow/*products*/]);
+  }, [productsToShow]);
 
   useEffect(() => {
     setPage(0);
     //setProducts([])
     setProductsToShow([]);
   }, [selectedCategory]);
+  useEffect(() => {
+    if(searchedWord.length > 0){
+      setSelectedCategory(0)
+      setProductsToShow([])
+      setCategoryTitle(`"${searchedWord}"`)
+    }
+  }, [searchedWord]);
 
-  
   let btnStyle = {
     margin: "2rem",
   };
@@ -86,21 +92,16 @@ const SearchComponent = (props) => {
   }
 
   const handleSearch = () => {
-
     if(searchWord.length > 0){
-
-      fetchProductsBySearch(searchWord)
-      
+      setSearchedWord(searchWord)
+      setSearchWord('')
+      // setSelectedCategory(0)
+      // setProductsToShow([])
+      // setCategoryTitle(`"${searchWord}"`)
+    }else{
+      setProductsToShow([])
+      setCategoryTitle('')
     }
-    isSearching = true;
-    searchedWord = searchWord;
-    console.log(searchedWord)
-    console.log(productsToShow + 'innnan')
-    setProductsToShow([])
-    console.log(productsToShow+'efter')
-    setCategoryTitle(searchedWord)
-    //setSearchWord('')
-
   }
 
   const onKeyUp = (e) => {
@@ -142,10 +143,7 @@ const SearchComponent = (props) => {
             </Dropdown>
           </div>
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
-            
               <Input type="text" className="form-control" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
-            
-          
           </div>
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>

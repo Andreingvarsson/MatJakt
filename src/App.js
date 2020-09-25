@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
+import ProductContext from "./ContextProviders/ProductContext";
 import Header from "./Components/Header";
 import GrocerySearchPage from "./Pages/GrocerySearchPage";
 
@@ -18,10 +19,12 @@ function App() {
           <Header></Header>
           {/* contextProvider */}
           <StoreContext>
+            <ProductContext>
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/sok-varor" component={GrocerySearchPage} />
             </Switch>
+            </ProductContext>
           </StoreContext>
           {/* contextProvider */}
         </div>
