@@ -13,41 +13,39 @@ async function getAll() {
   await Harvester.getMatHemProducts();
   console.log("All methods finished")
 }
+//Runs the function every hour
+//It will the set time before running it from start, add a single function call to check at startup
+setInterval(() => {
+  checkForHarvest();
+}, 3600000);
 
-//getAll();
-/*var date = Math.round((new Date()).getTime() / 1000);
-console.log(date)
-if (date > date + (86400)) {
-  console.log("It's been over 24 hours since last fetch")  
-} else {
-  console.log("It hasn't been over 24 hours since last fetch") 
-}
-newDate = date + 86401
-if (newDate > date + (86400)) {
-  console.log("It's been over 24 hours since last fetch")
-}else if (date < date + (86400)) {
-  console.log("It hasn't been over 24 hours since last fetch")
-}*/
-
+//Checks the current date and compares it to the dates for each harvest/fetch for the stores
+//If it has been 24 hours (86400 seconds) since the last fetch it will run the harvest functions
+//TODO, clean up console/make it more readable
 async function checkForHarvest() {
-  setTimeout(() => {
-    console.log("Checking if harvest is needed")
-    var currentDate = Math.round((new Date()).getTime() / 1000);
-    var latestFetchDate = db.all('SELECT latestFetch FROM stores WHERE storeId = 1')
-    console.log("Current date: " + currentDate)
-    console.log("Latest fetch: " + latestFetchDate[0].latestFetch)
-    if (currentDate > latestFetchDate[0].latestFetch + (600)) {
-      console.log("It's been over 24 hours since last fetch, starting new fetch")
-      getAll();
-    } else {
-      console.log("It hasn't been over 24 hours since last fetch")
-    }
-    checkForHarvest();
-  }, 600000)
+  console.log('\n' + Date().toString('yyyy-MM-d-h-mm-ss') + '\n' + "Checking if harvest is needed" + '\n')
+  var currentDate = Math.round((new Date()).getTime() / 1000);
+  var latestFetchDate = db.all('SELECT latestFetch FROM stores WHERE storeId = 1')
+  console.log("Current date: " + currentDate + '\n')
+  console.log("Latest Willys fetch: " + latestFetchDate[0].latestFetch)
+  if (currentDate > latestFetchDate[0].latestFetch + (86400)) {
+    console.log("Fetching Willys data");
+    await Harvester.getWillysProducts();
+  }
+  latestFetchDate = db.all('SELECT latestFetch FROM stores WHERE storeId = 2')
+  console.log("Latest Ica fetch: " + latestFetchDate[0].latestFetch)
+  if (currentDate > latestFetchDate[0].latestFetch + (86400)) {
+    console.log("Fetching Ica data");
+    await Harvester.getIcaProducts();
+  }
+  latestFetchDate = db.all('SELECT latestFetch FROM stores WHERE storeId = 3')
+  console.log("Latest MatHem fetch: " + latestFetchDate[0].latestFetch)
+  if (currentDate > latestFetchDate[0].latestFetch + (86400)) {
+    console.log("Fetching MatHem data");
+    await Harvester.getMatHemProducts();    
+  }
 }
 
-checkForHarvest();
-//Harvester.getWillysProducts();
 //*************** trying to fix date converting************************* */
 // let date = new Date();
 // // let strDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -85,7 +83,7 @@ postNewFetchDate(date);*/
 }*/
 
 
-function getLatestFetch(id){
+/*function getLatestFetch(id){
   let latestFetch = db.all(`SELECT latestFetch FROM stores WHERE storeId = ${id}`);
   console.log(latestFetch[0].latestFetch + ' i fetch')
   return latestFetch[0].latestFetch;
@@ -112,7 +110,7 @@ function checkIfNeedToFetch(){
     clearInterval(intervalId);
     intervalId = setCheckFetchInterval();
   }
-}
+}*/
 
 //TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?, 
 
