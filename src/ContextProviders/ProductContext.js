@@ -8,6 +8,8 @@ const ProductContextProvider = (props) => {
 
 
     const addProduct = (product) => {
+        console.log(product+ ' - inne i proCont')
+        
         setProducts([...products,...product])
     }
 

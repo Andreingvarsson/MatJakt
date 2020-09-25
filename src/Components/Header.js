@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
 <>   
-<div className="header"> 
+<div className="header bg-dark"> 
 <div className="container ">
     <nav className="navbar">   
     <span className="navbar-brand mx-auto">

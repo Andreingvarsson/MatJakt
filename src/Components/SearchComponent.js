@@ -120,10 +120,10 @@ const SearchComponent = (props) => {
     <>
       <div className="searchComponent container ">
        
-          <div className="row fixed">
+          <div className="row ">
           <div className="col-sm-4 col-md-4 col-l-4 mt-5 no-pad">
             <Dropdown isOpen={dropdownOpen} toggle={toggle} className="">
-              <DropdownToggle caret>Alla kategorier</DropdownToggle>
+              <DropdownToggle caret className="btn-dark">Alla kategorier</DropdownToggle>
               <DropdownMenu>
                 {categoryList.map((category) => (
                   <DropdownItem onClick={() => {setSelectedCategory(category.categoryId); setCategoryTitle(category.name);}}
@@ -162,16 +162,16 @@ const SearchComponent = (props) => {
           ))}
         </div>
         {productsToShow.length ? (
-          <div className="col d-flex jusitfy-content-center">
+          <div className="col-12 d-flex jusitfy-content-center">
           <button
             style={btnStyle}
             type="button"
-            className="btn btn-primary"
+            className="btn btn-dark"
             onClick={
               () => setPage(page + 1) /*fetchMoreProducts(selectedCategory)*/
             }
             >
-            Ladda fler
+            Ladda fler varor
           </button>
         </div>
         ) : null}

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import '../Css/productItem.css'
+import {ProductContext} from '../ContextProviders/ProductContext'
 
 const ProductItem = (props) => {
 
@@ -7,6 +8,18 @@ const ProductItem = (props) => {
     1: "willys-back",
     2: "ica-back",
     3: "mathem-back"
+  }
+  const {addProduct} = useContext(ProductContext)
+  const [count, setCount] = useState(1)
+
+  const addProductToContext = () => {
+
+    const prod = {
+      product: props.product,
+      amount: count
+    }
+    console.log(prod)
+    addProduct(prod)
   }
 
   let pStyle = {
@@ -18,14 +31,15 @@ const ProductItem = (props) => {
   let cardCont = {
     padding: "0.5em",
     boxShadow: "2px 5px lightgrey",
+    
   };
 
   return (
-    <div className="card mb-3 col-xl-3 col-l-4 col-md-4 col-sm-6 col-xs-6 " style={cardCont} >
+    <div className="card mb-3 col-xl-3 col-l-4 col-md-4 col-sm-6 col-xs-6" style={cardCont} >
       <div className="col no-gutters ">
         <div className="">
           <img src={props.product.storeId !== 2? props.product.imageUrl
-            : `https://assets.icanet.se/t_product_large_v1,f_auto/${props.product.imageUrl}.jpg`} className="card-img-top " alt="..."/>
+            : `https://assets.icanet.se/t_product_large_v1,f_auto/${props.product.imageUrl}.jpg`} className="card-img-top pic-height  " alt="..."/>
         </div>
           <div className="card-body">
             <h6 className="card-title text-center" style={titleStyle}>{props.product.name}</h6>
@@ -36,10 +50,22 @@ const ProductItem = (props) => {
             <div className={stores[props.product.storeId]} ></div>    
           </div>
       </div>
-        <div className="">
-          <button type="button" className="btn btn-light">
-            Lägg till
-          </button>
+        <div className="row  btn-div container mx-auto mtopbot">
+
+          <div className="col-6">
+
+            <div className="row d-flex align-middle">
+              <button type="button" className=" btn btn-dark col-4" onClick={()=> {if(count > 1){setCount(count-1)}}}> - </button>
+              <p className="col-4 ">{count}</p>
+              {/* need to fix css when more then 9 products */}
+              <button type="button" className="btn btn-dark col-4 " onClick={()=> {if(count < 9){setCount(count+1)}}}> + </button>
+            </div>
+
+          </div>
+          <div className="col-6 d-flex justify-content-end no-pad-right">
+          <button type="button" className="btn btn-dark" /*onClick={() => addProductToContext()}*/>Lägg till</button>
+
+          </div>
         </div>
     </div>
     
