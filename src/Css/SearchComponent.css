@@ -1,0 +1,16 @@
+.no-pad{
+    padding-left: 0;
+}
+
+.fixed{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 56;
+    background-color: white;
+    width: 100%;
+}
+
+.mono-font{
+    font-family: monospace;
+}

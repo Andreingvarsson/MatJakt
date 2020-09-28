@@ -5,7 +5,7 @@ const MatHemScrubber = require("../scrubbers/MatHemScrubber")
 const IcaHarvester = require("./IcaHarvester");
 const IcaScrubber = require("../scrubbers/IcaScrubber");
 const DbHandler = require('../DBHandler');
-const db = new DbHandler('../database/MatJaktDatabase.db');
+const db = new DbHandler('./database/MatJaktDatabase.db');
 
 module.exports = class Harvester {
 
