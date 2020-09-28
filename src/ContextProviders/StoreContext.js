@@ -14,8 +14,11 @@ const StoreContextProvider = (props) => {
   //   useEffect( async ()=> {
   //       getCategories();
   //   }, [])
+  //const [products, setProducts] = useState([]);
 
-  const [products, setProducts] = useState([]);
+  // const updateProducts = (update) => {
+  //   setProducts([...products,...update])
+  // }
 
   const getProducts = async () => {
     let res = await fetch("/api/sort");
@@ -69,8 +72,9 @@ const StoreContextProvider = (props) => {
     getCategories: getCategories,
     getProductsByCategory: getProductsByCategory,
     getProductsBySearch: getProductsBySearch,
-    products: products,
-    setProducts: setProducts
+    //products: products,
+    //setProducts: setProducts,
+    //updateProducts: updateProducts
     // categoryList: categoryList,
   };
 

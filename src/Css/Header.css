@@ -16,3 +16,11 @@
 .link{
     color: black;
 }
+.fix{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 563;
+    background-color: white;
+    width: 100%;
+}

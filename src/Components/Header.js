@@ -1,15 +1,19 @@
-import React from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import '../Css/Header.css'
-import ProductListPage from '../Pages/ProductListPage';
 import '../Css/fonts.css'
+import { Link } from 'react-router-dom';
+import { ProductContext } from '../ContextProviders/ProductContext';
 
 
 const Header = (props) => {
-  const {history} = props
+
+  //const {productsInList} = useContext(ProductContext)
+  
+
   
   return (
 <>   
-<div className="header bg-dark"> 
+<div className="header bg-dark fix"> 
 <div className="container ">
     <nav className="navbar d-flex justify-content-end">   
       <span className="navbar-brand col-4">
@@ -17,8 +21,8 @@ const Header = (props) => {
       </span>
       <div className="col-4 d-flex justify-content-between">
         
-          <a className="nav-link btn btn-light monospace-font" href="/sok-varor">Sök varor</a>
-          <a className="nav-link btn btn-light monospace-font" href="/inkopslista">Inköpslista</a>
+          <Link className="nav-link btn btn-light monospace-font" to="/sok-varor">Sök varor</Link>
+          <Link className="nav-link btn btn-light monospace-font" to="/inkopslista">Inköpslista<span></span></Link>
         
       </div>
     </nav>  

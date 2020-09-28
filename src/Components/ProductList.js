@@ -2,23 +2,21 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import  ProductItem  from './ProductItem'
-import StoreContext from '../ContextProviders/StoreContext'
 
 const SearchComponent = (props) => {
 
-    const { ProductsToShow } = useContext(StoreContext);
-    const [products, setProducts] = useState([])
-  
-  useEffect(() => {
-    setProducts(ProductsToShow)
-  }, [ProductsToShow]);
-
+  const getProduct = (product) => {
+    return product.product? product.product: product;
+  }
   return (
     <>
     
-          <div className="">
-          {products.map((product) => (
-          <ProductItem key={product.productId} product={product}></ProductItem>))}
+          <div className="container">
+          <div className="row">
+
+          {props.products.map((product,i) => (
+            <ProductItem key={product.productId+'x'+i} product={product}></ProductItem>))}
+          </div>
           </div>
       
     </>

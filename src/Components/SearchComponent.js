@@ -9,6 +9,7 @@ import {
   Form
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
+import { ProductContext } from "../ContextProviders/ProductContext";
 import ProductItem from "./ProductItem";
 import '../Css/SearchComponent.css'
 
@@ -17,6 +18,7 @@ const SearchComponent = (props) => {
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const { getCategories, getProductsByCategory, getProductsBySearch, setProducts, products } = useContext(StoreContext);
+  const { clearProductsToShow, addProductsToShow, productsFromContext} = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [productsToShow, setProductsToShow] = useState([]);
   //const [products, setProducts] = useState(products);
@@ -27,8 +29,9 @@ const SearchComponent = (props) => {
     let result = await getProductsBySearch(search, page)
     //setProductsToShow([])
     setSelectedCategory(0)
-    let newList = [...productsToShow,...result]
-    setProductsToShow(newList)
+    addProductsToShow(result);
+    // let newList = [...productsToShow,...result]
+    // setProductsToShow(newList)
   }
 
   const fetchCategories = async () => {
@@ -38,9 +41,10 @@ const SearchComponent = (props) => {
 
   const fetchMoreProducts = async (select) => {
     let result = await getProductsByCategory(select, page);
-    let newList = [...productsToShow/*products*/, ...result];
+    //let newList = [...productsToShow/*products*/, ...result];
     //setProducts(newList)
-    setProductsToShow(newList);
+    //setProductsToShow(newList);
+    addProductsToShow(result);
   };
 
   useEffect(() => {
@@ -58,24 +62,26 @@ const SearchComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    if (productsToShow.length /*products*/ === 0) {
+    if (productsFromContext.length/*productsToShow.length*/ /*products*/ === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
       }else if(searchedWord){
         fetchProductsBySearch(searchedWord)
       }
     }
-  }, [productsToShow]);
+  }, [productsFromContext/*productsToShow*/]);
 
   useEffect(() => {
     setPage(0);
     //setProducts([])
-    setProductsToShow([]);
+    clearProductsToShow();
+    //setProductsToShow([]);
   }, [selectedCategory]);
   useEffect(() => {
     if(searchedWord.length > 0){
       setSelectedCategory(0)
-      setProductsToShow([])
+      clearProductsToShow();
+      //setProductsToShow([])
       setCategoryTitle(`"${searchedWord}"`)
     }
   }, [searchedWord]);
@@ -99,7 +105,8 @@ const SearchComponent = (props) => {
       // setProductsToShow([])
       // setCategoryTitle(`"${searchWord}"`)
     }else{
-      setProductsToShow([])
+      //setProductsToShow([])
+      clearProductsToShow();
       //setSearchedWord('')
       //setCategoryTitle('')
     }
@@ -149,20 +156,20 @@ const SearchComponent = (props) => {
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
         <div className="row align-self-start">
-          {products.map((product, i) => (
+          {/* {products.map((product, i) => (
             <ProductItem
               key={product.productId + "a" + i}
               product={product}
             ></ProductItem>
-          ))}
-          {productsToShow.map((product, i) => (
+          ))} */}
+          {/* {productsFromContext.map((product, i) => (
             <ProductItem
               key={product.productId + "a" + i}
               product={product}
             ></ProductItem>
-          ))}
+          ))} */}
         </div>
-        {productsToShow.length ? (
+        {productsFromContext.length ? (
           <div className="col-12 d-flex jusitfy-content-center ">
           <button
             style={btnStyle}

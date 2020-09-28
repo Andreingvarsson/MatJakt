@@ -1,5 +1,5 @@
 import React, { useContext }  from 'react';
-import { StoreContext } from '../ContextProviders/StoreContext';
+import { ProductContext } from '../ContextProviders/ProductContext';
 import SearchComponent from  '../Components/SearchComponent';
 import ProductList from '../Components/ProductList'
 import '../Css/ProductListPage.css'
@@ -10,7 +10,7 @@ const ProductListPage = () => {
 
 
 
-    const {getProducts} = useContext(StoreContext)
+    const {productsInList} = useContext(ProductContext)
 
 
   return (
@@ -18,7 +18,7 @@ const ProductListPage = () => {
     <div className=""> 
     <div className="img-list"></div>
         <h2 className="col-12 text-center monospace-font mt-5">Inköpslista</h2>
-        {/* <ProductList></ProductList> */}
+        <ProductList products={productsInList}></ProductList>
     </div>
     </>
   );
