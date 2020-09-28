@@ -145,7 +145,8 @@ const SearchComponent = (props) => {
               </DropdownMenu>
             </Dropdown>
 
-            <ListGroup>
+      
+            <ListGroup className="col-xl-4 d-none d-md-block">
             {categoryList.map((category) => (
                   <ListGroupItem
                     onClick={() => {
@@ -163,14 +164,13 @@ const SearchComponent = (props) => {
                   }}
                 >
                  Återställ</ListGroupItem>
-  
     </ListGroup>
 
 
-
-
-
           </div>
+
+
+
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
               <Input type="text" className="form-control mono-font" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
           </div>
