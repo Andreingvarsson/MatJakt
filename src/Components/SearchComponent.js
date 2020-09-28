@@ -100,7 +100,8 @@ const SearchComponent = (props) => {
       // setCategoryTitle(`"${searchWord}"`)
     }else{
       setProductsToShow([])
-      setCategoryTitle('')
+      //setSearchedWord('')
+      //setCategoryTitle('')
     }
   }
 
