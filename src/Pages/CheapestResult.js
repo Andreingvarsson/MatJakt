@@ -1,10 +1,13 @@
 import React from "react";
 import "../Css/CheapestResult.css";
-import {Card} from 'reactstrap';
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
 const CheapestResult = (props) => {
 
-// Change to reactstrap Card!!
+// Change to reactstrap Card + resposivity.
 
   return (
     <>
