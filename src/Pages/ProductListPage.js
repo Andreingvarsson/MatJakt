@@ -1,4 +1,4 @@
-import React, { useContext }  from 'react';
+import React, { useContext, useEffect }  from 'react';
 import { ProductContext } from '../ContextProviders/ProductContext';
 import SearchComponent from  '../Components/SearchComponent';
 import ProductList from '../Components/ProductList'
@@ -10,8 +10,10 @@ const ProductListPage = () => {
 
 
 
-    const {productsInList} = useContext(ProductContext)
-
+    const {productsInList } = useContext(ProductContext)
+    useEffect(()=>{
+      
+    },[productsInList])
 
   return (
     <>

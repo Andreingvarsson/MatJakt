@@ -11,7 +11,7 @@ const ProductItem = (props) => {
     2: "ica-back",
     3: "mathem-back"
   }
-  const {addProductToList} = useContext(ProductContext)
+  const {addProductToList, removeProductFromList} = useContext(ProductContext)
   const [count, setCount] = useState(1);
   const [product, setProduct] = useState({});
   
@@ -22,8 +22,7 @@ const ProductItem = (props) => {
       product: product,
       amount: count
     }
-    console.log(product)
-    console.log(JSON.stringify(productInfo) + 'products before')
+    // console.log(product)
     addProductToList(productInfo)
     //addProductToList(prod)
   }
@@ -78,7 +77,7 @@ const ProductItem = (props) => {
 
           </div>
           <div className="col-6 d-flex justify-content-end no-pad-right">
-            {isShoppingList?<button type="button" className="btn btn-light monospace-font" >Ta Bort</button>:<button type="button" className="btn btn-light monospace-font" onClick={() => addProductToContext()}>Lägg till</button> }
+            {isShoppingList?<button type="button" className="btn btn-light monospace-font" onClick={() => removeProductFromList(product)} >Ta Bort</button>:<button type="button" className="btn btn-light monospace-font" onClick={() => addProductToContext()}>Lägg till</button> }
 
           </div>
         </div>
