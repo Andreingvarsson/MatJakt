@@ -3,13 +3,16 @@
 }
 
 .header{
-    background-color: pink;
+    /* background-color: rgb(39, 37, 37); */
     width: 100%;
 }
 
 .navbar-brand{
     color: white;
-    text-align: center; 
-    
-  
+    text-align: center;
+    padding-right: 0 !important;
+}
+
+.link{
+    color: black;
 }

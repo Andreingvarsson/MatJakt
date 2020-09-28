@@ -4,23 +4,14 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
+import ProductContext from "./ContextProviders/ProductContext";
 import Header from "./Components/Header";
 import GrocerySearchPage from "./Pages/GrocerySearchPage";
-import CheapestResult from "./Pages/CheapestResult";
-
-const getData = async (input) => {
-
-  let data = await fetch('/api/products/' + input)
-
-  data = await data.json()
-
-  console.log(data)
-
-}
+import ProductListPage from "./Pages/ProductListPage";
+import CheapestResult from './Pages/CheapestResult'
 
 function App() {
   return (
@@ -30,11 +21,14 @@ function App() {
           <Header></Header>
           {/* contextProvider */}
           <StoreContext>
+            <ProductContext>
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/sok-varor" component={GrocerySearchPage} />
               <Route path="/billigast-hos" component={CheapestResult} />
+              <Route path="/inkopslista" component={ProductListPage}/>
             </Switch>
+            </ProductContext>
           </StoreContext>
           {/* contextProvider */}
         </div>

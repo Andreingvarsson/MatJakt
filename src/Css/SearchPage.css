@@ -1,0 +1,17 @@
+
+
+.img-div{
+    height: 15vh;
+    background: url("../images/store-pic.jpg") no-repeat center;
+    background-size: cover;
+}
+.category-title{
+    margin-top: 4rem;
+    color: black;
+    border-bottom: 1px solid black;
+    padding-bottom: 0.7rem;
+    font-size: 1.9rem;
+    font-family: monospace;
+}
+
+

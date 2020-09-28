@@ -113,6 +113,7 @@ app.get("/api/products/:storeId", (req, res) => {
   res.json(anyProducts);
 });
 
+//************ CATEGORY PRODUCTS*********************** */
 app.get("/api/catProducts/:categoryId", (req, res) => {
   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
@@ -123,6 +124,16 @@ app.get("/api/catProducts/:categoryId", (req, res) => {
       " ORDER BY price ASC " +
       limit +
       page
+  );
+  res.json(anyProducts);
+});
+//*******************SEARCHED PRODUCTS********************** */
+app.get("/api/searchProducts/:searchWord", (req, res) => {
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+  const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  console.log(req.query.limit + " req limit" + req.query.page + 'INNNNNEEE I BACK');
+  let anyProducts = db.all(
+    "SELECT * FROM products WHERE name LIKE "+"'"+"%" +req.params.searchWord +"%"+"'" +" ORDER BY price ASC " + limit + page
   );
   res.json(anyProducts);
 });
