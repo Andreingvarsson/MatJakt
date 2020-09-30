@@ -9,7 +9,7 @@ const SearchComponent = (props) => {
         <div className="row">
           {props.products.map((product) => (
             <ProductItem
-              key={(product.product ? product.product : product).productId}
+              key={(product.productDetails ? product.productDetails : product).productId}
               product={product}
             ></ProductItem>
           ))}

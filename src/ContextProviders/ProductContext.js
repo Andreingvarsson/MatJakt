@@ -18,17 +18,19 @@ const ProductContextProvider = (props) => {
     }
 
     const addProductToList = (product) => {
-        console.log(product)
-        let newList = [...productsInList, product]
-        setProductsInList(newList)
-        console.log(productsInList.length +' - produktlista')
+        let found = productsInList.filter(p => p.productDetails.productId === product.productDetails.productId)
+        if(!found.length){
+
+            let newList = [...productsInList, product]
+            setProductsInList(newList)
+            console.log(productsInList.length +' - produktlista')
+        }
     }
 
     const removeProductFromList = (product) => {
         console.log(product.productId+ ' - productID')
         console.log(productsInList)
-        let newList = productsInList.filter(p => { console.log(p.product.productId + 'proID'); return p.product.productId !== product.productId})
-        newList.forEach(p => console.log(p.product.productId+' - kiss'))
+        let newList = productsInList.filter(p =>  p.productDetails.productId !== product.productId)
         console.log(newList + ' newlist efter delete')
         setProductsInList(newList)
     }

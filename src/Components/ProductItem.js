@@ -19,7 +19,7 @@ const ProductItem = (props) => {
   const isShoppingList = location.pathname === '/inkopslista';
   const addProductToContext = () => {
     let productInfo = {
-      product: product,
+      productDetails: product,
       amount: count
     }
     // console.log(product)
@@ -30,7 +30,7 @@ const ProductItem = (props) => {
   useEffect(()=>{
     if(isShoppingList){
       setCount(props.product.amount)
-      setProduct(props.product.product)
+      setProduct(props.product.productDetails)
     }else{
       setProduct(props.product)
     }
