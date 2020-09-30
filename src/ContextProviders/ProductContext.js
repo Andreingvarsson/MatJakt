@@ -10,6 +10,7 @@ const ProductContextProvider = (props) => {
 
     const addProductsToShow = (update) => {
         let newList = [...productsFromContext,...update]
+        if(newList.length === 0 && productsFromContext.length === 0){ return; }
         setProductsFromContext(newList)
     }
 

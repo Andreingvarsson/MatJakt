@@ -27,11 +27,10 @@ const SearchComponent = (props) => {
 
   const fetchProductsBySearch = async (search) => {
     let result = await getProductsBySearch(search, page)
-    //setProductsToShow([])
+    console.log('FFEEEECCT')
     setSelectedCategory(0)
     addProductsToShow(result);
-    // let newList = [...productsToShow,...result]
-    // setProductsToShow(newList)
+  
   }
 
   const fetchCategories = async () => {
@@ -41,9 +40,6 @@ const SearchComponent = (props) => {
 
   const fetchMoreProducts = async (select) => {
     let result = await getProductsByCategory(select, page);
-    //let newList = [...productsToShow/*products*/, ...result];
-    //setProducts(newList)
-    //setProductsToShow(newList);
     addProductsToShow(result);
   };
 
@@ -62,26 +58,25 @@ const SearchComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    if (productsFromContext.length/*productsToShow.length*/ /*products*/ === 0) {
+    if (productsFromContext.length === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
       }else if(searchedWord){
         fetchProductsBySearch(searchedWord)
+        setSearchedWord('')
       }
     }
-  }, [productsFromContext/*productsToShow*/]);
+  }, [productsFromContext]);
 
   useEffect(() => {
     setPage(0);
-    //setProducts([])
     clearProductsToShow();
-    //setProductsToShow([]);
   }, [selectedCategory]);
+
   useEffect(() => {
     if(searchedWord.length > 0){
       setSelectedCategory(0)
       clearProductsToShow();
-      //setProductsToShow([])
       setCategoryTitle(`"${searchedWord}"`)
     }
   }, [searchedWord]);
@@ -101,14 +96,10 @@ const SearchComponent = (props) => {
     if(searchWord.length > 0){
       setSearchedWord(searchWord)
       setSearchWord('')
-      // setSelectedCategory(0)
-      // setProductsToShow([])
-      // setCategoryTitle(`"${searchWord}"`)
     }else{
-      //setProductsToShow([])
+        //setSearchedWord('')
       clearProductsToShow();
-      //setSearchedWord('')
-      //setCategoryTitle('')
+      setCategoryTitle('""')
     }
   }
 

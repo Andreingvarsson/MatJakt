@@ -133,7 +133,7 @@ app.get("/api/searchProducts/:searchWord", (req, res) => {
   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
   console.log(req.query.limit + " req limit" + req.query.page + 'INNNNNEEE I BACK');
   let anyProducts = db.all(
-    "SELECT * FROM products WHERE name LIKE "+"'"+"%" +req.params.searchWord +"%"+"'" +" ORDER BY price ASC " + limit + page
+    "SELECT categories.name,  products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
   );
   res.json(anyProducts);
 });
