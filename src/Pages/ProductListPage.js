@@ -10,7 +10,8 @@ const ProductListPage = () => {
 
 
 
-    const {productsInList } = useContext(ProductContext)
+    const { productsInList } = useContext(ProductContext)
+    
     useEffect(()=>{
       
     },[productsInList])

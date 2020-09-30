@@ -1,4 +1,4 @@
-import React, { useContext, useState }  from 'react';
+import React, { useContext, useState, useEffect }  from 'react';
 import { StoreContext } from '../ContextProviders/StoreContext';
 import { ProductContext } from '../ContextProviders/ProductContext';
 import SearchComponent from  '../Components/SearchComponent';
@@ -8,9 +8,11 @@ import '../Css/SearchPage.css'
 
 const GrocerySearchPage = () => {
   
-    
-    const {productsFromContext} = useContext(ProductContext)
+  const { productsFromContext } = useContext(ProductContext)
 
+
+
+    
 
   return (
     <>
