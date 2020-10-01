@@ -145,7 +145,7 @@ app.get("/api/compareProducts/:product", (req, res) => {
   req.params.productsInList.forEach((product) => {
     let productFromDb = db.all(
       // Attempt a query - check productCategory if they have the same category - gather. 
-      // slicing name on 'space' = " ", so we get all the words in the name.
+      // split() name on 'space' = " ", so we get all the words in the name.
       // sort on storeId, cost/ kg/l price?
       // Somehow create a list of ICA, Willys, MatHem, based on our productsInList list. 
       
