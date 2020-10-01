@@ -1,7 +1,6 @@
 .page{
    text-align: center;
    margin: 2rem 2rem;
-   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
    color: rgb(71, 67, 67);
 }
 
@@ -25,4 +24,35 @@
     margin-left: 2rem; 
 }
 
+.middle{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
 
+.card-border{
+    border: none !important;
+}
+
+.top-margin{
+    margin-top: 2rem;
+}
+
+.title{
+    font-size: 30px;
+    font-family: monospace;
+}
+
+.text{
+    font-size: 22px;
+    font-family: monospace;
+}
+
+.sec-seg-text{
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+}
+.bold{
+    font-weight: bold;
+}
