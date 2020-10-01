@@ -138,6 +138,28 @@ app.get("/api/searchProducts/:searchWord", (req, res) => {
   res.json(anyProducts);
 });
 
+//**********************COMPARE PRODUCTS******************* */
+app.get("/api/compareProducts/:product", (req, res) => {
+  let compareProducts = [];
+
+  req.params.productsInList.forEach((product) => {
+    let productFromDb = db.all(
+      // Attempt a query - check productCategory if they have the same category - gather. 
+      // slicing name on 'space' = " ", so we get all the words in the name.
+      // sort on storeId, cost/ kg/l price?
+      // Somehow create a list of ICA, Willys, MatHem, based on our productsInList list. 
+      
+
+      "SELECT brand, name, storeId FROM products WHERE ***somethingSOMETHING*** products.name LIKE "+"'"+"%"+req.params.product+"%"+"'"+""
+    )
+  })
+  res.json(productFromDb);
+  // compareProducts.push(productFromDb)
+  compareProducts = [...compareProducts, productFromDb]
+  return compareProducts;
+});
+
+
 app.get("/api/sort", (req, res) => {
   let anyProducts = db.all(
     "SELECT * FROM products WHERE categoryId = 1 OR categoryId = 2 ORDER BY price ASC"
