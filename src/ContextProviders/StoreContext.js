@@ -51,11 +51,11 @@ const StoreContextProvider = (props) => {
     }
   };
   
-
-  const getProductsBySearch = async (searchWord, page = 0) => {
+// changes to the getProductsBySearch eco, swe.
+  const getProductsBySearch = async (searchWord, page = 0, eco, swe) => {
     console.log("Inne i getProductsBySearch - id: " + searchWord);
     let res = await fetch(
-      `/api/searchProducts/${searchWord}?limit=10&page=${page}`
+      `/api/searchProducts/${searchWord}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();

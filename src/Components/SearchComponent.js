@@ -25,22 +25,54 @@ const SearchComponent = (props) => {
   const [searchWord, setSearchWord] = useState('');
   const [searchedWord, setSearchedWord] = useState('');
 
+//  Added useStates for eco / swedish.
+ const [ecoState, setEcoState] = useState(false);
+ const [swedishState, setSwedishState] = useState(false);
+
+ // checkbox handler
+ const handleCheckboxChange = (event, whichBox) => {
+  if(whichBox === 'eco'){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+  
+    setEcoState(!ecoState)
+    
+  }else if(whichBox === 'swedish'){
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+  
+    setSwedishState(!swedishState)
+  }
+ }
+// useEffect in progress for searching products eco
+ useEffect(() => {
+   console.log(ecoState)
+   if(ecoState === true){
+     if(searchedWord){
+       fetchProductsBySearch(searchedWord)
+    
+     } 
+   }
+ },[ecoState])
+// useEffect in progress for searching products swedish
+ useEffect(() => {
+  console.log(swedishState)
+  if(swedishState === true){
+    if(searchedWord){
+      fetchProductsBySearch(searchedWord)
+   
+    } 
+  }
+},[swedishState])
+
   const fetchProductsBySearch = async (search) => {
-    let result = await getProductsBySearch(search, page)
+    let result = await getProductsBySearch(search, page, ecoState, swedishState)
     console.log('FFEEEECCT')
     setSelectedCategory(0)
     addProductsToShow(result);
   
   }
 
-  // TODO
-  // const fetchProductsByEco = () => {
-
-  // };
-
-  // const fetchProductsBySwedish = () => {
-
-  // };
 
   const fetchCategories = async () => {
     let result = await getCategories();
@@ -153,6 +185,18 @@ const SearchComponent = (props) => {
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
               <Input type="text" className="form-control mono-font" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
           </div>
+          <div className="col-4 mt-5">
+            <Label className="col-3">
+            <Input className="" type="checkbox" value={ecoState} onChange={e => handleCheckboxChange(e, 'eco')}/>
+            eco
+            </Label>
+            <Label className="col-3">
+            <Input  type="checkbox" value={swedishState} onChange={e => handleCheckboxChange(e, 'swedish')}/>
+            svensk
+            </Label>
+          </div>
+      
+        
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
         <div className="row align-self-start">

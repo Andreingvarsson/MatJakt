@@ -162,6 +162,32 @@ app.get("/api/searchProducts/:searchWord", (req, res) => {
   res.json(anyProducts);
 });
 
+
+
+ /************************SEARCH ECO/SWEDISH/ALL ATTEMPT*************************************** */
+
+ app.get("/api/searchProducts/:searchWord", (req, res) => {
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+  const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  console.log(req.query.limit + " req limit" + req.query.page + 'INNNNNEEE I BACK');
+  if(req.params.eco === true){
+    let ecoProducts = db.all(
+    "SELECT categories.name, products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" AND products.eco = 1 ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+    )
+    res.json(ecoProducts)
+
+  }else if(req.params.Swedish === true){
+    let swedishProducts = db.all(
+      "SELECT categories.name, products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" AND products.Swedish = 1 ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+      )
+      res.json(swedishProducts);
+  }
+  let anyProducts = db.all(
+    "SELECT categories.name,  products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+  );
+  res.json(anyProducts);
+});
+
 //**********************COMPARE PRODUCTS******************* */
 app.get("/api/compareProducts/:product", (req, res) => {
   let compareProducts = [];
