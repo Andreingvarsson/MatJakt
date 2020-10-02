@@ -59,7 +59,7 @@ const StoreContextProvider = (props) => {
     ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();
-      //console.log(res[0])
+      console.log(res[0])
       // setProductsToShow(res);
       return res;
     } catch (e) {

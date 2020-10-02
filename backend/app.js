@@ -79,7 +79,31 @@ function checkIfNeedToFetch() {
   }
 }
 
-//TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?,
+                  //TODO, eco and Swedish 
+// ***************************************************************** */
+app.get("/api/products/:eco", (req, res) => {
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+  const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  console.log(req.query.limit + " req limit" + req.query.page);
+  let ecoProducts = db.all("SELECT * FROM products WHERE eco = 1 ORDER BY price ASC" +
+  limit +
+  page
+  )
+  res.json(ecoProducts);
+});
+
+app.get("/api/products/:Swedish", (req, res) => {
+  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+  const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  console.log(req.query.limit + " req limit" + req.query.page);
+  let swedishProducts = db.all("SELECT * FROM products WHERE Swedish = 1 ORDER BY price ASC" +
+  limit +
+  page
+  )
+  res.json(swedishProducts);
+});
+
+// ******************************************************************** */
 
 app.get("/api/test", (req, res) => {
   res.json({ works: true });

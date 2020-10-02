@@ -33,6 +33,15 @@ const SearchComponent = (props) => {
   
   }
 
+  // TODO
+  // const fetchProductsByEco = () => {
+
+  // };
+
+  // const fetchProductsBySwedish = () => {
+
+  // };
+
   const fetchCategories = async () => {
     let result = await getCategories();
     setCategoryList(result.anyCategories);
