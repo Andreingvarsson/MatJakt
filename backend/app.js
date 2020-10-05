@@ -105,37 +105,37 @@ function checkIfNeedToFetch() {
 
 // ******************************************************************** */
 
-app.get("/api/test", (req, res) => {
-  res.json({ works: true });
-});
+// app.get("/api/test", (req, res) => {
+//   res.json({ works: true });
+// });
 
-app.get("/api/products", (req, res) => {
-  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
-  let anyProducts = db.all("SELECT * FROM products " + limit);
-  res.json({
-    anyProducts,
-  });
-});
+// app.get("/api/products", (req, res) => {
+//   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+//   let anyProducts = db.all("SELECT * FROM products " + limit);
+//   res.json({
+//     anyProducts,
+//   });
+// });
 //******************************************************************************** */
 // JUST TRYING SOMETHING FOR FRONTEND!
 app.get("/api/categories", (req, res) => {
   // const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
   let anyCategories = db.all("SELECT * FROM categories ");
-  res.json({
+  return res.json({
     anyCategories,
   });
 });
 
 //******************************************************************************* */
-app.get("/api/products/:storeId", (req, res) => {
-  console.log("fel" + req);
-  let anyProducts = db.all(
-    "SELECT * FROM products WHERE storeId = " +
-      req.params.storeId +
-      " AND WHERE price = 55"
-  );
-  res.json(anyProducts);
-});
+// app.get("/api/products/:storeId", (req, res) => {
+//   console.log("fel" + req);
+//   let anyProducts = db.all(
+//     "SELECT * FROM products WHERE storeId = " +
+//       req.params.storeId +
+//       " AND WHERE price = 55"
+//   );
+//   res.json(anyProducts);
+// });
 
 //************ CATEGORY PRODUCTS*********************** */
 app.get("/api/catProducts/:categoryId", (req, res) => {

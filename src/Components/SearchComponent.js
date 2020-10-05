@@ -37,11 +37,15 @@ const SearchComponent = (props) => {
  useEffect(() => {
    console.log(ecoState, ' - eco')
    if(ecoState === true){
-    if(searchedWord.search.length > 0){
+     if(selectedCategory !== 0){
+       clearProductsToShow()
+     }else if(searchedWord.search.length > 0){
       clearProductsToShow()
     } 
   }else if(ecoState === false){
-    if(searchedWord.search.length > 0){
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
       clearProductsToShow()
     }
   }
@@ -51,11 +55,16 @@ const SearchComponent = (props) => {
  useEffect(() => {
   console.log(swedishState , ' - swe')
   if(swedishState === true){
-    if(searchedWord.search.length > 0){
+
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
       clearProductsToShow()
     } 
   }else if(swedishState === false){
-    if(searchedWord.search.length > 0){
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
       clearProductsToShow()
     }
   }
