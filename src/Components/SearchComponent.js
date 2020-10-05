@@ -29,6 +29,13 @@ const SearchComponent = (props) => {
  const [ecoState, setEcoState] = useState(false);
  const [swedishState, setSwedishState] = useState(false);
 
+ const shouldComponentUpdate =  (nextProps, nextState) => {
+   if(nextState.searchedWord === searchedWord){
+     return true;
+   }
+  return true;
+ }
+
  // checkbox handler
  const handleCheckboxChange = (event, whichBox) => {
   if(whichBox === 'eco'){
@@ -47,25 +54,28 @@ const SearchComponent = (props) => {
 // useEffect in progress for searching products eco
  useEffect(() => {
    console.log(ecoState)
-   if(ecoState === true){
-     if(searchedWord){
-       fetchProductsBySearch(searchedWord)
+   console.log(searchedWord)
+  //  if(ecoState === true){
+  //    if(searchedWord){
+  //     clearProductsToShow()
+       
     
-     } 
-   }
+  //    } 
+  //  }
  },[ecoState])
 // useEffect in progress for searching products swedish
  useEffect(() => {
   console.log(swedishState)
-  if(swedishState === true){
-    if(searchedWord){
-      fetchProductsBySearch(searchedWord)
+  // if(swedishState === true){
+  //   if(searchedWord){
+  //     fetchProductsBySearch(searchedWord)
    
-    } 
-  }
+  //   } 
+  // }
 },[swedishState])
 
   const fetchProductsBySearch = async (search) => {
+    console.log(ecoState , 'EKOKOKOKO')
     let result = await getProductsBySearch(search, page, ecoState, swedishState)
     console.log('FFEEEECCT')
     setSelectedCategory(0)
@@ -104,7 +114,7 @@ const SearchComponent = (props) => {
         fetchMoreProducts(selectedCategory);
       }else if(searchedWord){
         fetchProductsBySearch(searchedWord)
-        setSearchedWord('')
+        //setSearchedWord('')
       }
     }
   }, [productsFromContext]);
@@ -116,6 +126,7 @@ const SearchComponent = (props) => {
 
   useEffect(() => {
     if(searchedWord.length > 0){
+      
       setSelectedCategory(0)
       clearProductsToShow();
       setCategoryTitle(`"${searchedWord}"`)
@@ -138,7 +149,7 @@ const SearchComponent = (props) => {
       setSearchedWord(searchWord)
       setSearchWord('')
     }else{
-        //setSearchedWord('')
+      setSearchedWord('')
       clearProductsToShow();
       setCategoryTitle('""')
     }

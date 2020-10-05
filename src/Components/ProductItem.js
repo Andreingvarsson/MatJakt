@@ -58,6 +58,8 @@ const ProductItem = (props) => {
           <div className="card-body">
             <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{product.name}</h6>
           <h5 className="text-center monospace-font solid">{product.price} kr</h5>
+
+          {product.eco?<p className="card-text text-center monospace-font" style={pStyle}>EKO</p>: <p className="card-text text-center monospace-font" style={pStyle}>Not EKO</p> }
           <p className="card-text text-center monospace-font" style={pStyle}>{product.productVolume}{product.productVolumeUnit}</p> 
           <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {product.comparePrice}/{product.compareUnit}<span> - {product.originCountry}</span></p> 
           <p className="card-text text-center monospace-font" style={pStyle}></p> 
