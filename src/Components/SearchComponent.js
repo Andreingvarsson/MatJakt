@@ -167,10 +167,10 @@ const SearchComponent = (props) => {
 
   return (
     <>
-      <div className="searchComponent container ">
+      <div className="searchComponent container">
        
-          <div className="row ">
-          <div className="col-sm-4 col-md-4 col-l-4 mt-5 no-pad">
+          <div className="row padi bg-white">
+          <div className="col-xs-4 col-sm-6 col-md-4 col-l-4  no-pad">
             <Dropdown isOpen={dropdownOpen} toggle={toggle} className="">
               <DropdownToggle caret className="btn-dark mono-font">Alla kategorier</DropdownToggle>
               <DropdownMenu className="mono-font">
@@ -188,18 +188,23 @@ const SearchComponent = (props) => {
               </DropdownMenu>
             </Dropdown>
           </div>
-          <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
+          <div className="col-xs-6 col-sm- col-md-4 col-l-4 col-xl-4 ">
               <Input type="text" className="form-control mono-font" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
           </div>
-          <div className="col-4 mt-5">
-            <Label className="col-3">
-            <Input className="" checked={ecoState} type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
-            eco
+          <div className="col-xs-6 col-sm-6 col-md-4 col-l-4 col-xl-4 ">
+           <div className="row d-flex justicy-content-center">
+            <Label className="col ">
+              <Input className="col" checked={ecoState} type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
+              EKO
             </Label>
-            <Label className="col-3">
-            <Input  type="checkbox" checked={swedishState} value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
-            svensk
+            <Label className="col">
+              <Input  className="col" type="checkbox" checked={swedishState} value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
+              Svensk  
             </Label>
+          </div>
+            
+           
+            
           </div>
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>

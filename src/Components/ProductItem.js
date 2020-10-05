@@ -49,6 +49,7 @@ const ProductItem = (props) => {
   };
 
   return (
+    
     <div className="card mb-3 col-xl-3 col-l-4 col-md-4 col-sm-6 col-xs-6" style={cardCont} >
       <div className="col no-gutters ">
         <div className="d-flex justify-content-center">
@@ -59,7 +60,7 @@ const ProductItem = (props) => {
             <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{product.name}</h6>
           <h5 className="text-center monospace-font solid">{product.price} kr</h5>
 
-          {product.eco?<p className="card-text text-center monospace-font" style={pStyle}>EKO</p>: <p className="card-text text-center monospace-font" style={pStyle}>Not EKO</p> }
+          {/* {product.eco?<p className="card-text text-center monospace-font" style={pStyle}>EKO</p>: <p className="card-text text-center monospace-font" style={pStyle}>Not EKO</p> } */}
           <p className="card-text text-center monospace-font" style={pStyle}>{product.productVolume}{product.productVolumeUnit}</p> 
           <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {product.comparePrice}/{product.compareUnit}<span> - {product.originCountry}</span></p> 
           <p className="card-text text-center monospace-font" style={pStyle}></p> 

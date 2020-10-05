@@ -2,6 +2,10 @@
     font-family: monospace;
 }
 
+.font-white{
+    color: white;
+}
+
 .solid{
     font-weight: bolder;
 }
