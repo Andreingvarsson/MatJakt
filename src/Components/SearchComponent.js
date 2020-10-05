@@ -6,22 +6,18 @@ import {
   DropdownItem,
   Label,
   Input,
-  Form
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
 import { ProductContext } from "../ContextProviders/ProductContext";
-import ProductItem from "./ProductItem";
 import '../Css/SearchComponent.css'
 
 const SearchComponent = (props) => {
   const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const { getCategories, getProductsByCategory, getProductsBySearch, setProducts, products } = useContext(StoreContext);
+  const { getCategories, getProductsByCategory, getProductsBySearch } = useContext(StoreContext);
   const { clearProductsToShow, addProductsToShow, productsFromContext} = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const [productsToShow, setProductsToShow] = useState([]);
-  //const [products, setProducts] = useState(products);
   const [searchWord, setSearchWord] = useState('');
   const [searchedWord, setSearchedWord] = useState('');
 
@@ -29,25 +25,11 @@ const SearchComponent = (props) => {
  const [ecoState, setEcoState] = useState(false);
  const [swedishState, setSwedishState] = useState(false);
 
- const shouldComponentUpdate =  (nextProps, nextState) => {
-   if(nextState.searchedWord === searchedWord){
-     return true;
-   }
-  return true;
- }
-
  // checkbox handler
- const handleCheckboxChange = (event, whichBox) => {
+ const handleCheckboxChange = (whichBox) => {
   if(whichBox === 'eco'){
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-  
     setEcoState(!ecoState)
-    
   }else if(whichBox === 'swedish'){
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-  
     setSwedishState(!swedishState)
   }
  }
@@ -55,23 +37,28 @@ const SearchComponent = (props) => {
  useEffect(() => {
    console.log(ecoState)
    console.log(searchedWord)
-  //  if(ecoState === true){
-  //    if(searchedWord){
-  //     clearProductsToShow()
-       
-    
-  //    } 
-  //  }
+   if(ecoState === true){
+    if(searchedWord){
+      clearProductsToShow()
+    } 
+  }else if(ecoState === false){
+    if(searchedWord){
+      clearProductsToShow()
+    }
+  }
  },[ecoState])
 // useEffect in progress for searching products swedish
  useEffect(() => {
   console.log(swedishState)
-  // if(swedishState === true){
-  //   if(searchedWord){
-  //     fetchProductsBySearch(searchedWord)
-   
-  //   } 
-  // }
+  if(swedishState === true){
+    if(searchedWord){
+      clearProductsToShow()
+    } 
+  }else if(swedishState === false){
+    if(searchedWord){
+      clearProductsToShow()
+    }
+  }
 },[swedishState])
 
   const fetchProductsBySearch = async (search) => {
@@ -80,9 +67,7 @@ const SearchComponent = (props) => {
     console.log('FFEEEECCT')
     setSelectedCategory(0)
     addProductsToShow(result);
-  
   }
-
 
   const fetchCategories = async () => {
     let result = await getCategories();
@@ -126,7 +111,6 @@ const SearchComponent = (props) => {
 
   useEffect(() => {
     if(searchedWord.length > 0){
-      
       setSelectedCategory(0)
       clearProductsToShow();
       setCategoryTitle(`"${searchedWord}"`)
@@ -165,8 +149,6 @@ const SearchComponent = (props) => {
     console.log(searchWord)
   },[searchWord])
 
-
-
   return (
     <>
       <div className="searchComponent container ">
@@ -198,11 +180,11 @@ const SearchComponent = (props) => {
           </div>
           <div className="col-4 mt-5">
             <Label className="col-3">
-            <Input className="" type="checkbox" value={ecoState} onChange={e => handleCheckboxChange(e, 'eco')}/>
+            <Input className="" type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
             eco
             </Label>
             <Label className="col-3">
-            <Input  type="checkbox" value={swedishState} onChange={e => handleCheckboxChange(e, 'swedish')}/>
+            <Input  type="checkbox" value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
             svensk
             </Label>
           </div>
