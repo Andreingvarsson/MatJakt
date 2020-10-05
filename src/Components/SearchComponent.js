@@ -19,7 +19,7 @@ const SearchComponent = (props) => {
   const { clearProductsToShow, addProductsToShow, productsFromContext} = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [searchWord, setSearchWord] = useState('');
-  const [searchedWord, setSearchedWord] = useState('');
+  const [searchedWord, setSearchedWord] = useState({search: ''});
 
 //  Added useStates for eco / swedish.
  const [ecoState, setEcoState] = useState(false);
@@ -35,36 +35,34 @@ const SearchComponent = (props) => {
  }
 // useEffect in progress for searching products eco
  useEffect(() => {
-   console.log(ecoState)
-   console.log(searchedWord)
+   console.log(ecoState, ' - eco')
    if(ecoState === true){
-    if(searchedWord){
+    if(searchedWord.search.length > 0){
       clearProductsToShow()
     } 
   }else if(ecoState === false){
-    if(searchedWord){
+    if(searchedWord.search.length > 0){
       clearProductsToShow()
     }
   }
  },[ecoState])
+
 // useEffect in progress for searching products swedish
  useEffect(() => {
-  console.log(swedishState)
+  console.log(swedishState , ' - swe')
   if(swedishState === true){
-    if(searchedWord){
+    if(searchedWord.search.length > 0){
       clearProductsToShow()
     } 
   }else if(swedishState === false){
-    if(searchedWord){
+    if(searchedWord.search.length > 0){
       clearProductsToShow()
     }
   }
 },[swedishState])
 
   const fetchProductsBySearch = async (search) => {
-    console.log(ecoState , 'EKOKOKOKO')
     let result = await getProductsBySearch(search, page, ecoState, swedishState)
-    console.log('FFEEEECCT')
     setSelectedCategory(0)
     addProductsToShow(result);
   }
@@ -75,7 +73,7 @@ const SearchComponent = (props) => {
   };
 
   const fetchMoreProducts = async (select) => {
-    let result = await getProductsByCategory(select, page);
+    let result = await getProductsByCategory(select, page, ecoState, swedishState);
     addProductsToShow(result);
   };
 
@@ -83,8 +81,8 @@ const SearchComponent = (props) => {
     if(selectedCategory !== 0){
       fetchMoreProducts(selectedCategory);
     }
-    else if(searchedWord){
-      fetchProductsBySearch(searchedWord)
+    else if(searchedWord.search){
+      fetchProductsBySearch(searchedWord.search)
     }
   }, [page]);
  
@@ -97,8 +95,8 @@ const SearchComponent = (props) => {
     if (productsFromContext.length === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
-      }else if(searchedWord){
-        fetchProductsBySearch(searchedWord)
+      }else if(searchedWord.search){
+        fetchProductsBySearch(searchedWord.search)
         //setSearchedWord('')
       }
     }
@@ -110,10 +108,10 @@ const SearchComponent = (props) => {
   }, [selectedCategory]);
 
   useEffect(() => {
-    if(searchedWord.length > 0){
+    if(searchedWord.search.length > 0){
       setSelectedCategory(0)
       clearProductsToShow();
-      setCategoryTitle(`"${searchedWord}"`)
+      setCategoryTitle(`"${searchedWord.search}"`)
     }
   }, [searchedWord]);
 
@@ -130,10 +128,10 @@ const SearchComponent = (props) => {
 
   const handleSearch = () => {
     if(searchWord.length > 0){
-      setSearchedWord(searchWord)
+      setSearchedWord({search:searchWord})
       setSearchWord('')
     }else{
-      setSearchedWord('')
+      setSearchedWord({search: ''})
       clearProductsToShow();
       setCategoryTitle('""')
     }

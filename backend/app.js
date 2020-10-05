@@ -141,15 +141,29 @@ app.get("/api/products/:storeId", (req, res) => {
 app.get("/api/catProducts/:categoryId", (req, res) => {
   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  const eco = req.query.eco;
+  const swe = req.query.swe;
   console.log(req.query.limit + " req limit" + req.query.page);
+  if(eco === 'true' && swe === 'true'){
+    let products = db.all(
+      "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.eco = 1 AND products.Swedish = 1 ORDER BY price ASC " + limit + page
+      )
+      return res.json(products)
+  }else if(eco === 'true'){
+    let products = db.all(
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.eco = 1 ORDER BY price ASC " + limit + page
+    )
+    return res.json(products)
+  }else if(swe === 'true'){
+    let products = db.all(
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.Swedish = 1 ORDER BY price ASC " + limit + page
+    )
+    return res.json(products)
+  }
   let anyProducts = db.all(
-    "SELECT * FROM products WHERE categoryId = " +
-      req.params.categoryId +
-      " ORDER BY price ASC " +
-      limit +
-      page
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" ORDER BY price ASC " + limit + page
   );
-  res.json(anyProducts);
+  return res.json(anyProducts);
 });
 //*******************SEARCHED PRODUCTS********************** */
 // app.get("/api/searchProducts/:searchWord", (req, res) => {

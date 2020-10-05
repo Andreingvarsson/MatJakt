@@ -36,10 +36,10 @@ const StoreContextProvider = (props) => {
     }
   };
 
-  const getProductsByCategory = async (categoryId, page = 0) => {
+  const getProductsByCategory = async (categoryId, page = 0, eco, swe) => {
     console.log("Inne i getProductsByCat - id: " + categoryId);
     let res = await fetch(
-      `/api/catProducts/${categoryId}?limit=10&page=${page}`
+      `/api/catProducts/${categoryId}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();
