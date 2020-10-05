@@ -79,64 +79,159 @@ function checkIfNeedToFetch() {
   }
 }
 
-//TODO, sök efter specifika categorier, sortera efter pris?, efter brand, organic, swedish?,
+                  //TODO, eco and Swedish 
+// ***************************************************************** */
+// app.get("/api/products/:eco", (req, res) => {
+//   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+//   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+//   console.log(req.query.limit + " req limit" + req.query.page);
+//   let ecoProducts = db.all("SELECT * FROM products WHERE eco = 1 ORDER BY price ASC" +
+//   limit +
+//   page
+//   )
+//   res.json(ecoProducts);
+// });
 
-app.get("/api/test", (req, res) => {
-  res.json({ works: true });
-});
+// app.get("/api/products/:Swedish", (req, res) => {
+//   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+//   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+//   console.log(req.query.limit + " req limit" + req.query.page);
+//   let swedishProducts = db.all("SELECT * FROM products WHERE Swedish = 1 ORDER BY price ASC" +
+//   limit +
+//   page
+//   )
+//   res.json(swedishProducts);
+// });
 
-app.get("/api/products", (req, res) => {
-  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
-  let anyProducts = db.all("SELECT * FROM products " + limit);
-  res.json({
-    anyProducts,
-  });
-});
+// ******************************************************************** */
+
+// app.get("/api/test", (req, res) => {
+//   res.json({ works: true });
+// });
+
+// app.get("/api/products", (req, res) => {
+//   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+//   let anyProducts = db.all("SELECT * FROM products " + limit);
+//   res.json({
+//     anyProducts,
+//   });
+// });
 //******************************************************************************** */
 // JUST TRYING SOMETHING FOR FRONTEND!
 app.get("/api/categories", (req, res) => {
   // const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
   let anyCategories = db.all("SELECT * FROM categories ");
-  res.json({
+  return res.json({
     anyCategories,
   });
 });
 
 //******************************************************************************* */
-app.get("/api/products/:storeId", (req, res) => {
-  console.log("fel" + req);
-  let anyProducts = db.all(
-    "SELECT * FROM products WHERE storeId = " +
-      req.params.storeId +
-      " AND WHERE price = 55"
-  );
-  res.json(anyProducts);
-});
+// app.get("/api/products/:storeId", (req, res) => {
+//   console.log("fel" + req);
+//   let anyProducts = db.all(
+//     "SELECT * FROM products WHERE storeId = " +
+//       req.params.storeId +
+//       " AND WHERE price = 55"
+//   );
+//   res.json(anyProducts);
+// });
 
 //************ CATEGORY PRODUCTS*********************** */
 app.get("/api/catProducts/:categoryId", (req, res) => {
   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  const eco = req.query.eco;
+  const swe = req.query.swe;
   console.log(req.query.limit + " req limit" + req.query.page);
+  if(eco === 'true' && swe === 'true'){
+    let products = db.all(
+      "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.eco = 1 AND products.Swedish = 1 ORDER BY price ASC " + limit + page
+      )
+      return res.json(products)
+  }else if(eco === 'true'){
+    let products = db.all(
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.eco = 1 ORDER BY price ASC " + limit + page
+    )
+    return res.json(products)
+  }else if(swe === 'true'){
+    let products = db.all(
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" AND products.Swedish = 1 ORDER BY price ASC " + limit + page
+    )
+    return res.json(products)
+  }
   let anyProducts = db.all(
-    "SELECT * FROM products WHERE categoryId = " +
-      req.params.categoryId +
-      " ORDER BY price ASC " +
-      limit +
-      page
+    "SELECT * FROM products WHERE categoryId = " +req.params.categoryId +" ORDER BY price ASC " + limit + page
   );
-  res.json(anyProducts);
+  return res.json(anyProducts);
 });
 //*******************SEARCHED PRODUCTS********************** */
-app.get("/api/searchProducts/:searchWord", (req, res) => {
+// app.get("/api/searchProducts/:searchWord", (req, res) => {
+//   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
+//   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+//   console.log(req.query.limit + " req limit" + req.query.page + 'INNNNNEEE I BACK');
+//   let anyProducts = db.all(
+//     "SELECT categories.name,  products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+//   );
+//   res.json(anyProducts);
+// });
+
+
+
+ /************************SEARCH ECO/SWEDISH/ALL ATTEMPT*************************************** */
+
+ app.get("/api/searchProducts/:searchWord", (req, res) => {
   const limit = req.query.limit ? ` LIMIT ` + req.query.limit : "";
   const page = req.query.page ? ` OFFSET ` + req.query.page * 10 : "";
+  const eco = req.query.eco;
+  const swe = req.query.swe;
   console.log(req.query.limit + " req limit" + req.query.page + 'INNNNNEEE I BACK');
+  console.log(eco);
+  if(eco === 'true' && swe === 'true'){
+    let products = db.all(
+      "SELECT categories.name, products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" AND products.eco = 1 AND products.Swedish = 1 ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+    )
+    return res.json(products)
+  }else if(eco === 'true'){
+    console.log('ECO TRUE')
+    let ecoProducts = db.all(
+    "SELECT categories.name, products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" AND products.eco = 1 ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+    )
+    return res.json(ecoProducts)
+
+  }else if(swe === 'true'){
+    let swedishProducts = db.all(
+      "SELECT categories.name, products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" AND products.Swedish = 1 ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
+      )
+     return res.json(swedishProducts);
+  }
   let anyProducts = db.all(
-    "SELECT * FROM products WHERE name LIKE "+"'"+"%" +req.params.searchWord +"%"+"'" +" ORDER BY price ASC " + limit + page
+    "SELECT categories.name,  products.* FROM products, categories WHERE products.categoryId = categories.categoryId AND products.name LIKE "+"'"+"%"+req.params.searchWord+"%"+"'"+" ORDER BY  INSTR("+"'"+"Fryst, Skafferi Djur"+"'"+", categories.name), length(products.name) ASC" + limit + page
   );
-  res.json(anyProducts);
+  return res.json(anyProducts);
 });
+
+//**********************COMPARE PRODUCTS******************* */
+app.get("/api/compareProducts/:product", (req, res) => {
+  let compareProducts = [];
+
+  req.params.productsInList.forEach((product) => {
+    let productFromDb = db.all(
+      // Attempt a query - check productCategory if they have the same category - gather. 
+      // split() name on 'space' = " ", so we get all the words in the name.
+      // sort on storeId, cost/ kg/l price?
+      // Somehow create a list of ICA, Willys, MatHem, based on our productsInList list. 
+      
+
+      "SELECT brand, name, storeId FROM products WHERE ***somethingSOMETHING*** products.name LIKE "+"'"+"%"+req.params.product+"%"+"'"+""
+    )
+  })
+  res.json(productFromDb);
+  // compareProducts.push(productFromDb)
+  compareProducts = [...compareProducts, productFromDb]
+  return compareProducts;
+});
+
 
 app.get("/api/sort", (req, res) => {
   let anyProducts = db.all(

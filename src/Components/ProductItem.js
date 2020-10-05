@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import '../Css/productItem.css'
 import '../Css/fonts.css'
 import {ProductContext} from '../ContextProviders/ProductContext'
+import { useLocation } from 'react-router-dom'
 
 const ProductItem = (props) => {
 
@@ -10,18 +11,30 @@ const ProductItem = (props) => {
     2: "ica-back",
     3: "mathem-back"
   }
-  const {addProduct} = useContext(ProductContext)
-  const [count, setCount] = useState(1)
-
+  const {addProductToList, removeProductFromList} = useContext(ProductContext)
+  const [count, setCount] = useState(1);
+  const [product, setProduct] = useState({});
+  
+  const location = useLocation();
+  const isShoppingList = location.pathname === '/inkopslista';
   const addProductToContext = () => {
-
-    const prod = {
-      product: props.product,
+    let productInfo = {
+      productDetails: product,
       amount: count
     }
-    console.log(prod)
-    addProduct(prod)
+    // console.log(product)
+    addProductToList(productInfo)
+    //addProductToList(prod)
   }
+
+  useEffect(()=>{
+    if(isShoppingList){
+      setCount(props.product.amount)
+      setProduct(props.product.productDetails)
+    }else{
+      setProduct(props.product)
+    }
+  },[])
 
   let pStyle = {
     fontSize: "0.7em",
@@ -39,16 +52,18 @@ const ProductItem = (props) => {
     <div className="card mb-3 col-xl-3 col-l-4 col-md-4 col-sm-6 col-xs-6" style={cardCont} >
       <div className="col no-gutters ">
         <div className="d-flex justify-content-center">
-          <img src={props.product.storeId !== 2? props.product.imageUrl
-            : `https://assets.icanet.se/t_product_large_v1,f_auto/${props.product.imageUrl}.jpg`} className="card-img-top pic-height  " alt="..."/>
+          <img src={product.storeId !== 2? product.imageUrl
+            : `https://assets.icanet.se/t_product_large_v1,f_auto/${product.imageUrl}.jpg`} className="card-img-top pic-height  " alt="..."/>
         </div>
           <div className="card-body">
-            <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{props.product.name}</h6>
-          <h5 className="text-center monospace-font solid">{props.product.price} kr</h5>
-          <p className="card-text text-center monospace-font" style={pStyle}>{props.product.productVolume}{props.product.productVolumeUnit}</p> 
-          <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {props.product.comparePrice}/{props.product.compareUnit}<span> - {props.product.originCountry}</span></p> 
+            <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{product.name}</h6>
+          <h5 className="text-center monospace-font solid">{product.price} kr</h5>
+
+          {product.eco?<p className="card-text text-center monospace-font" style={pStyle}>EKO</p>: <p className="card-text text-center monospace-font" style={pStyle}>Not EKO</p> }
+          <p className="card-text text-center monospace-font" style={pStyle}>{product.productVolume}{product.productVolumeUnit}</p> 
+          <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {product.comparePrice}/{product.compareUnit}<span> - {product.originCountry}</span></p> 
           <p className="card-text text-center monospace-font" style={pStyle}></p> 
-            <div className={stores[props.product.storeId]} ></div>    
+            <div className={stores[product.storeId]} ></div>    
           </div>
       </div>
         <div className="row  btn-div container mx-auto mtopbot">
@@ -64,7 +79,7 @@ const ProductItem = (props) => {
 
           </div>
           <div className="col-6 d-flex justify-content-end no-pad-right">
-          <button type="button" className="btn btn-light monospace-font" /*onClick={() => addProductToContext()}*/>Lägg till</button>
+            {isShoppingList?<button type="button" className="btn btn-light monospace-font" onClick={() => removeProductFromList(product)} >Ta Bort</button>:<button type="button" className="btn btn-light monospace-font" onClick={() => addProductToContext()}>Lägg till</button> }
 
           </div>
         </div>

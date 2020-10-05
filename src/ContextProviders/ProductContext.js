@@ -4,23 +4,47 @@ export const ProductContext = createContext();
 
 const ProductContextProvider = (props) => {
 
-    const [products, setProducts] = useState([]);
+    const [productsFromContext, setProductsFromContext] = useState([]);
+    const [productsInList, setProductsInList] = useState([]);
 
 
-    const addProduct = (product) => {
-        console.log(product+ ' - inne i proCont')
-        
-        setProducts([...products,...product])
+    const addProductsToShow = (update) => {
+        let newList = [...productsFromContext,...update]
+        if(newList.length === 0 && productsFromContext.length === 0){ return; }
+        setProductsFromContext(newList)
     }
 
-    const removeProduct = (product) => {
-        setProducts(products.filter(p => p !== product))
+    const clearProductsToShow = () => {
+        setProductsFromContext([])
+    }
+
+    const addProductToList = (product) => {
+        let found = productsInList.filter(p => p.productDetails.productId === product.productDetails.productId)
+        if(!found.length){
+
+            let newList = [...productsInList, product]
+            setProductsInList(newList)
+            console.log(productsInList.length +' - produktlista')
+        }
+    }
+
+    const removeProductFromList = (product) => {
+        console.log(product.productId+ ' - productID')
+        console.log(productsInList)
+        let newList = productsInList.filter(p =>  p.productDetails.productId !== product.productId)
+        console.log(newList + ' newlist efter delete')
+        setProductsInList(newList)
     }
 
     const values ={
-        products: products,
-        addProduct: addProduct,
-        removeProduct: removeProduct
+        addProductToList: addProductToList,
+        removeProductFromList: removeProductFromList,
+        addProductsToShow: addProductsToShow,
+        clearProductsToShow: clearProductsToShow,
+        productsFromContext: productsFromContext,
+        productsInList: productsInList,
+
+
     }
 
     return (

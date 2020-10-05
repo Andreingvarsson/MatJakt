@@ -6,29 +6,74 @@ import {
   DropdownItem,
   Label,
   Input,
-  Form
 } from "reactstrap";
 import { StoreContext } from "../ContextProviders/StoreContext";
-import ProductItem from "./ProductItem";
+import { ProductContext } from "../ContextProviders/ProductContext";
 import '../Css/SearchComponent.css'
 
 const SearchComponent = (props) => {
   const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
-  const { getCategories, getProductsByCategory, getProductsBySearch, setProducts, products } = useContext(StoreContext);
+  const { getCategories, getProductsByCategory, getProductsBySearch } = useContext(StoreContext);
+  const { clearProductsToShow, addProductsToShow, productsFromContext} = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
-  const [productsToShow, setProductsToShow] = useState([]);
-  //const [products, setProducts] = useState(products);
   const [searchWord, setSearchWord] = useState('');
-  const [searchedWord, setSearchedWord] = useState('');
+  const [searchedWord, setSearchedWord] = useState({search: ''});
+
+//  Added useStates for eco / swedish.
+ const [ecoState, setEcoState] = useState(false);
+ const [swedishState, setSwedishState] = useState(false);
+
+ // checkbox handler
+ const handleCheckboxChange = (whichBox) => {
+  if(whichBox === 'eco'){
+    setEcoState(!ecoState)
+  }else if(whichBox === 'swedish'){
+    setSwedishState(!swedishState)
+  }
+ }
+// useEffect in progress for searching products eco
+ useEffect(() => {
+   console.log(ecoState, ' - eco')
+   if(ecoState === true){
+     if(selectedCategory !== 0){
+       clearProductsToShow()
+     }else if(searchedWord.search.length > 0){
+      clearProductsToShow()
+    } 
+  }else if(ecoState === false){
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
+      clearProductsToShow()
+    }
+  }
+ },[ecoState])
+
+// useEffect in progress for searching products swedish
+ useEffect(() => {
+  console.log(swedishState , ' - swe')
+  if(swedishState === true){
+
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
+      clearProductsToShow()
+    } 
+  }else if(swedishState === false){
+    if(selectedCategory !== 0){
+      clearProductsToShow()
+    }else if(searchedWord.search.length > 0){
+      clearProductsToShow()
+    }
+  }
+},[swedishState])
 
   const fetchProductsBySearch = async (search) => {
-    let result = await getProductsBySearch(search, page)
-    //setProductsToShow([])
+    let result = await getProductsBySearch(search, page, ecoState, swedishState)
     setSelectedCategory(0)
-    let newList = [...productsToShow,...result]
-    setProductsToShow(newList)
+    addProductsToShow(result);
   }
 
   const fetchCategories = async () => {
@@ -37,18 +82,16 @@ const SearchComponent = (props) => {
   };
 
   const fetchMoreProducts = async (select) => {
-    let result = await getProductsByCategory(select, page);
-    let newList = [...productsToShow/*products*/, ...result];
-    //setProducts(newList)
-    setProductsToShow(newList);
+    let result = await getProductsByCategory(select, page, ecoState, swedishState);
+    addProductsToShow(result);
   };
 
   useEffect(() => {
     if(selectedCategory !== 0){
       fetchMoreProducts(selectedCategory);
     }
-    else if(searchedWord){
-      fetchProductsBySearch(searchedWord)
+    else if(searchedWord.search){
+      fetchProductsBySearch(searchedWord.search)
     }
   }, [page]);
  
@@ -58,25 +101,26 @@ const SearchComponent = (props) => {
   }, []);
 
   useEffect(() => {
-    if (productsToShow.length /*products*/ === 0) {
+    if (productsFromContext.length === 0) {
       if (selectedCategory !== 0) {
         fetchMoreProducts(selectedCategory);
-      }else if(searchedWord){
-        fetchProductsBySearch(searchedWord)
+      }else if(searchedWord.search){
+        fetchProductsBySearch(searchedWord.search)
+        //setSearchedWord('')
       }
     }
-  }, [productsToShow]);
+  }, [productsFromContext]);
 
   useEffect(() => {
     setPage(0);
-    //setProducts([])
-    setProductsToShow([]);
+    clearProductsToShow();
   }, [selectedCategory]);
+
   useEffect(() => {
-    if(searchedWord.length > 0){
+    if(searchedWord.search.length > 0){
       setSelectedCategory(0)
-      setProductsToShow([])
-      setCategoryTitle(`"${searchedWord}"`)
+      clearProductsToShow();
+      setCategoryTitle(`"${searchedWord.search}"`)
     }
   }, [searchedWord]);
 
@@ -93,15 +137,12 @@ const SearchComponent = (props) => {
 
   const handleSearch = () => {
     if(searchWord.length > 0){
-      setSearchedWord(searchWord)
+      setSearchedWord({search:searchWord})
       setSearchWord('')
-      // setSelectedCategory(0)
-      // setProductsToShow([])
-      // setCategoryTitle(`"${searchWord}"`)
     }else{
-      setProductsToShow([])
-      //setSearchedWord('')
-      //setCategoryTitle('')
+      setSearchedWord({search: ''})
+      clearProductsToShow();
+      setCategoryTitle('""')
     }
   }
 
@@ -114,8 +155,6 @@ const SearchComponent = (props) => {
   useEffect(()=>{
     console.log(searchWord)
   },[searchWord])
-
-
 
   return (
     <>
@@ -146,23 +185,35 @@ const SearchComponent = (props) => {
           <div className="col-sm-8 col-md-4 col-l-4 col-xl-4 mt-5">
               <Input type="text" className="form-control mono-font" placeholder="Sök produkt" onKeyPress={e => onKeyUp(e)}  value={searchWord} onChange={e => updateSearchWord(e.target.value)} id="searchWord"/>  
           </div>
+          <div className="col-4 mt-5">
+            <Label className="col-3">
+            <Input className="" type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
+            eco
+            </Label>
+            <Label className="col-3">
+            <Input  type="checkbox" value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
+            svensk
+            </Label>
+          </div>
+      
+        
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
         <div className="row align-self-start">
-          {products.map((product, i) => (
+          {/* {products.map((product, i) => (
             <ProductItem
               key={product.productId + "a" + i}
               product={product}
             ></ProductItem>
-          ))}
-          {productsToShow.map((product, i) => (
+          ))} */}
+          {/* {productsFromContext.map((product, i) => (
             <ProductItem
               key={product.productId + "a" + i}
               product={product}
             ></ProductItem>
-          ))}
+          ))} */}
         </div>
-        {productsToShow.length ? (
+        {productsFromContext.length ? (
           <div className="col-12 d-flex jusitfy-content-center ">
           <button
             style={btnStyle}

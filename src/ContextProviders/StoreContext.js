@@ -14,8 +14,11 @@ const StoreContextProvider = (props) => {
   //   useEffect( async ()=> {
   //       getCategories();
   //   }, [])
+  //const [products, setProducts] = useState([]);
 
-  const [products, setProducts] = useState([]);
+  // const updateProducts = (update) => {
+  //   setProducts([...products,...update])
+  // }
 
   const getProducts = async () => {
     let res = await fetch("/api/sort");
@@ -33,10 +36,10 @@ const StoreContextProvider = (props) => {
     }
   };
 
-  const getProductsByCategory = async (categoryId, page = 0) => {
+  const getProductsByCategory = async (categoryId, page = 0, eco, swe) => {
     console.log("Inne i getProductsByCat - id: " + categoryId);
     let res = await fetch(
-      `/api/catProducts/${categoryId}?limit=10&page=${page}`
+      `/api/catProducts/${categoryId}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();
@@ -48,15 +51,15 @@ const StoreContextProvider = (props) => {
     }
   };
   
-
-  const getProductsBySearch = async (searchWord, page = 0) => {
+// changes to the getProductsBySearch eco, swe.
+  const getProductsBySearch = async (searchWord, page = 0, eco, swe) => {
     console.log("Inne i getProductsBySearch - id: " + searchWord);
     let res = await fetch(
-      `/api/searchProducts/${searchWord}?limit=10&page=${page}`
+      `/api/searchProducts/${searchWord}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); // api to get categories.. whats the right "name"..
     try {
       res = await res.json();
-      //console.log(res[0])
+      console.log(res[0])
       // setProductsToShow(res);
       return res;
     } catch (e) {
@@ -69,8 +72,9 @@ const StoreContextProvider = (props) => {
     getCategories: getCategories,
     getProductsByCategory: getProductsByCategory,
     getProductsBySearch: getProductsBySearch,
-    products: products,
-    setProducts: setProducts
+    //products: products,
+    //setProducts: setProducts,
+    //updateProducts: updateProducts
     // categoryList: categoryList,
   };
 
