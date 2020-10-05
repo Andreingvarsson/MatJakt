@@ -12,11 +12,11 @@ import { ProductContext } from "../ContextProviders/ProductContext";
 import '../Css/SearchComponent.css'
 
 const SearchComponent = (props) => {
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const { getCategories, getProductsByCategory, getProductsBySearch } = useContext(StoreContext);
-  const { clearProductsToShow, addProductsToShow, productsFromContext} = useContext(ProductContext);
+  const { clearProductsToShow, addProductsToShow, productsFromContext, clearPage, page} = useContext(ProductContext);
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [searchWord, setSearchWord] = useState('');
   const [searchedWord, setSearchedWord] = useState({search: ''});
@@ -44,8 +44,10 @@ const SearchComponent = (props) => {
     } 
   }else if(ecoState === false){
     if(selectedCategory !== 0){
+      clearPage()
       clearProductsToShow()
     }else if(searchedWord.search.length > 0){
+      clearPage();
       clearProductsToShow()
     }
   }
@@ -59,12 +61,14 @@ const SearchComponent = (props) => {
     if(selectedCategory !== 0){
       clearProductsToShow()
     }else if(searchedWord.search.length > 0){
+      clearPage()
       clearProductsToShow()
     } 
   }else if(swedishState === false){
     if(selectedCategory !== 0){
       clearProductsToShow()
     }else if(searchedWord.search.length > 0){
+      clearPage()
       clearProductsToShow()
     }
   }
@@ -112,7 +116,7 @@ const SearchComponent = (props) => {
   }, [productsFromContext]);
 
   useEffect(() => {
-    setPage(0);
+    clearPage();
     clearProductsToShow();
   }, [selectedCategory]);
 
@@ -123,10 +127,6 @@ const SearchComponent = (props) => {
       setCategoryTitle(`"${searchedWord.search}"`)
     }
   }, [searchedWord]);
-
-  let btnStyle = {
-    margin: "2rem",
-  };
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -144,6 +144,15 @@ const SearchComponent = (props) => {
       clearProductsToShow();
       setCategoryTitle('""')
     }
+  }
+
+  const resetSearching = () => {
+    setSelectedCategory(0);
+    setCategoryTitle(""); /*setPage(0)*/
+    setSearchedWord({search: ''})
+    clearProductsToShow([])
+    setEcoState(false)
+    setSwedishState(false)
   }
 
   const onKeyUp = (e) => {
@@ -172,10 +181,7 @@ const SearchComponent = (props) => {
                   </DropdownItem>
                 ))}
                 <DropdownItem
-                  onClick={() => {
-                    setSelectedCategory(0);
-                    setCategoryTitle(""); /*setPage(0)*/
-                  }}
+                  onClick={() => resetSearching()}
                 >
                   Återställ
                 </DropdownItem>
@@ -187,46 +193,27 @@ const SearchComponent = (props) => {
           </div>
           <div className="col-4 mt-5">
             <Label className="col-3">
-            <Input className="" type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
+            <Input className="" checked={ecoState} type="checkbox" value={ecoState} onChange={e => handleCheckboxChange('eco')}/>
             eco
             </Label>
             <Label className="col-3">
-            <Input  type="checkbox" value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
+            <Input  type="checkbox" checked={swedishState} value={swedishState} onChange={e => handleCheckboxChange('swedish')}/>
             svensk
             </Label>
           </div>
-      
-        
           {categoryTitle? <h5 className="category-title text-right col-l-12 col-sm-12">{categoryTitle} </h5>: null}
         </div>
-        <div className="row align-self-start">
-          {/* {products.map((product, i) => (
-            <ProductItem
-              key={product.productId + "a" + i}
-              product={product}
-            ></ProductItem>
-          ))} */}
-          {/* {productsFromContext.map((product, i) => (
-            <ProductItem
-              key={product.productId + "a" + i}
-              product={product}
-            ></ProductItem>
-          ))} */}
-        </div>
-        {productsFromContext.length ? (
+        {/* {productsFromContext.length ? (
           <div className="col-12 d-flex jusitfy-content-center ">
           <button
             style={btnStyle}
             type="button"
             className="btn btn-dark mono-font"
-            onClick={
-              () => setPage(page + 1) /*fetchMoreProducts(selectedCategory)*/
-            }
-            >
+            onClick={() => setPage(page + 1)}>
             Ladda fler varor
           </button>
         </div>
-        ) : null}
+        ) : null} */}
       </div>
     </>
   );

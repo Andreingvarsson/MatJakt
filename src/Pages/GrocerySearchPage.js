@@ -8,10 +8,10 @@ import '../Css/SearchPage.css'
 
 const GrocerySearchPage = () => {
   
-  const { productsFromContext } = useContext(ProductContext)
+  const { productsFromContext, addPage, page } = useContext(ProductContext)
+  
 
-
-
+  
     
 
   return (
@@ -22,10 +22,18 @@ const GrocerySearchPage = () => {
         <SearchComponent></SearchComponent>
     </div>
     <ProductList products={productsFromContext}></ProductList>
-    {/* <button  className="btn btn-dark container top-btn"> till toppen</button> */}
-    {/* <input></input> */}
+    {productsFromContext.length ? (
+          <div page={page} className="col-12 d-flex jusitfy-content-center ">
+          <button
+            type="button"
+            className="btn btn-dark mono-font"
+            onClick={() => addPage()}>
+            Ladda fler varor
+          </button>
+        </div>
+        ) : null}
     
-    {/* <button onClick={()=> getProducts()}>Hämta produkter</button> */}
+    
     
     </div>
     </>
