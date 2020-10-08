@@ -25,8 +25,7 @@ function App() {
           <StoreContext>
             <ProductContext>
             <Switch>
-              <Route exact path="/" component={home} />
-              <Route path="/sok-varor" component={GrocerySearchPage} />
+              <Route exact path="/hem" component={GrocerySearchPage} />
               <Route path="/inkopslista" component={ProductListPage}/>
             </Switch>
             </ProductContext>

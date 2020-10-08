@@ -23,7 +23,7 @@ const Header = (props) => {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse " id="links">
-      <Link className="nav-link btn btn-light monospace-font" to="/sok-varor">Sök varor</Link>
+      <Link className="nav-link btn btn-light monospace-font" to="/hem">Sök varor</Link>
       <Link className="nav-link btn btn-light monospace-font ml-3" to="/inkopslista">Inköpslista<span></span></Link>
    
     </div>
