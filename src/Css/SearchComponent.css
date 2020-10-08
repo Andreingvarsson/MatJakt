@@ -16,7 +16,10 @@
     font-family: monospace;
 }
 
-.padi{
+.pad-top{
     padding-top: 2rem;
+}
+.dropdown-fix{
+    width: 100% !important;
 }
 

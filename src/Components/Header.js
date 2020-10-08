@@ -13,18 +13,18 @@ const Header = (props) => {
   
   return (
 <>   
+    
 
-
-<nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top bg-dark">
-  <div className="container">
+<nav className="navbar navbar-expand-md navbar-light bg-light sticky-top bg-dark">
+  <div className="container ">
 
     <h1 className="monospace-font font-white ">MatJakt</h1>
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#links" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div className="collapse navbar-collapse " id="links">
       <Link className="nav-link btn btn-light monospace-font" to="/sok-varor">Sök varor</Link>
-      <Link className="nav-link btn btn-light monospace-font" to="/inkopslista">Inköpslista<span></span></Link>
+      <Link className="nav-link btn btn-light monospace-font ml-3" to="/inkopslista">Inköpslista<span></span></Link>
    
     </div>
   </div>
