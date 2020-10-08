@@ -26,4 +26,11 @@ module.exports = class APIHandler {
     );
     res.json(anyProducts);
   }
+
+  categories(req, res) {
+      let anyCategories = db.all("SELECT * FROM categories ");
+      res.json({
+        anyCategories,
+      });
+  }
 }
