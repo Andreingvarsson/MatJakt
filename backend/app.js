@@ -1,9 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const Harvester = require('./classes/Harvesters/Harvester')
 const DbHandler = require('./classes/DBHandler');
 const util = require('util')
 const db = new DbHandler('./database/MatJaktDatabase.db');
+const APIHandler = require("./classes/APIHandler");
+const api = new APIHandler("./classes/APIHandler");
 
 
 
@@ -40,38 +42,17 @@ async function checkForHarvest() {
   }
 }
 
-app.get('/api/test', (req, res)=>{
-   res.json({works: true})
-})
+app.get("/api/categories", api.categories);
 
-app.get('/api/products', (req, res) => {
-  const limit = req.query.limit ? ` LIMIT ` + req.query.limit : ''
-  let anyProducts = db.all('SELECT * FROM products ' + limit)
-  res.json({
-    anyProducts
-  })
-})
+app.get("/api/catProducts/:categoryId", api.categoryProducts);
+
+app.get("/api/searchProducts/:searchWord", api.searchedProducts);
 
 
-app.get('/api/products/:categoryId', (req, res) => {
-  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = ' + req.params.categoryId + " ORDER BY price ASC")
-  res.json(
-    anyProducts
-  )
-})
+app.use(express.static(__dirname + "src")); 
 
-app.get('/api/sort', (req, res) => {
-  let anyProducts = db.all('SELECT * FROM products WHERE categoryId = 1 OR categoryId = 2 ORDER BY price ASC')
-  res.json(
-    anyProducts
-  )
-})
+app.get("*", (req, res) => {
+  res.sendFile("index.js", { root: "src" });
+});
 
-
-app.use(express.static(__dirname + 'src')) //Hittar nog bara till backend pga __dirname, så kan inte ladda hela mappen för nedanstående del
-
-app.get('*', (req, res) => {
-  res.sendFile('index.js', { root: 'src'});
-})
-
-app.listen(3001, () => console.log('MatJakt server listening on port 3001'));
+app.listen(3001, () => console.log("MatJakt server listening on port 3001"));
