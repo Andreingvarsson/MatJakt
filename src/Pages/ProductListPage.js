@@ -27,7 +27,6 @@ const ProductListPage = () => {
     <div className="img-list"></div>
         <h2 className="col-12 text-center monospace-font mt-5">Inköpslista</h2>
         <ProductList products={productsInList}></ProductList>
-        <button className="btn-dark btn" onClick={compareProducts}>Jämför</button>
     </div>
     </>
   );

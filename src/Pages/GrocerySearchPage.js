@@ -8,25 +8,25 @@ import '../Css/SearchPage.css'
 
 const GrocerySearchPage = () => {
   
-  const { productsFromContext } = useContext(ProductContext)
-
-
-
-    
-
+  const { productsFromContext, addPage, page } = useContext(ProductContext)
   return (
     <>
     <div className="grocerySearchPage"> 
     <div className="img-div"></div>
-    <div className="">
+    <div className=" bg-white stick">
         <SearchComponent></SearchComponent>
     </div>
-    <ProductList products={productsFromContext}></ProductList>
-    {/* <button  className="btn btn-dark container top-btn"> till toppen</button> */}
-    {/* <input></input> */}
-    
-    {/* <button onClick={()=> getProducts()}>Hämta produkter</button> */}
-    
+    <ProductList  products={productsFromContext}></ProductList>
+    {productsFromContext.length ? (
+          <div page={page} className="">
+          <button
+            type="button"
+            className="btn btn-dark mono-font mx-auto d-block mt-5 mb-5"
+            onClick={() => addPage()}>
+            Ladda fler varor
+          </button>
+        </div>
+        ) : null}
     </div>
     </>
   );

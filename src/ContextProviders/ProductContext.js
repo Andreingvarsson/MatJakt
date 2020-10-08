@@ -6,6 +6,15 @@ const ProductContextProvider = (props) => {
 
     const [productsFromContext, setProductsFromContext] = useState([]);
     const [productsInList, setProductsInList] = useState([]);
+    const [page, setPage] = useState(0);
+
+    const addPage = () => {
+        setPage(page +1);
+    }
+
+    const clearPage = () => {
+        setPage(0)
+    }
 
 
     const addProductsToShow = (update) => {
@@ -43,6 +52,9 @@ const ProductContextProvider = (props) => {
         clearProductsToShow: clearProductsToShow,
         productsFromContext: productsFromContext,
         productsInList: productsInList,
+        addPage: addPage,
+        clearPage: clearPage,
+        page:page
 
 
     }

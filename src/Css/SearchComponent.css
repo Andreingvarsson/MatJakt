@@ -4,7 +4,7 @@
 
 .fixed{
     position: sticky;
-    top: 0; 
+    top: 6; 
     left: 0;
     z-index: 45;
     background-color: white;
@@ -14,5 +14,12 @@
 
 .mono-font{
     font-family: monospace;
+}
+
+.pad-top{
+    padding-top: 2rem;
+}
+.dropdown-fix{
+    width: 100% !important;
 }
 
