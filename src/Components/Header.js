@@ -1,29 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Css/Header.css'
-import ProductListPage from '../Pages/ProductListPage';
 import '../Css/fonts.css'
+import { Link } from 'react-router-dom';
+import { ProductContext } from '../ContextProviders/ProductContext';
 
 
 const Header = (props) => {
-  const {history} = props
+
+  //const {productsInList} = useContext(ProductContext)
+  
+
   
   return (
 <>   
-<div className="header bg-dark"> 
-<div className="container ">
-    <nav className="navbar d-flex justify-content-end">   
-      <span className="navbar-brand col-4">
-        <h1 className="monospace-font" href="/">MatJakt!</h1>
-      </span>
-      <div className="col-4 d-flex justify-content-between">
-        
-          <a className="nav-link btn btn-light monospace-font" href="/sok-varor">Sök varor</a>
-          <a className="nav-link btn btn-light monospace-font" href="/inkopslista">Inköpslista</a>
-        
-      </div>
-    </nav>  
+    
+
+<nav className="navbar navbar-expand-md navbar-light bg-light sticky-top bg-dark">
+  <div className="container ">
+
+    <h1 className="monospace-font font-white ">MatJakt</h1>
+    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#links" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse " id="links">
+      <Link className="nav-link btn btn-light monospace-font" to="/sok-varor">Sök varor</Link>
+      <Link className="nav-link btn btn-light monospace-font ml-3" to="/inkopslista">Inköpslista<span></span></Link>
+   
     </div>
-</div>
+  </div>
+</nav>
+
+
 
 </>
   );

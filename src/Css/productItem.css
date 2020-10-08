@@ -1,6 +1,6 @@
 .pic-height{
-    width: 50% !important;
-    height: 50%;
+    width: 40% !important;
+    height: 40%;
 }
 
 .black-bottom{
@@ -8,19 +8,19 @@
 }
 
 .willys-back{
-    height: 2.7vh;
+    height: 2vh;
     background: url("../images/willys2.png") no-repeat center;
     background-size: contain;
     /* width: auto; */
 }
 .ica-back{
-    height: 5vh;
+    height: 3vh;
     background: url("../images/ica-logo-share.jpg") no-repeat center;
     background-size: contain;
     /* width: auto; */
 }
 .mathem-back{
-    height: 8vh;
+    height: 5vh;
     background: url("../images/mathem.png") no-repeat center;
     background-size: contain;
 }
@@ -31,6 +31,10 @@
 
 .mtopbot{
     margin-bottom: 1em;
+}
+
+.pad{
+    padding: 1rem;
 }
 
 

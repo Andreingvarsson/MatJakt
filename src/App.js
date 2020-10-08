@@ -17,7 +17,10 @@ function App() {
     <>
       <Router>
         <div className="App">
-          <Header></Header>
+          <Header className="fix head"></Header>
+          
+        
+
           {/* contextProvider */}
           <StoreContext>
             <ProductContext>
@@ -28,8 +31,10 @@ function App() {
             </Switch>
             </ProductContext>
           </StoreContext>
-          {/* contextProvider */}
         </div>
+          
+          {/* contextProvider */}
+        
       </Router>
     </>
   );
