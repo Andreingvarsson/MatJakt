@@ -22,18 +22,13 @@ module.exports = class WillysScrubber extends Scrubber {
     compareUnit: (x) => x.comparePriceUnit ? x.comparePriceUnit : "Unknown",
     eco: (x) => (x.labels.includes("ecological") ? 1 : 0),
     Swedish: (x) => (x.labels.includes("swedish_flag") ? 1 : 0),
-    // NodeFetch ERROR Unexpected token N in json at position 0 ?
-    originCountry: (x) => "some country",
-    //  async (x) => {
-    //   // Seems we need detailed product info for this...
-    //   // (one fetch per product - lots of extra time :( )
-    //   // maybe ask productOwner if Swedish/non Swedish enough?
-    //   let rawData = await fetch(
-    //     "https://www.willys.se/axfood/rest/p/" + x.code
-    //   );
-    //   let data = await rawData.json();
-    //   return data.originCountry || data.tradeItemCountryOfOrigin;
-    // },
+    originCountry: async (x) => {
+      let rawData = await fetch(
+        "https://www.willys.se/axfood/rest/p/" + x.code
+      );
+      let data = await rawData.json();
+      return data.originCountry || data.tradeItemCountryOfOrigin;
+    },
   };
 
   static checkCategory(x) {
@@ -54,27 +49,6 @@ module.exports = class WillysScrubber extends Scrubber {
     } catch {
       return x.priceValue;
     }
-
-
-    /*let z =
-      x.potentialPromotions.length >= 1
-        ? x.potentialPromotions[0].conditionLabel
-          ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
-            ? x.priceValue
-              ? x.priceValue
-              : null
-            : x.potentialPromotions[0].price.value
-            ? x.potentialPromotions[0].price.value
-            : x.priceValue
-            ? x.priceValue
-            : null
-          : x.priceValue
-          ? x.priceValue
-          : null
-        : x.priceValue
-        ? x.priceValue
-        : null;
-    return z;*/
   }
 
   static checkDiscountComparePrice(x) {
@@ -89,28 +63,6 @@ module.exports = class WillysScrubber extends Scrubber {
     } catch {
       return parseFloat(x.comparePrice.replace(/,/, "."));
     }
-
-    /*let z =
-      x.potentialPromotions.length >= 1
-        ? x.potentialPromotions[0].conditionLabel
-          ? x.potentialPromotions[0].conditionLabel.match(/([0-9]+\s)(för)/g)
-            ? x.comparePrice
-              ? parseFloat(x.comparePrice.replace(/,/, "."))
-              : null
-            : x.potentialPromotions[0].comparePrice
-            ? parseFloat(
-                x.potentialPromotions[0].comparePrice.replace(/,/, ".")
-              )
-            : x.comparePrice
-            ? parseFloat(x.comparePrice.replace(/,/, "."))
-            : null
-          : x.comparePrice
-          ? parseFloat(x.comparePrice.replace(/,/, "."))
-          : null
-        : x.comparePrice
-        ? parseFloat(x.comparePrice.replace(/,/, "."))
-        : null;
-        return z;*/
   }
 
   static checkIfDiscount(x) {
