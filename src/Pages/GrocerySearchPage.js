@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect }  from 'react';
-import { StoreContext } from '../ContextProviders/StoreContext';
+import React, { useContext }  from 'react';
 import { ProductContext } from '../ContextProviders/ProductContext';
 import SearchComponent from  '../Components/SearchComponent';
 import ProductList from '../Components/ProductList'

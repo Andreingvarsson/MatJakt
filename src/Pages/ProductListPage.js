@@ -10,17 +10,6 @@ const ProductListPage = () => {
 
     const { productsInList } = useContext(ProductContext)
 
-    const compareProducts =  () =>{
-      console.log(productsInList)
-      // jobbar på get funktion i backend innan fortsätta här.
-      
-
-    }
-    
-    useEffect(()=>{
-      
-    },[productsInList])
-
   return (
     <>
     <div className=""> 

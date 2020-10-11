@@ -16,7 +16,6 @@ const ProductContextProvider = (props) => {
         setPage(0)
     }
 
-
     const addProductsToShow = (update) => {
         let newList = [...productsFromContext,...update]
         if(newList.length === 0 && productsFromContext.length === 0){ return; }
@@ -55,8 +54,6 @@ const ProductContextProvider = (props) => {
         addPage: addPage,
         clearPage: clearPage,
         page:page
-
-
     }
 
     return (

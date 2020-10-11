@@ -5,7 +5,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import home from "./Pages/Home";
 import StoreContext from "./ContextProviders/StoreContext";
 import ProductContext from "./ContextProviders/ProductContext";
 import Header from "./Components/Header";
@@ -18,22 +17,15 @@ function App() {
       <Router>
         <div className="App">
           <Header className="fix head"></Header>
-          
-        
-
-          {/* contextProvider */}
           <StoreContext>
             <ProductContext>
             <Switch>
-              <Route exact path="/hem" component={GrocerySearchPage} />
+              <Route exact path="/" component={GrocerySearchPage} />
               <Route path="/inkopslista" component={ProductListPage}/>
             </Switch>
             </ProductContext>
           </StoreContext>
         </div>
-          
-          {/* contextProvider */}
-        
       </Router>
     </>
   );

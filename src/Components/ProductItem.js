@@ -22,9 +22,7 @@ const ProductItem = (props) => {
       productDetails: product,
       amount: count
     }
-    // console.log(product)
     addProductToList(productInfo)
-    //addProductToList(prod)
   }
 
   useEffect(()=>{
@@ -59,8 +57,6 @@ const ProductItem = (props) => {
           <div className="card-body">
             <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{product.name}</h6>
           <h5 className="text-center monospace-font solid">{product.price} kr</h5>
-
-          {/* {product.eco?<p className="card-text text-center monospace-font" style={pStyle}>EKO</p>: <p className="card-text text-center monospace-font" style={pStyle}>Not EKO</p> } */}
           <p className="card-text text-center monospace-font" style={pStyle}>{product.productVolume}{product.productVolumeUnit}</p> 
           <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {product.comparePrice}/{product.compareUnit}<span> - {product.originCountry}</span></p> 
           <p className="card-text text-center monospace-font" style={pStyle}></p> 
@@ -69,12 +65,11 @@ const ProductItem = (props) => {
       </div>
         <div className="row  btn-div container mx-auto mtopbot">
 
-          <div className="col-6">
+          <div className="col-6 d-flex align-middle">
 
-            <div className="row d-flex align-middle">
+            <div className="row d-flex  align-middle">
               <button type="button" className=" btn btn-light col-4" onClick={()=> {if(count > 1){setCount(count-1)}}}> - </button>
-              <p className="col-4 ">{count}</p>
-              {/* need to fix css when more then 9 products */}
+              <p className="col-4 align-middle">{count}</p>
               <button type="button" className="btn btn-light col-4 " onClick={()=> {if(count < 9){setCount(count+1)}}}> + </button>
             </div>
 

@@ -4,12 +4,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Label,
   Input,
-  Button,
-  ButtonGroup,
-  Form,
-  FormGroup,
   Col,
   Row,
   Container,
@@ -19,7 +14,6 @@ import { ProductContext } from "../ContextProviders/ProductContext";
 import "../Css/SearchComponent.css";
 
 const SearchComponent = (props) => {
-  // const [page, setPage] = useState(0);
   const [categoryTitle, setCategoryTitle] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const {
@@ -37,12 +31,9 @@ const SearchComponent = (props) => {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [searchWord, setSearchWord] = useState("");
   const [searchedWord, setSearchedWord] = useState({ search: "" });
-
-  //  Added useStates for eco / swedish.
   const [ecoState, setEcoState] = useState(false);
   const [swedishState, setSwedishState] = useState(false);
 
-  // checkbox handler
   const handleCheckboxChange = (whichBox) => {
     if (whichBox === "eco") {
       setEcoState(!ecoState);
@@ -50,7 +41,6 @@ const SearchComponent = (props) => {
       setSwedishState(!swedishState);
     }
   };
-  // useEffect in progress for searching products eco
   useEffect(() => {
     console.log(ecoState, " - eco");
     if (ecoState === true) {
@@ -70,7 +60,6 @@ const SearchComponent = (props) => {
     }
   }, [ecoState]);
 
-  // useEffect in progress for searching products swedish
   useEffect(() => {
     console.log(swedishState, " - swe");
     if (swedishState === true) {
@@ -135,7 +124,6 @@ const SearchComponent = (props) => {
         fetchMoreProducts(selectedCategory);
       } else if (searchedWord.search) {
         fetchProductsBySearch(searchedWord.search);
-        //setSearchedWord('')
       }
     }
   }, [productsFromContext]);
@@ -173,7 +161,7 @@ const SearchComponent = (props) => {
 
   const resetSearching = () => {
     setSelectedCategory(0);
-    setCategoryTitle(""); /*setPage(0)*/
+    setCategoryTitle("");
     setSearchedWord({ search: "" });
     clearProductsToShow([]);
     setEcoState(false);
@@ -260,10 +248,6 @@ const SearchComponent = (props) => {
                 />
               </Col>
             </Row>
-
-            {/* <Button style={swedishState? buttonFocused: null} className="bg-dark"  onClick={e => handleCheckboxChange('swedish')} >Svenskt</Button>
-        <Button className="bg-dark "   onClick={e => handleCheckboxChange('eco')}>EKO</Button>
-       */}
           </Col>
           {categoryTitle ? (
             <h5 className="category-title text-right col-l-12 col-sm-12">
@@ -271,17 +255,6 @@ const SearchComponent = (props) => {
             </h5>
           ) : null}
         </Row>
-        {/* {productsFromContext.length ? (
-          <div className="col-12 d-flex jusitfy-content-center ">
-          <button
-            style={btnStyle}
-            type="button"
-            className="btn btn-dark mono-font"
-            onClick={() => setPage(page + 1)}>
-            Ladda fler varor
-          </button>
-        </div>
-        ) : null} */}
       </Container>
     </>
   );
