@@ -1,0 +1,29 @@
+
+
+.img-div{
+    height: 15vh;
+    background: url("../images/store-pic.jpg") no-repeat center;
+    background-size: cover;
+}
+.category-title{
+    margin-top: 1rem; 
+    color: black;
+    border-bottom: 1px solid black;
+    padding-bottom: 0.7rem;
+    font-size: 1.9rem;
+    font-family: monospace;
+}
+.top-btn {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 30px;
+    z-index: 99;
+}
+
+.stick{
+ position: sticky;
+ top: 3rem;
+ z-index: 450;
+}
+

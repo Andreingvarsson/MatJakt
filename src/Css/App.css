@@ -1,0 +1,20 @@
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+.fix{
+    
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 56;
+        background-color: white;
+        width: 100%;
+    
+}
+.head{
+    flex:2
+}

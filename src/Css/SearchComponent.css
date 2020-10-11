@@ -1,0 +1,25 @@
+.no-pad{
+    padding-left: 0;
+}
+
+.fixed{
+    position: sticky;
+    top: 6; 
+    left: 0;
+    z-index: 45;
+    background-color: white;
+    width: 100%;
+    /* margin-top: 2rem; */
+}
+
+.mono-font{
+    font-family: monospace;
+}
+
+.pad-top{
+    padding-top: 2rem;
+}
+.dropdown-fix{
+    width: 100% !important;
+}
+

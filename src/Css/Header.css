@@ -1,0 +1,21 @@
+.header{
+    width: 100%;
+}
+
+.navbar-brand{
+    color: white;
+    text-align: center;
+    padding-right: 0 !important;
+}
+
+.link{
+    color: black;
+}
+.fix{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 563;
+    background-color: white;
+    width: 100%;
+}
