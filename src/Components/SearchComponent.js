@@ -42,7 +42,6 @@ const SearchComponent = (props) => {
     }
   };
   useEffect(() => {
-    console.log(ecoState, " - eco");
     if (ecoState === true) {
       if (selectedCategory !== 0) {
         clearProductsToShow();
@@ -58,10 +57,10 @@ const SearchComponent = (props) => {
         clearProductsToShow();
       }
     }
+    // eslint-disable-next-line
   }, [ecoState]);
 
   useEffect(() => {
-    console.log(swedishState, " - swe");
     if (swedishState === true) {
       if (selectedCategory !== 0) {
         clearProductsToShow();
@@ -77,6 +76,7 @@ const SearchComponent = (props) => {
         clearProductsToShow();
       }
     }
+    // eslint-disable-next-line
   }, [swedishState]);
 
   const fetchProductsBySearch = async (search) => {
@@ -111,6 +111,7 @@ const SearchComponent = (props) => {
     } else if (searchedWord.search) {
       fetchProductsBySearch(searchedWord.search);
     }
+    // eslint-disable-next-line
   }, [page]);
 
   useEffect(() => {
@@ -126,11 +127,13 @@ const SearchComponent = (props) => {
         fetchProductsBySearch(searchedWord.search);
       }
     }
+    // eslint-disable-next-line
   }, [productsFromContext]);
 
   useEffect(() => {
     clearPage();
     clearProductsToShow();
+    // eslint-disable-next-line
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -139,6 +142,7 @@ const SearchComponent = (props) => {
       clearProductsToShow();
       setCategoryTitle(`"${searchedWord.search}"`);
     }
+    // eslint-disable-next-line
   }, [searchedWord]);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -173,14 +177,6 @@ const SearchComponent = (props) => {
       handleSearch();
     }
   };
-
-  let buttonFocused = {
-    backgroundColor: "#1d2124!important",
-  };
-
-  useEffect(() => {
-    console.log(searchWord);
-  }, [searchWord]);
 
   return (
     <>

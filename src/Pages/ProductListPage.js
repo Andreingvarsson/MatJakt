@@ -1,6 +1,5 @@
-import React, { useContext, useEffect }  from 'react';
+import React, { useContext }  from 'react';
 import { ProductContext } from '../ContextProviders/ProductContext';
-import SearchComponent from  '../Components/SearchComponent';
 import ProductList from '../Components/ProductList'
 import '../Css/ProductListPage.css'
 import '../Css/fonts.css'

@@ -29,18 +29,13 @@ const ProductContextProvider = (props) => {
     const addProductToList = (product) => {
         let found = productsInList.filter(p => p.productDetails.productId === product.productDetails.productId)
         if(!found.length){
-
             let newList = [...productsInList, product]
             setProductsInList(newList)
-            console.log(productsInList.length +' - produktlista')
         }
     }
 
     const removeProductFromList = (product) => {
-        console.log(product.productId+ ' - productID')
-        console.log(productsInList)
         let newList = productsInList.filter(p =>  p.productDetails.productId !== product.productId)
-        console.log(newList + ' newlist efter delete')
         setProductsInList(newList)
     }
 

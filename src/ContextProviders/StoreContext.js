@@ -21,7 +21,7 @@ const StoreContextProvider = (props) => {
   };
 
   const getProductsByCategory = async (categoryId, page = 0, eco, swe) => {
-    console.log("Inne i getProductsByCat - id: " + categoryId);
+
     let res = await fetch(
       `/api/catProducts/${categoryId}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); 
@@ -34,13 +34,13 @@ const StoreContextProvider = (props) => {
   };
 
   const getProductsBySearch = async (searchWord, page = 0, eco, swe) => {
-    console.log("Inne i getProductsBySearch - id: " + searchWord);
+
     let res = await fetch(
       `/api/searchProducts/${searchWord}?limit=10&page=${page}&eco=${eco}&swe=${swe}`
     ); 
     try {
       res = await res.json();
-      console.log(res[0])
+
       return res;
     } catch (e) {
       console.log("This is the error!! " + e);

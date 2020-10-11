@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom'
 
 const ProductItem = (props) => {
 
+  let toSEK = new Intl.NumberFormat('sv-SE', {style: 'currency', currency: 'SEK'}).format;
+ 
   let stores = {
     1: "willys-back",
     2: "ica-back",
@@ -32,6 +34,7 @@ const ProductItem = (props) => {
     }else{
       setProduct(props.product)
     }
+    // eslint-disable-next-line
   },[])
 
   let pStyle = {
@@ -43,7 +46,6 @@ const ProductItem = (props) => {
   let cardCont = {
     padding: "0.5em",
     boxShadow: "2px 5px lightgrey",
-    
   };
 
   return (
@@ -56,7 +58,7 @@ const ProductItem = (props) => {
         </div>
           <div className="card-body">
             <h6 className="card-title text-center monospace-font solid" style={titleStyle}>{product.name}</h6>
-          <h5 className="text-center monospace-font solid">{product.price} kr</h5>
+          <h5 className="text-center monospace-font solid">{toSEK(product.price)}</h5>
           <p className="card-text text-center monospace-font" style={pStyle}>{product.productVolume}{product.productVolumeUnit}</p> 
           <p className="card-text text-center monospace-font" style={pStyle}>Jfr-pris {product.comparePrice}/{product.compareUnit}<span> - {product.originCountry}</span></p> 
           <p className="card-text text-center monospace-font" style={pStyle}></p> 
